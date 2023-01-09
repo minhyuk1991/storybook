@@ -9,7 +9,7 @@ export default {
   title: "Button",
 };
 
-export const withSassStyleTag = () => ({
+export const Aa = () => ({
   Component: Button,
   props: { text: "Hello" },
   on: { click: handleClick },
