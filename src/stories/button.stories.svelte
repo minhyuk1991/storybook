@@ -7,9 +7,10 @@ let count = 0;
 function handleClick() {
   count += 1;
 }
+const argss = { args: { rounded: true, text: "dd", name: "aa" } };
 </script>
 
-<Meta title="Button" component="{Button}" />
+<!-- <Meta title="Button" component="{Button}" />
 
 <Template let:args>
   <Button {...args} on:click="{handleClick}">
@@ -17,13 +18,11 @@ function handleClick() {
   </Button>
 </Template>
 
-<Story name="Button" />
+<Story name="Button" /> -->
 
-<Story name="Rounded" args="{{ rounded: true }}" />
-
-<Story name="Square" source args="{{ rounded: false }}" />
+<!-- <Story name="Square" source args="{{ rounded: false }}" /> -->
 
 <!-- Dynamic snippet should be disabled for this story -->
-<Story name="Button No Args">
+<!-- <Story name="Button No Args">
   <Button>Label</Button>
-</Story>
+</Story> -->
