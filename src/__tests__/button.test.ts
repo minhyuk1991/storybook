@@ -4,7 +4,6 @@ import { sum } from "../aa";
 describe("Counter", () => {
   test("it has a button with the text 'Clicks: 0'", async () => {
     render(Button, { text: "aa" });
-
     const button = screen.getByText("aa");
     expect(button).toBeTruthy();
   });
