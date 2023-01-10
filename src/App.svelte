@@ -18,8 +18,14 @@
 <script lang="ts">
 import svelteLogo from "./assets/svelte.svg";
 import Counter from "./components/Counter.svelte";
+import InterSectionList from "./components/intersectionList/InterSectionList.svelte";
+import Layout from "./components/layout/Layout.svelte";
+
+const values = new Array(500).fill(0).map((item, i) => {
+  return { id: i };
+});
 </script>
 
-<main>
-  <div class="text-[40px] text-red-500">aaa</div>
-</main>
+<Layout>
+  <InterSectionList array="{values}" />
+</Layout>
