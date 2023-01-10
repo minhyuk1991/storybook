@@ -16,32 +16,16 @@
 </style>
 
 <script lang="ts">
-import svelteLogo from "./assets/svelte.svg";
 import Counter from "./components/Counter.svelte";
+import InterSectionList from "./components/intersectionList/InterSectionList.svelte";
+import Layout from "./components/layout/Layout.svelte";
+
+const values = new Array(500).fill(0).map((item, i) => {
+  return { id: i };
+});
 </script>
 
-<main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src="{svelteLogo}" class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a
-      href="https://github.com/sveltejs/kit#readme"
-      target="_blank"
-      rel="noreferrer">SvelteKit</a
-    >, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
-</main>
+<Layout>
+  <p class="h-[1500px]">content</p>
+  <!-- <InterSectionList array="{values}" /> -->
+</Layout>
