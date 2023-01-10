@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/svelte";
-import Button from "../lib/Button.svelte";
 import { sum } from "../aa";
+import Button from "../components/Button.svelte";
 describe("Counter", () => {
   test("it has a button with the text 'Clicks: 0'", async () => {
-    render(Button, { text: "aa" });
+    render(Button, { text: "aa", rounded: false });
     const button = screen.getByText("aa");
     expect(button).toBeTruthy();
   });

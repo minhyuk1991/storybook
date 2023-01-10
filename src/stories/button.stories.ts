@@ -1,6 +1,6 @@
 import { action } from "@storybook/addon-actions";
 
-import Button from "../lib/Button.svelte";
+import Button from "../components/Button.svelte";
 let count = 0;
 function handleClick() {
   count += 1;
