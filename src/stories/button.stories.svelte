@@ -12,9 +12,7 @@ import Button from './../components/Button.svelte'
   </Button>
 </Template>
 
-<Story name="Rounded" pa/>
 
-<Story name="Square" source args={{rounded: false}}/>
 
 <!-- Dynamic snippet should be disabled for this story -->
 <Story name="Button No Args">
