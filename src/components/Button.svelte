@@ -30,8 +30,6 @@ afterUpdate(() => {
 </script>
 
 <button class="button" class:rounded="{rounded}" on:click="{onClick}">
-  <strong>{rounded ? "Round" : "Square"} corners</strong>
-  <br />
   {text}
   <slot />
 </button>

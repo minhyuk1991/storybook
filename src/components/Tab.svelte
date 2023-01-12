@@ -13,16 +13,16 @@ const clickHandler = (e: EventMouse, item) => {
 };
 </script>
 
-<ul class="flex w-full">
+<ul class="flex w-full gap-[2px]">
   {#each tabItems as item}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <li
       on:click="{(e) => {
         clickHandler(e, item);
       }}"
-      class="{`text-white flex items-center justify-center border-t-[8px] border-solid flex-1 cursor-pointer ${
+      class="{`text-black dark:bg-black bg-white dark:text-white flex items-center justify-center border-t-[8px] border-solid flex-1 cursor-pointer ${
         currentItem.name === item.name
-          ? 'border-yellow-200'
+          ? 'border-yellow-900 dark:border-yellow-400'
           : ' border-transparent'
       }`}">
       {item.name}

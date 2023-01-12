@@ -1,12 +1,16 @@
-import { action } from "@storybook/addon-actions";
-
 import Layout from "../components/layout/Layout.svelte";
 
 export default {
-  title: "Layout",
+  component: Layout,
+  title: 'Layout',
+  
 };
 
-export const Aa = () => ({
+const Template = args => ({
   Component: Layout,
-  props: { text: "Hello" },
+  props: args,
 });
+
+export const Default = Template.bind({});
+
+
