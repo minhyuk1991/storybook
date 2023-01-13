@@ -21,7 +21,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'svelte3', 'prettier', 'import'],
   rules: {
-    'semi':true,
+    'semi':2,
     '@typescript-eslint/semi': ['error'],
     'prettier/prettier': 'error',
     'no-plusplus': 0,
@@ -47,4 +47,4 @@ module.exports = {
   settings: {
     'svelte3/typescript': () => require('typescript'), // pass the TypeScript package to the Svelte plugin
   },
-}
+};
