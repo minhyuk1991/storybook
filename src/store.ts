@@ -1,4 +1,3 @@
-import {writable} from 'svelte/store';
+import { writable } from 'svelte/store';
 
-
-export let dark = writable(false)
+export const dark = writable(false);

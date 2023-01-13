@@ -1,13 +1,13 @@
-import Layout from "../components/layout/Layout.svelte";
+import Layout from '../components/layout/Layout.svelte';
 
 export default {
-  component: Layout,
-  title: "Layout",
+	component: Layout,
+	title: 'Layout'
 };
 
-const Template = (args) => ({
-  Component: Layout,
-  props: args,
+const Template = (args: any) => ({
+	Component: Layout,
+	props: args
 });
 
 export const Default = Template.bind({});

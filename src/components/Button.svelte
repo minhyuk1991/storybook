@@ -1,35 +1,39 @@
 <style>
 .rounded {
-  border-radius: 35px;
+	border-radius: 35px;
 }
 
 .button {
-  border: 3px solid;
-  padding: 10px 20px;
-  background-color: white;
-  outline: none;
+	border: 3px solid;
+	padding: 10px 20px;
+	background-color: white;
+	outline: none;
 }
 </style>
 
-<script>
-import { createEventDispatcher, afterUpdate } from "svelte";
-export let text = "";
+<script lang="ts">
+import { createEventDispatcher, afterUpdate } from 'svelte';
+export let text = '';
 export let rounded = true;
 
 const dispatch = createEventDispatcher();
 
-function onClick(event) {
-  rounded = !rounded;
+function clickHandler(
+	event: MouseEvent & {
+		currentTarget: EventTarget & HTMLButtonElement;
+	}
+) {
+	rounded = !rounded;
 
-  dispatch("click", event);
+	dispatch('click', event);
 }
 
 afterUpdate(() => {
-  dispatch("afterUpdate");
+	dispatch('afterUpdate');
 });
 </script>
 
-<button class="button" class:rounded="{rounded}" on:click="{onClick}">
-  {text}
-  <slot />
+<button class="button" class:rounded="{rounded}" on:click="{clickHandler}">
+	{text}
+	<slot />
 </button>
