@@ -1,16 +1,22 @@
 {
-	"recommendations": ["svelte.svelte-vscode"],
-	"editor.formatOnSave": true,
-	"prettier.requireConfig": true,
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"[svelte]": {
-		"editor.defaultFormatter": "svelte.svelte-vscode"
-	},
-	"editor.quickSuggestions": {
-		"strings": true
-	},
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
-	},
-	"eslint.workingDirectories": [{ "mode": "auto" }]
+  // For ESLint
+  "source.fixAll.eslint": true,
+  // For TSLint
+  "source.fixAll.tslint": true,
+  // For Stylelint
+  "source.fixAll.stylelint": true,
+  "recommendations": ["svelte.svelte-vscode"],
+  "editor.formatOnSave": true,
+  "prettier.requireConfig": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.workingDirectories": [{ "mode": "auto" }]
 }

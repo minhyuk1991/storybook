@@ -21,6 +21,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'svelte3', 'prettier', 'import'],
   rules: {
+    'semi':true,
+    '@typescript-eslint/semi': ['error'],
     'prettier/prettier': 'error',
     'no-plusplus': 0,
     'import/extensions': ['error', { ts: 'never' }],
@@ -28,6 +30,12 @@ module.exports = {
     '@typescript-eslint/no-shadow': ['error'],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     '@typescript-eslint/no-var-requires': 'warn',
+    'prettier/prettier': [
+      'error',
+      {
+          endOfLine: 'auto',
+      },
+  ],
   },
   ignorePatterns: ['build/*', 'node_modules/*'],
   overrides: [
@@ -39,4 +47,4 @@ module.exports = {
   settings: {
     'svelte3/typescript': () => require('typescript'), // pass the TypeScript package to the Svelte plugin
   },
-};
+}
