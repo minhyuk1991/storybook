@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prepare": "husky install",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -17,7 +18,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "sb": "storybook dev -p 6006",
     "build-storybook": "storybook build"
-  },  
+  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "npm lint:fix",
