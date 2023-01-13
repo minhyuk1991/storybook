@@ -3,7 +3,8 @@
   // const values = new Array(500).fill(0).map((item, i) => {
   // 	return { id: i }
   // })
-  const a = 1;
+  const a = 10;
+  const b = 20;
 </script>
 
 <Layout>
