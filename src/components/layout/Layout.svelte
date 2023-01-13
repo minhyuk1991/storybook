@@ -1,11 +1,10 @@
 <script lang="ts">
-import type { EventMouse } from '../../types';
-import DarkModeToggleButton from '../darkModeToggleButton/DarkModeToggleButton.svelte';
-import Sidebar from './sidebar/Sidebar.svelte';
+	import DarkModeToggleButton from '../darkModeToggleButton/DarkModeToggleButton.svelte'
+	import Sidebar from './sidebar/Sidebar.svelte'
 
-export let isOpen: boolean = false;
+	export let isOpen = false
 
-const clickHandler = (e: EventMouse) => (isOpen = !isOpen);
+	const clickHandler = () => (isOpen = !isOpen)
 </script>
 
 <div class="flex min-h-[100vh] w-full items-stretch">

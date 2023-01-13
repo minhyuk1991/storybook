@@ -1,24 +1,21 @@
 <script lang="ts">
-import { each, onMount } from 'svelte/internal';
-import type { EventMouse, TabItem, TabItems } from '../types';
+	import type { EventMouse, TabItem, TabItems } from '../types'
 
-export let tabItems: TabItems;
-export let clickHandlerF = null;
+	export let tabItems: TabItems
 
-let currentItem = tabItems[0];
-onMount(() => {});
+	let currentItem = tabItems[0]
 
-const clickHandler = (e: EventMouse, item: TabItem) => {
-	currentItem = item;
-};
+	const clickHandler = (e: EventMouse, item: TabItem) => {
+		currentItem = item
+	}
 </script>
 
 <ul class="flex w-full gap-[2px]">
 	{#each tabItems as item}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<li
-			on:click="{(e) => {
-				clickHandler(e, item);
+			on:click="{e => {
+				clickHandler(e, item)
 			}}"
 			class="{`flex flex-1 cursor-pointer items-center justify-center border-t-[8px] border-solid bg-white text-black dark:bg-black dark:text-white ${
 				currentItem.name === item.name
