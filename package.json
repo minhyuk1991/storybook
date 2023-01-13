@@ -10,7 +10,7 @@
     "test": "npx jest src",
     "test:watch": "npm run test -- --watch",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "storybook": "storybook dev -p 6006",
+    "sb": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "devDependencies": {
