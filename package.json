@@ -20,7 +20,7 @@
     "build-storybook": "storybook build"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
+    "*.\"{,!(node_modules|public)/**/}*.{js,svelte,ts}\"": [
       "npm lint:fix",
       "prettier --write"
     ]
