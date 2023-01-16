@@ -3,5 +3,7 @@
 
 npx lint-staged --concurrent true
 echo "빠라빠라빰 시작"
+
+npm run test
 npm run lint:fix
 echo "빠라빠라빰 종료"
