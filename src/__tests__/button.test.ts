@@ -1,4 +1,4 @@
-import { sum } from '../aa';
+import { sum } from '../sum';
 import Button from '../components/button/Button.svelte';
 import { render, screen } from '@testing-library/svelte';
 import '@testing-library/jest-dom';
