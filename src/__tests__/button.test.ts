@@ -50,8 +50,8 @@ describe('button ', () => {
       },
     });
     const buttonEl = screen.getByText('testButton');
-    console.log(buttonEl);
+    console.log(buttonEl.style.backgroundColor);
     expect(buttonEl).toBeInTheDocument();
-    expect(buttonEl.style.backgroundColor === '#ffffff').toBe(true);
+    expect(buttonEl.style.backgroundColor === 'rgb(255, 255, 255)').toBe(true);
   });
 });
