@@ -3,18 +3,35 @@ import { render, screen } from '@testing-library/svelte';
 import '@testing-library/jest-dom';
 
 describe('button ', () => {
-  it('button_props_test: size', () => {
+  it('layout dom runder test', () => {
     render(Layout, {
       props: {
         isOpen: false,
       },
     });
-    const layout = screen.queryByRole('main');
-    console.log(layout);
-    // expect(buttonEl).toBeInTheDocument();
-    // expect(buttonEl.classList.contains('sm')).toBe(true);
-    // expect(buttonEl.classList.contains('text-[10px]')).toBe(true);
-    // expect(buttonEl.classList.contains('lg')).toBe(false);
-    // expect(buttonEl.classList.contains('text-[20px]')).toBe(false);
+    const layout = screen.getByTestId('main');
+    expect(layout.classList.contains('main')).toBe(true);
+  });
+
+  it('layout_props_test: open - true', () => {
+    render(Layout, {
+      props: {
+        isOpen: true,
+      },
+    });
+    const layout = screen.getByTestId('main');
+    expect(layout.classList.contains('open')).toBe(true);
+    expect(layout.classList.contains('close')).toBe(false);
+  });
+
+  it('layout_props_test: open - false', () => {
+    render(Layout, {
+      props: {
+        isOpen: false,
+      },
+    });
+    const layout = screen.getByTestId('main');
+    expect(layout.classList.contains('open')).toBe(false);
+    expect(layout.classList.contains('close')).toBe(true);
   });
 });

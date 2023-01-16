@@ -9,8 +9,10 @@
   <Sidebar {clickHandler} {isOpen} />
   <div class={`flex flex-1 overflow-hidden `}>
     <main
-      class={`flex min-h-[calc(100vh-200px-200px)] flex-1 transform flex-col items-stretch  transition-transform duration-1000 ${
-        isOpen ? 'translate-x-[300px]' : ''
+      data-testid="main"
+      id="main"
+      class={`main flex min-h-[calc(100vh-200px-200px)] flex-1 transform flex-col items-stretch  transition-transform duration-1000 ${
+        isOpen ? 'open translate-x-[300px]' : 'close'
       }`}
     >
       <div
