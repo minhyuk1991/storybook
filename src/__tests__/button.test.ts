@@ -18,7 +18,6 @@ describe('button ', () => {
         onClickF: () => {},
       },
     });
-    console.log(testButton);
     const text = testButton.getByText('testButton');
     expect(text).toBeInTheDocument();
   });
@@ -32,7 +31,6 @@ describe('button ', () => {
       },
     });
     const buttonEl = screen.getByText('testButton');
-    console.log(buttonEl);
     expect(buttonEl).toBeInTheDocument();
     expect(buttonEl.classList.contains('sm')).toBe(true);
     expect(buttonEl.classList.contains('text-[10px]')).toBe(true);
@@ -50,7 +48,6 @@ describe('button ', () => {
       },
     });
     const buttonEl = screen.getByText('testButton');
-    console.log(buttonEl.style.backgroundColor);
     expect(buttonEl).toBeInTheDocument();
     expect(buttonEl.style.backgroundColor === 'rgb(255, 255, 255)').toBe(true);
   });
