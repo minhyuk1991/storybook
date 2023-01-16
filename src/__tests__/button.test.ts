@@ -10,19 +10,28 @@ describe('sum ', () => {
 });
 
 describe('button ', () => {
-  it('button text props', () => {
+  it('button_props_test: size ', () => {
     const testButton = render(Button, {
       props: {
         text: 'testButton',
         size: 'sm',
-        onClickF: () => {
-          console.log('aaa');
-        },
+        onClickF: () => {},
       },
     });
     console.log(testButton);
     const text = testButton.getByText('testButton');
     expect(text).toBeInTheDocument();
-    // expect(testButton.getByText('testButton')).toBe(true);
+  });
+  it('button_props_test: text ', () => {
+    const testButton = render(Button, {
+      props: {
+        text: 'testButton',
+        size: 'sm',
+        onClickF: () => {},
+      },
+    });
+    const text = testButton.getByText('testButton');
+    expect(text).toBeInTheDocument();
+    console.log('text', text);
   });
 });
