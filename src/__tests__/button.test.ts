@@ -1,6 +1,6 @@
 import { sum } from '../aa';
 import Button from '../components/button/Button.svelte';
-import { render } from '@testing-library/svelte';
+import { render, screen } from '@testing-library/svelte';
 import '@testing-library/jest-dom';
 
 describe('sum ', () => {
@@ -23,15 +23,17 @@ describe('button ', () => {
     expect(text).toBeInTheDocument();
   });
   it('button_props_test: text ', () => {
-    const testButton = render(Button, {
+    render(Button, {
       props: {
         text: 'testButton',
         size: 'sm',
         onClickF: () => {},
       },
     });
-    const text = testButton.getByText('testButton');
-    expect(text).toBeInTheDocument();
-    console.log('text', text);
+
+    const buttonEl = screen.getByText('testButton');
+    console.log(buttonEl);
+    expect(buttonEl).toBeInTheDocument();
+    expect(buttonEl.classList.contains('sm')).toBe(true);
   });
 });
