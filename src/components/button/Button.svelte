@@ -33,6 +33,6 @@
     class={`${size === 'sm' ? 'text-[10px]' : ''}${
       size === 'lg' ? 'text-[20px]' : ''
     } border-dark-900 border-[1px] border-solid px-2 py-2 text-white`}
-    >{text}<slot /></button
+    >{text}{#if !text}<slot />{/if}</button
   >
 </div>
