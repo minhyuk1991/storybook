@@ -10,7 +10,7 @@ describe('sum ', () => {
 });
 
 describe('button ', () => {
-  it('button_props_test: size ', () => {
+  it('button_props_test: text', () => {
     const testButton = render(Button, {
       props: {
         text: 'testButton',
@@ -22,7 +22,8 @@ describe('button ', () => {
     const text = testButton.getByText('testButton');
     expect(text).toBeInTheDocument();
   });
-  it('button_props_test: text ', () => {
+
+  it('button_props_test: size', () => {
     render(Button, {
       props: {
         text: 'testButton',
@@ -30,10 +31,12 @@ describe('button ', () => {
         onClickF: () => {},
       },
     });
-
     const buttonEl = screen.getByText('testButton');
     console.log(buttonEl);
     expect(buttonEl).toBeInTheDocument();
     expect(buttonEl.classList.contains('sm')).toBe(true);
+    expect(buttonEl.classList.contains('text-[10px]')).toBe(true);
+    expect(buttonEl.classList.contains('lg')).toBe(false);
+    expect(buttonEl.classList.contains('text-[20px]')).toBe(false);
   });
 });
