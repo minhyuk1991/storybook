@@ -1,4 +1,5 @@
 const sveltePreprocess = require('svelte-preprocess');
+// const topLevelAwait = require('vite-plugin-top-level-await');
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|ts|svelte)'],
   addons: [
@@ -14,6 +15,7 @@ module.exports = {
   features: {
     storyStoreV7: true,
   },
+
   docs: {
     autodocs: false,
   },
