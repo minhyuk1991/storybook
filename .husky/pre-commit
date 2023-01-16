@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx lint-staged --concurrent false
+npx lint-staged --concurrent true
 echo "빠라빠라빰 시작"
 npm run lint:fix
 echo "빠라빠라빰 종료"

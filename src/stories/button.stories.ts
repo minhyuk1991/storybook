@@ -3,7 +3,7 @@
 import type { Props } from '../components/button/Button.svelte';
 import Button from '../components/button/Button.svelte';
 
-const aaa = 'aaa';
+const aaa = 'aaaa';
 const argTypes = {
   color: { control: 'color' },
   size: {
