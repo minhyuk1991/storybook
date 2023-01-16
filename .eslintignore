@@ -15,3 +15,4 @@ yarn.lock
 /dist
 /storybook-static
 .eslintrc.cjs
+/src/main.ts

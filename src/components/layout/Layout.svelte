@@ -1,9 +1,7 @@
 <script lang="ts">
   import DarkModeToggleButton from '../darkModeToggleButton/DarkModeToggleButton.svelte';
   import Sidebar from './sidebar/Sidebar.svelte';
-
   export let isOpen = false;
-
   const clickHandler = () => (isOpen = !isOpen);
 </script>
 
