@@ -4,3 +4,10 @@ export type EventMouse = MouseEvent & {
 
 export type TabItem = { name: string; isChecked: boolean };
 export type TabItems = TabItem[];
+
+export type Folder = {
+  name: string;
+  children: Array<Folder>;
+};
+
+export type RootFolder = Folder[];
