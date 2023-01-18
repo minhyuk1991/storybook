@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "prepare": "husky install",
-    "dev": "vite",
+    "dev": "routify -c dev-vite ",
+    "dev-vite": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
+    "@roxi/routify": "^2.18.8",
     "@storybook/addon-actions": "^7.0.0-beta.14",
     "@storybook/addon-essentials": "^7.0.0-beta.14",
     "@storybook/addon-interactions": "^7.0.0-beta.14",
@@ -64,6 +66,7 @@
     "jest-environment-jsdom": "^29.3.1",
     "jest-transform-stub": "^2.0.0",
     "lint-staged": "^13.1.0",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "prettier": "^2.8.2",
     "prettier-plugin-svelte": "^2.9.0",

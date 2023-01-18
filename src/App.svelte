@@ -2,12 +2,11 @@
   import Button from './components/button/Button.svelte';
   import Layout from './components/layout/Layout.svelte';
   import Radio from './components/radio/Radio.svelte';
+  import { Router } from '@roxi/routify';
+  import { routes } from '../.routify/routes';
 </script>
 
-<Layout>
-  <Radio isChecked={false} id="ddd" name="zz" text="ddd" />
-  <!-- <Button>dddd</Button> -->
-</Layout>
+<Router {routes} />
 
 <style>
 </style>
