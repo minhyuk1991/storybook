@@ -8,17 +8,6 @@
   export let size: string = 'sm';
   export let text: string;
   export let onClickF: Function;
-
-  //   let fontSize = '10px';
-  //   let fontWeight = 'bold';
-  //   let lineHeight = 1.5;
-
-  //   if (size === 'sm') {
-  //     fontSize = '10px';
-  //   }
-  //   if (size === 'lg') {
-  //     fontSize = '16px';
-  //   }
 </script>
 
 <div>

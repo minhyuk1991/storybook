@@ -1,0 +1,56 @@
+.w-full {
+  width: 100%;
+}
+.w-1200px {
+  width: 1200px;
+}
+
+.m0-auto {
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.gap-10px {
+  gap: 10px;
+}
+
+.items-conter {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.list-style-none {
+  list-style: none;
+}
+
+.w-25per {
+  width: 25%;
+}
+
+.min-h-400px {
+  min-height: 400px;
+}
+.border-1px {
+  border-width: 1px;
+}
+
+.border-solid {
+  border-style: solid;
+}
+.border-red {
+  border-color: red;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.p-10px {
+  padding: 10px;
+}
