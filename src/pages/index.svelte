@@ -2,4 +2,6 @@
   import Layout from '../components/layout/Layout.svelte';
 </script>
 
-<Layout>aa</Layout>
+<Layout>
+  <p class="text-[400px]">Main page</p>
+</Layout>
