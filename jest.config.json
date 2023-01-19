@@ -1,7 +1,13 @@
 {
   "transform": {
     "^.+\\.js$": "babel-jest",
-    "^.+\\.ts$": "ts-jest",
+    "^.+\\.ts$": [
+      "ts-jest",
+      {
+        "tsconfig": "tsconfig.json",
+        "isolatedModules": false
+      }
+    ],
     "^.+\\.svelte$": ["svelte-jester", { "preprocess": true }],
     ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
   },
