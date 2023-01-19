@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky install",
-    "dev": "routify -c dev-vite ",
+    "dev": "routify -c dev-vite test:watch",
     "dev-vite": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -14,7 +14,7 @@
     "fix": "npx eslint --fix \"{,!(node_modules|public)/**/}*.{js,svelte,ts}\"",
     "format": "npx prettier --write \"{,!(node_modules|public)/**/}*.{js,svelte,ts}\"",
     "lint:fix": "eslint --fix \"{,!(node_modules|public)/**/}*.{js,svelte,ts}\"",
-    "test": "npx jest src",
+    "test": "npx jest --onlyChanged src",
     "test:watch": "npm run test -- --watch",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "sb": "storybook dev -p 6006",
