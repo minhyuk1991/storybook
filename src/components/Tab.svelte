@@ -13,6 +13,7 @@
 <ul class="flex w-full gap-[2px]">
   {#each tabItems as item}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!--  -->
     <li
       on:click={(e) => {
         clickHandler(e, item);
