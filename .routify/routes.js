@@ -1,11 +1,11 @@
 
 /**
  * @roxi/routify 2.18.8
- * File generated Thu Jan 19 2023 09:43:57 GMT+0900 (대한민국 표준시)
+ * File generated Fri Jan 20 2023 08:31:24 GMT+0900 (대한민국 표준시)
  */
 
 export const __version = "2.18.8"
-export const __timestamp = "2023-01-19T00:43:57.238Z"
+export const __timestamp = "2023-01-19T23:31:24.151Z"
 
 //buildRoutes
 import { buildClientTree } from "@roxi/routify/runtime/buildRoutes"
@@ -24,6 +24,31 @@ export const _tree = {
   "ownMeta": {},
   "absolutePath": "src/pages",
   "children": [
+    {
+      "isFile": true,
+      "isDir": false,
+      "file": "aaa.svelte",
+      "filepath": "/aaa.svelte",
+      "name": "aaa",
+      "ext": "svelte",
+      "badExt": false,
+      "absolutePath": "C:/Users/LG/Downloads/storybook-svelte-csf-vite-example-main/storybook-svelte-csf-vite-example-main/src/pages/aaa.svelte",
+      "importPath": "../src/pages/aaa.svelte",
+      "isLayout": false,
+      "isReset": false,
+      "isIndex": false,
+      "isFallback": false,
+      "isPage": true,
+      "ownMeta": {},
+      "meta": {
+        "recursive": true,
+        "preload": false,
+        "prerender": true
+      },
+      "path": "/aaa",
+      "id": "_aaa",
+      "component": () => import('../src/pages/aaa.svelte').then(m => m.default)
+    },
     {
       "isFile": true,
       "isDir": false,

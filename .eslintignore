@@ -16,3 +16,4 @@ yarn.lock
 /storybook-static
 .eslintrc.cjs
 /src/main.ts
+/.routify
