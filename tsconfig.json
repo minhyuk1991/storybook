@@ -21,6 +21,7 @@
     "sourceMap": true,
     "strict": true
   },
+  "exclude": [],
   "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
