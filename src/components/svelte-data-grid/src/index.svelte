@@ -6,12 +6,7 @@
   const MIN_COLUMN_SIZE = 30;
   let wrapper: null | HTMLDivElement;
   let tableSpace: null | HTMLDivElement;
-  /**
-   * Computes the 'left' value for a grid-cell.
-   * @param {Number} i The cell index
-   * @param {Array} columnWidths The array of column widths in order
-   * @returns {Number}
-   */
+
   function getCellLeft({
     i,
     columnWidths,
@@ -39,14 +34,7 @@
     }
     return left;
   }
-  /**
-   * Gets the closest column index given an x offset
-   * @param {Number} x The x offset
-   * @param {Array} columnWidths Array of column widths
-   * @param {Array} __affixedColumnIndices Array of column indices that have been affixed
-   * @param {Number} __scrollLeft The scrollLeft value of the scrollable container
-   * @returns {Number}
-   */
+
   function getClosestIndex(
     x: number,
     columnWidths: number[],
@@ -165,23 +153,7 @@
   onMount(() => {
     editHistory = new EditHistory(rows);
   });
-  /**
-   * TODO handle svelte 2's onupdate
-   **/
-  // onupdate(({ changed, current, previous }) => {
-  //   // Record the change in onupdate to allow the DOM to change before doing the deep diff
-  //   if (changed.rows && previous && previous.rows && previous.rows.length > 0) {
-  //     if (!current.skipRecord) {
-  //       this.editHistory.recordChange(current.rows);
-  //     } else {
-  //       this.set({ skipRecord: false });
-  //     }
-  //   }
-  // });
-  /**
-   * This action creates a half-opaque 'ghost' column header to visualize dragging a column into a different position
-   * This is put in an action because ultimately the ghost image has nothing to do with the actual column index move
-   */
+
   function dragCopy(node: HTMLDivElement, enabled: boolean) {
     console.log(node);
     let copy: HTMLDivElement | null = null;
@@ -283,10 +255,7 @@
       }
     }
   }
-  /**
-   * Event handler for window's mousemove event
-   * @param {MouseEvent} event The MouseEvent object
-   */
+
   function onMouseMove(
     event: MouseEvent & {
       currentTarget: EventTarget & Window;
@@ -782,6 +751,22 @@
     <div class="row-action-line" style="top: {__rowActionLineTop - 2}px;" />
   {/if}
 
+  <!-- <Header
+    {rowHeight}
+    {__scrollLeft}
+    {gridSpaceWidth}
+    {columns}
+    {__affixedColumnIndices}
+    {onColumnDragStart}
+    {getCellZIndex}
+    {getCellLeft}
+    {columnWidths}
+    {dragCopy}
+    {onColumnResizeStart}
+    {allowColumnReordering}
+    {allowResizeFromTableHeaders}
+    {__columnHeaderResizeCaptureWidth}
+  /> -->
   <div class="grid-headers" style="height: {rowHeight}px;" data-rolw="rowgroup">
     <!-- We link up the horizontal scrolling of the inner grid view with the sticky header row by making the
         -- header row width 100% of the container, and using position:absolute along with 'left' to
@@ -813,7 +798,10 @@
           {#if column.headerComponent}
             <svelte:component this={column.headerComponent} {column} />
           {:else}
-            <div class="cell-default">{column.display || ''}</div>
+            <div class="cell-default">
+              {column.display || ''}
+              <button>dasdsad</button>
+            </div>
           {/if}
         </div>
         {#if allowResizeFromTableHeaders && !column.disallowResize}
