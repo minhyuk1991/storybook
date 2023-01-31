@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, afterUpdate } from 'svelte';
+  import { onMount, afterUpdate, tick } from 'svelte';
   import EditHistory from './edit-history';
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
@@ -126,6 +126,7 @@
         options?: any[];
       }[] = []; // Array of column definitions: { display: '', dataName: ''}, where display is what the display value is and dataName is what the key on the row object is
   export let rowHeight = 24; // Row height in pixels
+  export let rowHeightHeader = 24; // Row height in pixels
   export let allowResizeFromTableCells = false; // Allow the user to click on table cell borders to resize columns
   export let allowResizeFromTableHeaders = true; // Allow the user to clikc on table header borders to resize columns
   export let allowColumnReordering = true; // Allow the user to drag column headers to reorder columns
@@ -603,7 +604,21 @@
   /**
    * Sets updated scroll values when the scrollable area is scrolled
    */
+
+  const debounce = (callback: Function, delay: number) => {
+    let timer: number;
+    return () => {
+      if (timer) clearTimeout(timer as number);
+      timer = setTimeout(callback, delay);
+    };
+  };
+
+  let isScrolling = false;
   function onScroll() {
+    isScrolling = true;
+    debounce(() => {
+      isScrolling = false;
+    }, 300)();
     if (!tableSpace) {
       throw new Error('tableSpace is null');
     }
@@ -737,7 +752,7 @@
 />
 <div
   class="data-grid-wrapper {__resizing || __columnDragging ? 'resizing' : ''}"
-  style="padding-top: {rowHeight}px;"
+  style="padding-top: {rowHeightHeader}px;"
   bind:this={wrapper}
   role="table"
 >
@@ -767,13 +782,17 @@
     {allowResizeFromTableHeaders}
     {__columnHeaderResizeCaptureWidth}
   /> -->
-  <div class="grid-headers" style="height: {rowHeight}px;" data-rolw="rowgroup">
+  <div
+    class="grid-headers"
+    style="height: {rowHeightHeader}px;"
+    data-rolw="rowgroup"
+  >
     <!-- We link up the horizontal scrolling of the inner grid view with the sticky header row by making the
         -- header row width 100% of the container, and using position:absolute along with 'left' to
         -- control the 'scroll' of the header row -->
     <div
       class="grid-header-row"
-      style="left: -{__scrollLeft}px; height: {rowHeight}px; width: {gridSpaceWidth}px;"
+      style="left: -{__scrollLeft}px; height: {rowHeightHeader}px; width: {gridSpaceWidth}px;"
       role="row"
     >
       {#each columns as column, i (i)}
@@ -790,7 +809,7 @@
             __scrollLeft,
           })}px; width: {columnWidths[
             i
-          ]}px; height: {rowHeight}px; line-height: {rowHeight}px;"
+          ]}px; height: {rowHeightHeader}px; line-height: {rowHeightHeader}px;"
           title={column.display || ''}
           use:dragCopy={allowColumnReordering}
           role="columnheader"
@@ -800,7 +819,6 @@
           {:else}
             <div class="cell-default">
               {column.display || ''}
-              <button>dasdsad</button>
             </div>
           {/if}
         </div>
@@ -824,7 +842,7 @@
   </div>
 
   <div
-    class="grid-inner"
+    class={`grid-inner ${isScrolling ? 'scrolling' : ''}`}
     bind:this={tableSpace}
     bind:offsetHeight={__innerOffsetHeight}
     on:scroll={onScroll}
@@ -1039,5 +1057,23 @@
   }
   .grid-cell:not(:last-child) {
     border-right: 1px solid #666;
+  }
+
+  .grid-headers {
+    text-align: center;
+    border-radius: 24px 25px 0 0;
+    overflow: hidden;
+  }
+  .grid-header-row > .grid-cell {
+    /* padding: 16px; */
+  }
+  .grid-header-row > * .cell-default {
+    background-color: red;
+  }
+  .grid-header-row .grid-cell:first-child {
+    border-radius: 25px 0 0 0;
+  }
+  .grid-header-row .grid-cell:nth-last-child(2) > div {
+    border-radius: 0 25px 0 0;
   }
 </style>

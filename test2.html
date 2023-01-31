@@ -1,309 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./test2.css" />
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+      .axis {
+        font: 10px sans-serif;
+      }
+
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+      }
+
+      .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+      }
+    </style>
   </head>
+
   <body>
-    <div class="">
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per min-h-400px border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-      <ul class="w-1200px m0-auto gap-10px flex items-center justify-center">
-        <li
-          class="list-style-none w-25per border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item1</div>
-        </li>
-        <li
-          class="list-style-none w-25per border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item2</div>
-        </li>
-        <li
-          class="list-style-none w-25per border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item3</div>
-        </li>
-        <li
-          class="list-style-none w-25per border-1px border-red flex flex-wrap items-center justify-center border-solid"
-        >
-          <div class="p-10px flex w-full justify-center">header</div>
-          <div class="p-10px flex w-full justify-center">item4</div>
-        </li>
-      </ul>
-    </div>
+    <svg width="960" height="500"></svg>
+    <script>
+      var svg = d3.select('svg'),
+        margin = {
+          top: 20,
+          right: 20,
+          bottom: 30,
+          left: 50,
+        },
+        width = +svg.attr('width') - margin.left - margin.right,
+        height = +svg.attr('height') - margin.top - margin.bottom,
+        g = svg
+          .append('g')
+          .attr(
+            'transform',
+            'translate(' + margin.left + ',' + margin.top + ')'
+          );
+
+      var parseTime = d3.timeParse('%H:%M:%S');
+
+      var x = d3.scaleTime().rangeRound([0, width]);
+
+      var y = d3.scaleLinear().rangeRound([height, 0]);
+
+      var line = d3
+        .line()
+        .x(function (d) {
+          return x(d.time);
+        })
+        .y(function (d) {
+          return y(d.value);
+        });
+
+      var data = [];
+      setInterval(function () {
+        var now = new Date();
+        data.push({
+          time: now,
+          value: Math.random() * 100,
+        });
+
+        // keep only 1 minute of data
+        data = data.filter(function (d) {
+          return d.time > new Date(now.getTime() - 60 * 1000);
+        });
+
+        x.domain(
+          d3.extent(data, function (d) {
+            return d.time;
+          })
+        );
+        y.domain(
+          d3.extent(data, function (d) {
+            return d.value;
+          })
+        );
+
+        g.selectAll('.line').remove();
+        g.append('path').datum(data).attr('class', 'line').attr('d', line);
+
+        g.select('.axis--x').remove();
+        g.append('g')
+          .attr('class', 'axis axis--x')
+          .attr('transform', 'translate(0,' + height + ')')
+          .call(d3.axisBottom(x).ticks(5));
+
+        g.select('.axis--y').remove();
+        g.append('g')
+          .attr('class', 'axis axis--y')
+          .call(d3.axisLeft(y).ticks(10));
+      }, 2000);
+    </script>
   </body>
 </html>
-
-<!-- Recalculate Style 0.23ms 
-Layout 0.25ms 
-Pre-Paint 65 us
-Paint 0.14ms -->
-
-<!-- tailwindcss -->
-<!-- Parse StyleSheet 0.19ms
-Recalculate Style 0.66ms Layout 1.34ms Pre-Paint 0.43 ms Paint 1.29ms  -->

@@ -11,3 +11,19 @@ export type Folder = {
 };
 
 export type RootFolder = Folder[];
+
+export type MockData = {
+  hostName: string;
+  top: number;
+  cpu: number;
+  mem: number;
+  swap: number;
+  disk: number;
+  diskName: string;
+};
+
+export type MockDataColumn = {
+  width: number;
+  dataName: string;
+  display: string;
+};

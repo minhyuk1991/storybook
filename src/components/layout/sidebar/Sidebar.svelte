@@ -1,9 +1,15 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte';
   import type { EventMouse, RootFolder } from '../../../types';
   import Folder from '../../folder/Folder.svelte';
   import Tab from '../../Tab.svelte';
+
   export let isOpen: boolean;
   export let clickHandler: (e: EventMouse) => void;
+
+  $: {
+    () => {}, [isOpen];
+  }
 
   const testData = [
     { name: 'a1', isChecked: false },
@@ -68,6 +74,9 @@
       },
     ],
   };
+
+  onMount(() => {});
+  onDestroy(() => {});
 </script>
 
 <header
