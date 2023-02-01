@@ -37,6 +37,7 @@ module.exports = {
           endOfLine: 'auto',
       },
   ],
+  
   },
   ignorePatterns: ['build/*', 'node_modules/*'],
   overrides: [
@@ -49,3 +50,23 @@ module.exports = {
     'svelte3/typescript': () => require('typescript'), // pass the TypeScript package to the Svelte plugin
   },
 };
+// module.exports = {
+// 	root: true,
+// 	parser: '@typescript-eslint/parser',
+// 	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'eslint:recommended', 'plugin:prettier/recommended'],
+// 	plugins: ['svelte3', '@typescript-eslint','prettier'],
+// 	ignorePatterns: ['*.cjs'],
+// 	overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
+// 	settings: {
+// 		'svelte3/typescript': () => require('typescript')
+// 	},
+// 	parserOptions: {
+// 		sourceType: 'module',
+// 		ecmaVersion: 2020
+// 	},
+// 	env: {
+// 		browser: true,
+// 		es2017: true,
+// 		node: true
+// 	}
+// };

@@ -4,8 +4,8 @@
 </script>
 
 <script lang="ts">
-  export let color: string = '#fff';
-  export let size: string = 'sm';
+  export let color = '#fff';
+  export let size = 'sm';
   export let text: string;
   export let onClickF: Function;
 </script>

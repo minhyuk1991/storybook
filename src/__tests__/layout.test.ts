@@ -6,8 +6,8 @@ describe('button ', () => {
   it('layout dom render test', () => {
     render(Layout, {
       props: {
-        isOpen: false,
-      },
+        isOpen: false
+      }
     });
     const layout = screen.getByTestId('main');
     expect(layout.classList.contains('main')).toBe(true);
@@ -16,8 +16,8 @@ describe('button ', () => {
   it('[layout_props_test] open - true', () => {
     render(Layout, {
       props: {
-        isOpen: true,
-      },
+        isOpen: true
+      }
     });
     const layout = screen.getByTestId('main');
     expect(layout.classList.contains('open')).toBe(true);
@@ -27,8 +27,8 @@ describe('button ', () => {
   it('[layout_props_test]: open - false', () => {
     render(Layout, {
       props: {
-        isOpen: false,
-      },
+        isOpen: false
+      }
     });
     const layout = screen.getByTestId('main');
     expect(layout.classList.contains('open')).toBe(false);

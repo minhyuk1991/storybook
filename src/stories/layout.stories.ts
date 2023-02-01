@@ -5,8 +5,8 @@ import Layout from '../components/layout/Layout.svelte';
 const argTypes = {
   isOpen: {
     control: 'select',
-    options: [true, false],
-  },
+    options: [true, false]
+  }
 };
 export default {
   /* 👇 The title prop is optional.
@@ -16,7 +16,7 @@ export default {
   title: 'Layout',
   component: Layout,
   argTypes,
-  docs: { page: false },
+  docs: { page: false }
 };
 
 /*
@@ -27,9 +27,9 @@ export default {
 export const Default = {
   render: (args: Props) => ({
     Component: Layout,
-    props: args,
+    props: args
   }),
   args: {
-    isOpen: false,
-  },
+    isOpen: false
+  }
 };

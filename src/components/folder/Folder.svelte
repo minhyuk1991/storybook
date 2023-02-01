@@ -13,11 +13,7 @@
   }
 </script>
 
-<li
-  style="padding-left: {indent}px"
-  on:click={toggleOpen}
-  class="flex items-center text-white"
->
+<li style="padding-left: {indent}px" on:click={toggleOpen} class="flex items-center text-white">
   {#if children.length > 0}
     <TogglePlusMinus {open} />
     {open ? '(open)' : '(closed)'}

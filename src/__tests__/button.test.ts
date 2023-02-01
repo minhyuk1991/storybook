@@ -15,8 +15,8 @@ describe('button ', () => {
       props: {
         text: 'testButton',
         size: 'sm',
-        onClickF: () => {},
-      },
+        onClickF: () => {}
+      }
     });
     const text = testButton.getByText('testButton');
     expect(text).toBeInTheDocument();
@@ -27,8 +27,8 @@ describe('button ', () => {
       props: {
         text: 'testButton',
         size: 'sm',
-        onClickF: () => {},
-      },
+        onClickF: () => {}
+      }
     });
     const buttonEl = screen.getByText('testButton');
     expect(buttonEl).toBeInTheDocument();
@@ -44,8 +44,8 @@ describe('button ', () => {
         text: 'testButton',
         size: 'sm',
         color: '#ffffff',
-        onClickF: () => {},
-      },
+        onClickF: () => {}
+      }
     });
     const buttonEl = screen.getByText('testButton');
     expect(buttonEl).toBeInTheDocument();

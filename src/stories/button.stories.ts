@@ -1,15 +1,14 @@
 // Button.stories.js
-
 import type { Props } from '../components/button/Button.svelte';
 import Button from '../components/button/Button.svelte';
 const argTypes = {
   color: { control: 'color' },
   size: {
     control: 'select',
-    options: ['sm', 'lg'],
+    options: ['sm', 'lg']
   },
   onClickF: { control: 'function' },
-  text: { control: 'text' },
+  text: { control: 'text' }
 };
 export default {
   /* 👇 The title prop is optional.
@@ -19,7 +18,7 @@ export default {
   title: 'Button',
   component: Button,
   argTypes,
-  docs: { page: false },
+  docs: { page: false }
 };
 
 /*
@@ -30,11 +29,11 @@ export default {
 export const Default = {
   render: (args: Props) => ({
     Component: Button,
-    props: args,
+    props: args
   }),
   args: {
     color: 'red',
     size: 'sm',
-    text: 'button',
-  },
+    text: 'button'
+  }
 };

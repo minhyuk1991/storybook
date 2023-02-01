@@ -18,12 +18,12 @@ export default defineConfig({
     //   promiseImportName: (i) => `__tla_${i}`,
     // }),
     svelte({
-      preprocess: [sveltePreprocess({ typescript: true })],
+      preprocess: [sveltePreprocess({ typescript: true })]
     }),
-    createHtmlPlugin(),
+    createHtmlPlugin()
   ],
   base: './',
   build: {
-    target: 'exnext',
-  },
+    target: 'exnext'
+  }
 });

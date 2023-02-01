@@ -1,5 +1,6 @@
 <script lang="ts">
   export let open = false;
+  // let count = 0;
 </script>
 
 <div
