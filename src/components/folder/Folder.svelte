@@ -7,6 +7,7 @@
   export let indent = 0;
 
   const a = 10;
+  const b = 20;
   let open = true;
 
   function toggleOpen() {

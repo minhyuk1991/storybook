@@ -20,7 +20,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'svelte3', 'prettier', 'import'],
+  plugins: ['svelte3', '@typescript-eslint', 'eslint-plugin-tsdoc', 'prettier', 'import'],
 	rules: {
 		semi: ['error', 'always'],
 		'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
