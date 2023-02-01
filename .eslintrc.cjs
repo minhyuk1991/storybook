@@ -21,24 +21,24 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'svelte3', 'prettier', 'import'],
-  rules: {
-    'semi':2,
-    '@typescript-eslint/semi': ['error'],
-    'prettier/prettier': 'error',
-    'no-plusplus': 0,
-    'import/extensions': ['error', { ts: 'never' }],
-    'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': ['error'],
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    '@typescript-eslint/no-var-requires': 'warn',
-    '@typescript-eslint/no-unused-vars': ['error'],
-    'prettier/prettier': [
-      'error',
-      {
-          endOfLine: 'auto',
-      },
-  ],
-  },
+	rules: {
+		semi: ['error', 'always'],
+		'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
+		'tsdoc/syntax': 'warn',
+		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+		'import/prefer-default-export': 2,
+		'import/no-mutable-exports': 0,
+		'no-labels': 0,
+		'no-restricted-syntax': 0,
+		'@typescript-eslint/no-var-requires': 'warn',
+		'@typescript-eslint/no-unused-vars': [
+			2,
+			{
+				args: 'none',
+			},
+		],
+		'no-unused-vars': 'warn',
+	},
   ignorePatterns: ['build/*', 'node_modules/*'],
 	overrides: [
 		{
