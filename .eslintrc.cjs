@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     es2021: true,
@@ -7,12 +8,12 @@ module.exports = {
   extends: [
     'airbnb-typescript/base',
     'plugin:@typescript-eslint/recommended',
+		'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:eslint-comments/recommended',
     'plugin:import/recommended',
     'plugin:promise/recommended',
     'prettier',
   ],
-  parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.eslint.json'],
@@ -39,13 +40,21 @@ module.exports = {
   ],
   },
   ignorePatterns: ['build/*', 'node_modules/*'],
-  overrides: [
-    {
-      files: ['**/*.svelte'],
-      processor: 'svelte3/svelte3',
-    },
-  ],
+	overrides: [
+		{
+			files: ['**/*.svelte'],
+			processor: 'svelte3/svelte3',
+		},
+	],
   settings: {
-    'svelte3/typescript': () => require('typescript'), // pass the TypeScript package to the Svelte plugin
-  },
+    'svelte3/typescript': () => require('typescript'), 
+		'svelte3/ignore-styles': () => true,
+		'import/extensions': ['.js', '.ts'],
+		'import/resolver': {
+			node: {
+				extensions: ['.js', '.ts'],
+			},
+			typescript: {},
+		},
+	},
 };

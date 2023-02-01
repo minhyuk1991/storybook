@@ -6,6 +6,7 @@
   export let children: RootFolder = [];
   export let indent = 0;
 
+  const a = 10;
   let open = true;
 
   function toggleOpen() {
@@ -16,6 +17,7 @@
 <li
   style="padding-left: {indent}px"
   on:click={toggleOpen}
+  on:keypress={toggleOpen}
   class="flex items-center text-white"
 >
   {#if children.length > 0}
