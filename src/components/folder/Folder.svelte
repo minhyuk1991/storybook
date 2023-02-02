@@ -1,10 +1,3 @@
-<style>
-	h3 {
-		cursor: pointer;
-		user-select: none;
-	}
-</style>
-
 <script lang="ts">
 	import type { RootFolder } from '../../types';
 	import TogglePlusMinus from '../togglePlusMinus/TogglePlusMinus.svelte';

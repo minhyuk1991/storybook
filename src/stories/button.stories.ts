@@ -1,25 +1,22 @@
-// Button.stories.js
-
-import type { Props } from '../components/button/Button.svelte';
 import Button from '../components/button/Button.svelte';
 const argTypes = {
-  color: { control: 'color' },
-  size: {
-    control: 'select',
-    options: ['sm', 'lg'],
-  },
-  onClickF: { control: 'function' },
-  text: { control: 'text' },
+	color: { control: 'color' },
+	size: {
+		control: 'select',
+		options: ['sm', 'lg'],
+	},
+	onClickF: { control: 'function' },
+	text: { control: 'text' },
 };
 export default {
-  /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/7.0/svelte/configure/overview#configure-story-loading
-   * to learn how to generate automatic titles
-   */
-  title: 'Button',
-  component: Button,
-  argTypes,
-  docs: { page: false },
+	/* 👇 The title prop is optional.
+	 * See https://storybook.js.org/docs/7.0/svelte/configure/overview#configure-story-loading
+	 * to learn how to generate automatic titles
+	 */
+	title: 'Button',
+	component: Button,
+	argTypes,
+	docs: { page: false },
 };
 
 /*
@@ -28,13 +25,13 @@ export default {
  * to learn how to use render functions.
  */
 export const Default = {
-  render: (args: Props) => ({
-    Component: Button,
-    props: args,
-  }),
-  args: {
-    color: 'red',
-    size: 'sm',
-    text: 'button',
-  },
+	render: (args: unknown) => ({
+		Component: Button,
+		props: args,
+	}),
+	args: {
+		color: 'red',
+		size: 'sm',
+		text: 'button',
+	},
 };
