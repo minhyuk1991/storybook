@@ -27,7 +27,7 @@ module.exports = {
 		'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
 		'tsdoc/syntax': 'warn',
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-		'import/prefer-default-export': 2,
+		'import/prefer-default-export': 0,
 		'import/no-mutable-exports': 0,
 		'no-labels': 0,
 		'no-restricted-syntax': 0,
