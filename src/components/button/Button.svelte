@@ -14,7 +14,6 @@
 	<button
 		on:click="{() => {
 			if (onClickF) {
-				console.log('button click');
 				onClickF();
 			}
 		}}"

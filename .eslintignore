@@ -16,3 +16,5 @@ yarn.lock
 /storybook-static
 /src/main.ts
 /.routify
+.eslintrc.cjs
+vite.config.ts

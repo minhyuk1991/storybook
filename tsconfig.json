@@ -69,6 +69,8 @@
 		".vercel_build_output/*",
 		"functions/*",
 		"static/*",
-		"scripts/*"
+		"scripts/*",
+		"storybook-static/*",
+		"vite.config.ts"
 	]
 }

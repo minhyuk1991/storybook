@@ -15,11 +15,11 @@ module.exports = {
     'prettier',
   ],
 	parserOptions: {
+    project: 'tsconfig.json',
 		tsconfigRootDir: __dirname,
 		extraFileExtensions: ['.svelte'],
 		sourceType: 'module',
 		ecmaVersion: 2020,
-    project: 'tsconfig.json',
 	},
   plugins: ['svelte3', '@typescript-eslint', 'eslint-plugin-tsdoc', 'prettier', 'import'],
 	rules: {
