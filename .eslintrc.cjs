@@ -14,12 +14,13 @@ module.exports = {
     'plugin:promise/recommended',
     'prettier',
   ],
-  parserOptions: {
-    tsconfigRootDir: __dirname,
-    project: ['./tsconfig.eslint.json'],
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
+	parserOptions: {
+		tsconfigRootDir: __dirname,
+		extraFileExtensions: ['.svelte'],
+		sourceType: 'module',
+		ecmaVersion: 2020,
+    project: 'tsconfig.json',
+	},
   plugins: ['svelte3', '@typescript-eslint', 'eslint-plugin-tsdoc', 'prettier', 'import'],
 	rules: {
 		semi: ['error', 'always'],
@@ -39,7 +40,7 @@ module.exports = {
 		],
 		'no-unused-vars': 'warn',
 	},
-  ignorePatterns: ['build/*', 'node_modules/*'],
+  ignorePatterns: ['build/*', 'node_modules/*','.eslintrc.cjs'],
 	overrides: [
 		{
 			files: ['**/*.svelte'],
