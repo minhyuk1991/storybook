@@ -18,3 +18,5 @@ yarn.lock
 /.routify
 .eslintrc.cjs
 vite.config.ts
+
+/src/components/svelte-data-grid
