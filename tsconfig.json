@@ -28,24 +28,7 @@
 		"checkJs": true,
 		"types": ["node", "node-fetch", "jest"],
 		"paths": {
-			// "$lib/*": ["src/lib/*"],
-			// "$stores": ["src/stores/index.ts"],
-			// "$stores/*": ["src/stores/*"],
-			// "$core": ["src/lib/core/index.ts"],
-			// "$core/*": ["src/lib/core/*"],
-			// "$utils": ["src/lib/utils/index.ts"],
-			// "$utils/*": ["src/lib/utils/*"],
-			// "$shared": ["src/lib/shared/index.ts"],
-			// "$shared/*": ["src/lib/shared/*"],
-			// "$components": ["src/lib/shared/components/index.ts"],
-			// "$components/*": ["src/lib/shared/components/*"],
-			// "$ui": ["src/lib/shared/ui/index.ts"],
-			// "$ui/*": ["src/lib/shared/ui/*"],
-			// "$models": ["src/lib/models/index.ts"],
-			// "$models/*": ["src/lib/models/*"],
-			// "$data": ["src/lib/data/index.ts"],
-			// "$data/*": ["src/lib/data/*"],
-			// "$environment/*": ["src/environments/*"]
+			"@/*": ["src/*"]
 		}
 	},
 	"include": [

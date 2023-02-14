@@ -28,7 +28,7 @@ module.exports = {
 		ecmaVersion: 2020,
 	},
 	//plugins: [ ... ] - 적용할 플러그인 목록입니다. svelte3, @typescript-eslint, eslint-plugin-tsdoc, prettier, import 플러그인이 적용됩니다.
-  plugins: ['svelte3', '@typescript-eslint', 'eslint-plugin-tsdoc', 'prettier', 'import'],
+  plugins: ['svelte3', '@typescript-eslint', 'eslint-plugin-tsdoc', 'prettier', 'import',],
   // 적용할 규칙 목록입니다. 규칙으로는 semi, no-console, tsdoc/syntax, import/no-extraneous-dependencies, import/prefer-default-export, import/no-mutable-exports, no-labels, no-restricted-syntax, @typescript-eslint/no-var-requires, @typescript-eslint/no-unused-vars, no-unused-vars, @typescript-eslint/no-infer
 	rules: {
 		semi: ['error', 'always'],
@@ -62,7 +62,8 @@ module.exports = {
 		'import/extensions': ['.js', '.ts'],
 		'import/resolver': {
 			node: {
-				extensions: ['.js', '.ts'],
+				extensions: ['.js', '.ts', '.svelte'],
+				moduleDirectory: ['node_modules', 'src/'],
 			},
 			typescript: {},
 		},

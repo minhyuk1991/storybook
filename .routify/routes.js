@@ -1,11 +1,11 @@
 
 /**
  * @roxi/routify 2.18.8
- * File generated Thu Feb 09 2023 15:54:28 GMT+0900 (대한민국 표준시)
+ * File generated Tue Feb 14 2023 11:14:56 GMT+0900 (대한민국 표준시)
  */
 
 export const __version = "2.18.8"
-export const __timestamp = "2023-02-09T06:54:28.338Z"
+export const __timestamp = "2023-02-14T02:14:56.540Z"
 
 //buildRoutes
 import { buildClientTree } from "@roxi/routify/runtime/buildRoutes"
@@ -122,6 +122,56 @@ export const _tree = {
         "prerender": true
       },
       "path": "/test"
+    },
+    {
+      "isFile": true,
+      "isDir": false,
+      "file": "test_1.svelte",
+      "filepath": "/test_1.svelte",
+      "name": "test_1",
+      "ext": "svelte",
+      "badExt": false,
+      "absolutePath": "C:/Users/LG/Downloads/storybook-svelte-csf-vite-example-main/storybook-svelte-csf-vite-example-main/src/pages/test_1.svelte",
+      "importPath": "../src/pages/test_1.svelte",
+      "isLayout": false,
+      "isReset": false,
+      "isIndex": false,
+      "isFallback": false,
+      "isPage": true,
+      "ownMeta": {},
+      "meta": {
+        "recursive": true,
+        "preload": false,
+        "prerender": true
+      },
+      "path": "/test_1",
+      "id": "_test_1",
+      "component": () => import('../src/pages/test_1.svelte').then(m => m.default)
+    },
+    {
+      "isFile": true,
+      "isDir": false,
+      "file": "test_2.svelte",
+      "filepath": "/test_2.svelte",
+      "name": "test_2",
+      "ext": "svelte",
+      "badExt": false,
+      "absolutePath": "C:/Users/LG/Downloads/storybook-svelte-csf-vite-example-main/storybook-svelte-csf-vite-example-main/src/pages/test_2.svelte",
+      "importPath": "../src/pages/test_2.svelte",
+      "isLayout": false,
+      "isReset": false,
+      "isIndex": false,
+      "isFallback": false,
+      "isPage": true,
+      "ownMeta": {},
+      "meta": {
+        "recursive": true,
+        "preload": false,
+        "prerender": true
+      },
+      "path": "/test_2",
+      "id": "_test_2",
+      "component": () => import('../src/pages/test_2.svelte').then(m => m.default)
     }
   ],
   "isLayout": false,
