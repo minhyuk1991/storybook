@@ -1,8 +1,8 @@
 <script lang="ts">
     import Layout from '../components/layout/Layout.svelte';
-    import DataGrid from './../components/svelte-data-grid/src/index.svelte';
-    import LineChartCell from './../components/svelte-data-grid/src/lineChart-cell.svelte';
-    import PercentageChartCell from './../components/svelte-data-grid/src/percentageChart-cell.svelte';
+    import DataGrid from '../components/svelte-data-grid/src/index.svelte';
+    import LineChartCell from '../components/svelte-data-grid/src/lineChart-cell.svelte';
+    import PercentageChartCell from '../components/svelte-data-grid/src/percentageChart-cell.svelte';
 
     import { createMockDataList } from '../mockData';
     import { onDestroy } from 'svelte';
