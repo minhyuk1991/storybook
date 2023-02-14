@@ -20,3 +20,4 @@ yarn.lock
 vite.config.ts
 
 /src/components/svelte-data-grid
+/src/components/headlessGrid
