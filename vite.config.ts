@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, BuildOptions } from 'vite';
 
 // eslint-disable-next-line import/no-unresolved
 import { svelte } from '@sveltejs/vite-plugin-svelte';
@@ -10,7 +10,12 @@ import path from 'path';
 // import wasm from 'vite-plugin-wasm';
 // import topLevelAwait from 'vite-plugin-top-level-await';
 // https://vitejs.dev/config/
-export default defineConfig({
+
+interface CustomBuildOptions extends BuildOptions {
+    exclude: string[];
+}
+
+const option = {
     plugins: [
         // wasm(),
         // topLevelAwait({
@@ -28,10 +33,13 @@ export default defineConfig({
     base: './',
     build: {
         target: 'esnext',
+        exclude: ['src/stories/**/*'],
     },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
         },
     },
-});
+};
+
+export default defineConfig(option);
