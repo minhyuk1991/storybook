@@ -33,7 +33,7 @@ const option = {
     base: './',
     build: {
         target: 'esnext',
-        exclude: ['src/stories/**/*'],
+        exclude: ['./src/stories/**/*'],
     },
     resolve: {
         alias: {
