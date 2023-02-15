@@ -26,11 +26,15 @@ export default defineConfig({
         }),
         createHtmlPlugin(),
     ],
+    optimizeDeps: {
+        exclude: ['@roxi/routify'],
+    },
     base: '/storybook/',
     build: {
         target: 'esnext',
     },
     resolve: {
+        dedupe: ['@roxi/routify'],
         alias: {
             '@': path.resolve(__dirname, './src'),
         },
