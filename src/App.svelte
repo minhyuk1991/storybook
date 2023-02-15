@@ -4,4 +4,7 @@
     // import { routes } from '../.routify/routes';
 </script>
 
+<head>
+    <base href="/storybook/" />
+</head>
 <Router routes="{routes}" />
