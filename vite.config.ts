@@ -29,7 +29,7 @@ export default defineConfig({
     optimizeDeps: {
         exclude: ['@roxi/routify'],
     },
-    base: '/storybook/',
+    base: './',
     build: {
         target: 'esnext',
     },
