@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { basepath } from '@sveltech/routify';
     import { Router } from '@roxi/routify';
     import { routes } from '../.routify/routes';
-    $: $basepath = './storybook';
+    // import { routes } from '../.routify/routes';
 </script>
 
 <Router routes="{routes}" />

@@ -10245,6 +10245,11 @@
   optionalDependencies:
     "fsevents" "~2.3.2"
 
+"routify@^1.2.7":
+  "integrity" "sha512-SwKKc4aRBzMjTgnhdw3JJ0OH+MnuJk0FNftapPAGcliTJrYVqQ2dSAiy9MnzeHK3XBMcVxSgRUNSf3fftzu6Jw=="
+  "resolved" "https://registry.npmjs.org/routify/-/routify-1.2.7.tgz"
+  "version" "1.2.7"
+
 "run-parallel@^1.1.9":
   "integrity" "sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA=="
   "resolved" "https://registry.npmjs.org/run-parallel/-/run-parallel-1.2.0.tgz"

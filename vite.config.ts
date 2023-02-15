@@ -11,11 +11,7 @@ import path from 'path';
 // import topLevelAwait from 'vite-plugin-top-level-await';
 // https://vitejs.dev/config/
 
-interface CustomBuildOptions extends BuildOptions {
-    exclude: string[];
-}
-
-const option = {
+export default defineConfig({
     plugins: [
         // wasm(),
         // topLevelAwait({
@@ -30,7 +26,7 @@ const option = {
         }),
         createHtmlPlugin(),
     ],
-    base: '.',
+    base: './',
     build: {
         target: 'esnext',
         exclude: ['./src/stories/**/*'],
@@ -40,6 +36,4 @@ const option = {
             '@': path.resolve(__dirname, './src'),
         },
     },
-};
-
-export default defineConfig(option);
+});

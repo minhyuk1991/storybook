@@ -101,6 +101,7 @@
         "@types/uuid": "^9.0.0",
         "d3": "^7.8.2",
         "deep-diff": "^1.0.2",
+        "routify": "^1.2.7",
         "svelte-headless-table": "^0.17.2",
         "svelte-tiny-virtual-list": "^2.0.5",
         "uuid": "^9.0.0"
