@@ -26,7 +26,7 @@ export default defineConfig({
         }),
         createHtmlPlugin(),
     ],
-    base: '/storybook/',
+    base: './storybook/',
     build: {
         target: 'esnext',
     },
