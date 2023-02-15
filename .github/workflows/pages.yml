@@ -35,12 +35,14 @@ jobs:
             - name: Install Modules
               run: npm i
             - name: Build Pages
-              run: npm run bsb
+              # run: npm run bsb
+              run: npm run build
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v1
               with:
                   # Upload entire repository
-                  path: './storybook-static'
+                  # path: './storybook-static'
+                  path: './dist'
             - name: Deploy to GitHub Pages
               id: deployment
               uses: actions/deploy-pages@v1
