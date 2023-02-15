@@ -106,5 +106,5 @@
         "svelte-tiny-virtual-list": "^2.0.5",
         "uuid": "^9.0.0"
     },
-    "export": "routify export --basepath /r"
+    "export": "routify export --basepath /storybook"
 }
