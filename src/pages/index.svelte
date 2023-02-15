@@ -4,6 +4,6 @@
 </script>
 
 <Layout>
-    <p class="text-[400px]">Main page</p>
+    <p class=" text-[400px]">Main page</p>
     <Grid />
 </Layout>
