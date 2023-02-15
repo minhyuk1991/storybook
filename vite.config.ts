@@ -29,7 +29,6 @@ export default defineConfig({
     base: './',
     build: {
         target: 'esnext',
-        exclude: ['./src/stories/**/*'],
     },
     resolve: {
         alias: {
