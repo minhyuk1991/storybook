@@ -25,7 +25,7 @@ export default defineConfig({
         }),
         createHtmlPlugin(),
     ],
-    base: '/app/',
+    base: './',
     build: {
         target: 'esnext',
     },
