@@ -7,7 +7,7 @@
         "prepare": "husky install",
         "dev": "routify -c dev-vite",
         "dev-vite": "vite",
-        "build": "vite build",
+        "build": "routify build && vite build",
         "preview": "vite preview",
         "lint": "prettier --plugin-search-dir . --check . && eslint .",
         "lint-staged": "lint-staged",
