@@ -30,7 +30,7 @@ const option = {
         }),
         createHtmlPlugin(),
     ],
-    base: './',
+    base: '.',
     build: {
         target: 'esnext',
         exclude: ['./src/stories/**/*'],
