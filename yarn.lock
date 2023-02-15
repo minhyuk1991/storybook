@@ -1411,51 +1411,51 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
-"@npmcli/arborist@^6.2.1":
-  "version" "6.2.1"
+"@npmcli/arborist@^6.2.2":
+  "version" "6.2.2"
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/fs" "^3.1.0"
     "@npmcli/installed-package-contents" "^2.0.0"
-    "@npmcli/map-workspaces" "^3.0.0"
+    "@npmcli/map-workspaces" "^3.0.2"
     "@npmcli/metavuln-calculator" "^5.0.0"
-    "@npmcli/name-from-folder" "^1.0.1"
+    "@npmcli/name-from-folder" "^2.0.0"
     "@npmcli/node-gyp" "^3.0.0"
     "@npmcli/package-json" "^3.0.0"
     "@npmcli/query" "^3.0.0"
     "@npmcli/run-script" "^6.0.0"
     "bin-links" "^4.0.1"
-    "cacache" "^17.0.3"
+    "cacache" "^17.0.4"
     "common-ancestor-path" "^1.0.1"
     "hosted-git-info" "^6.1.1"
     "json-parse-even-better-errors" "^3.0.0"
     "json-stringify-nice" "^1.1.4"
-    "minimatch" "^5.1.1"
+    "minimatch" "^6.1.6"
     "nopt" "^7.0.0"
     "npm-install-checks" "^6.0.0"
     "npm-package-arg" "^10.1.0"
     "npm-pick-manifest" "^8.0.1"
     "npm-registry-fetch" "^14.0.3"
     "npmlog" "^7.0.1"
-    "pacote" "^15.0.7"
+    "pacote" "^15.0.8"
     "parse-conflict-json" "^3.0.0"
     "proc-log" "^3.0.0"
     "promise-all-reject-late" "^1.0.0"
     "promise-call-limit" "^1.0.1"
-    "read-package-json-fast" "^3.0.1"
+    "read-package-json-fast" "^3.0.2"
     "semver" "^7.3.7"
     "ssri" "^10.0.1"
     "treeverse" "^3.0.0"
     "walk-up-path" "^1.0.0"
 
-"@npmcli/config@^6.1.2":
-  "version" "6.1.2"
+"@npmcli/config@^6.1.3":
+  "version" "6.1.3"
   dependencies:
-    "@npmcli/map-workspaces" "^3.0.0"
+    "@npmcli/map-workspaces" "^3.0.2"
     "ini" "^3.0.0"
     "nopt" "^7.0.0"
     "proc-log" "^3.0.0"
-    "read-package-json-fast" "^3.0.0"
+    "read-package-json-fast" "^3.0.2"
     "semver" "^7.3.5"
     "walk-up-path" "^1.0.0"
 
@@ -1494,12 +1494,12 @@
     "npm-bundled" "^3.0.0"
     "npm-normalize-package-bin" "^3.0.0"
 
-"@npmcli/map-workspaces@^3.0.0":
-  "version" "3.0.0"
+"@npmcli/map-workspaces@^3.0.2":
+  "version" "3.0.2"
   dependencies:
-    "@npmcli/name-from-folder" "^1.0.1"
+    "@npmcli/name-from-folder" "^2.0.0"
     "glob" "^8.0.1"
-    "minimatch" "^5.0.1"
+    "minimatch" "^6.1.6"
     "read-package-json-fast" "^3.0.0"
 
 "@npmcli/metavuln-calculator@^5.0.0":
@@ -1516,8 +1516,8 @@
     "mkdirp" "^1.0.4"
     "rimraf" "^3.0.2"
 
-"@npmcli/name-from-folder@^1.0.1":
-  "version" "1.0.1"
+"@npmcli/name-from-folder@^2.0.0":
+  "version" "2.0.0"
 
 "@npmcli/node-gyp@^3.0.0":
   "version" "3.0.0"
@@ -1528,7 +1528,7 @@
     "json-parse-even-better-errors" "^3.0.0"
 
 "@npmcli/promise-spawn@^6.0.0", "@npmcli/promise-spawn@^6.0.1":
-  "version" "6.0.1"
+  "version" "6.0.2"
   dependencies:
     "which" "^3.0.0"
 
@@ -1576,9 +1576,9 @@
     "picomatch" "^2.3.1"
 
 "@roxi/routify@^2.18.8":
-  "integrity" "sha512-yVvUAXno9XuweZMgGK5FeXZwijUA3z5tKh42KnwCi6snMvjEfPMBnDKidEk4ybUF27IfpBKvUs0QoPrFepvytQ=="
-  "resolved" "https://registry.npmjs.org/@roxi/routify/-/routify-2.18.8.tgz"
-  "version" "2.18.8"
+  "integrity" "sha512-7G1pPSYaEXZ+NoDbIvZRblI/tFDNrbPKs0K4+KApOn1Rb3YGzAu5o2DU1v2BTG4F+0Ro0CS8FmSfvoDiYMimUQ=="
+  "resolved" "https://registry.npmjs.org/@roxi/routify/-/routify-2.18.11.tgz"
+  "version" "2.18.11"
   dependencies:
     "@roxi/ssr" "^0.2.1"
     "@types/node" "^12.20.52"
@@ -4011,11 +4011,11 @@
     "tar" "^6.1.11"
     "unique-filename" "^2.0.0"
 
-"cacache@^17.0.0", "cacache@^17.0.3":
-  "version" "17.0.3"
+"cacache@^17.0.0", "cacache@^17.0.4":
+  "version" "17.0.4"
   dependencies:
     "@npmcli/fs" "^3.1.0"
-    "fs-minipass" "^2.1.0"
+    "fs-minipass" "^3.0.0"
     "glob" "^8.0.1"
     "lru-cache" "^7.7.1"
     "minipass" "^4.0.0"
@@ -4157,8 +4157,8 @@
   "resolved" "https://registry.npmjs.org/ci-info/-/ci-info-3.7.0.tgz"
   "version" "3.7.0"
 
-"ci-info@^3.7.0":
-  "version" "3.7.0"
+"ci-info@^3.7.1":
+  "version" "3.7.1"
 
 "cidr-regex@^3.1.1":
   "version" "3.1.1"
@@ -4264,7 +4264,7 @@
   "version" "1.0.4"
 
 "cmd-shim@^6.0.0":
-  "version" "6.0.0"
+  "version" "6.0.1"
 
 "co@^4.6.0":
   "integrity" "sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ=="
@@ -4965,7 +4965,7 @@
     "untildify" "^4.0.0"
 
 "defaults@^1.0.3":
-  "version" "1.0.3"
+  "version" "1.0.4"
   dependencies:
     "clone" "^1.0.2"
 
@@ -6262,12 +6262,22 @@
     "jsonfile" "^6.0.1"
     "universalify" "^2.0.0"
 
-"fs-minipass@^2.0.0", "fs-minipass@^2.1.0":
+"fs-minipass@^2.0.0":
   "integrity" "sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg=="
   "resolved" "https://registry.npmjs.org/fs-minipass/-/fs-minipass-2.1.0.tgz"
   "version" "2.1.0"
   dependencies:
     "minipass" "^3.0.0"
+
+"fs-minipass@^2.1.0":
+  "version" "2.1.0"
+  dependencies:
+    "minipass" "^3.0.0"
+
+"fs-minipass@^3.0.0", "fs-minipass@^3.0.1":
+  "version" "3.0.1"
+  dependencies:
+    "minipass" "^4.0.0"
 
 "fs.realpath@^1.0.0":
   "integrity" "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
@@ -6453,8 +6463,8 @@
     "once" "^1.3.0"
     "path-is-absolute" "^1.0.0"
 
-"glob@^8.0.1":
-  "version" "8.0.3"
+"glob@^8.0.1", "glob@^8.1.0":
+  "version" "8.1.0"
   dependencies:
     "fs.realpath" "^1.0.0"
     "inflight" "^1.0.4"
@@ -6700,7 +6710,7 @@
     "domutils" "^2.0.0"
     "entities" "^2.0.0"
 
-"http-cache-semantics@^4.1.0":
+"http-cache-semantics@^4.1.0", "http-cache-semantics@^4.1.1":
   "version" "4.1.1"
 
 "http-errors@2.0.0":
@@ -6810,9 +6820,9 @@
   "version" "1.2.1"
 
 "ignore-walk@^6.0.0":
-  "version" "6.0.0"
+  "version" "6.0.1"
   dependencies:
-    "minimatch" "^5.0.1"
+    "minimatch" "^6.1.6"
 
 "ignore@^4.0.6":
   "integrity" "sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg=="
@@ -6869,12 +6879,12 @@
 "ini@^3.0.0", "ini@^3.0.1":
   "version" "3.0.1"
 
-"init-package-json@^4.0.1":
-  "version" "4.0.1"
+"init-package-json@^5.0.0":
+  "version" "5.0.0"
   dependencies:
     "npm-package-arg" "^10.0.0"
-    "promzard" "^0.3.0"
-    "read" "^1.0.7"
+    "promzard" "^1.0.0"
+    "read" "^2.0.0"
     "read-package-json" "^6.0.0"
     "semver" "^7.3.5"
     "validate-npm-package-license" "^3.0.4"
@@ -6985,7 +6995,12 @@
   "resolved" "https://registry.npmjs.org/is-callable/-/is-callable-1.2.7.tgz"
   "version" "1.2.7"
 
-"is-core-module@^2.1.0", "is-core-module@^2.11.0", "is-core-module@^2.9.0":
+"is-cidr@^4.0.2":
+  "version" "4.0.2"
+  dependencies:
+    "cidr-regex" "^3.1.1"
+
+"is-core-module@^2.1.0", "is-core-module@^2.10.0", "is-core-module@^2.11.0", "is-core-module@^2.9.0":
   "integrity" "sha512-RRjxlvLDkD1YJwDbroBHMb+cukurkDWNyHx7D3oNB5x9rb5ogcksMC5wHCadcXoo67gVr/+3GFySh3134zi6rw=="
   "resolved" "https://registry.npmjs.org/is-core-module/-/is-core-module-2.11.0.tgz"
   "version" "2.11.0"
@@ -6993,7 +7008,7 @@
     "has" "^1.0.3"
 
 "is-core-module@^2.8.1":
-  "version" "2.10.0"
+  "version" "2.11.0"
   dependencies:
     "has" "^1.0.3"
 
@@ -7910,10 +7925,10 @@
   "version" "1.3.1"
 
 "just-diff-apply@^5.2.0":
-  "version" "5.4.1"
+  "version" "5.5.0"
 
 "just-diff@^5.0.1":
-  "version" "5.1.1"
+  "version" "5.2.0"
 
 "kind-of@^3.0.2", "kind-of@^3.0.3":
   "integrity" "sha512-NOW9QQXMoZGg/oqnVNoNTTIFEIid1627WCffUBJEdMxYApq7mNE7CpzucIPc+ZQg25Phej7IJSmX3hO+oblOtQ=="
@@ -7993,68 +8008,68 @@
     "prelude-ls" "~1.1.2"
     "type-check" "~0.3.2"
 
-"libnpmaccess@^7.0.1":
-  "version" "7.0.1"
+"libnpmaccess@^7.0.2":
+  "version" "7.0.2"
   dependencies:
     "npm-package-arg" "^10.1.0"
     "npm-registry-fetch" "^14.0.3"
 
-"libnpmdiff@^5.0.9":
-  "version" "5.0.9"
+"libnpmdiff@^5.0.10":
+  "version" "5.0.10"
   dependencies:
-    "@npmcli/arborist" "^6.2.1"
+    "@npmcli/arborist" "^6.2.2"
     "@npmcli/disparity-colors" "^3.0.0"
     "@npmcli/installed-package-contents" "^2.0.0"
     "binary-extensions" "^2.2.0"
     "diff" "^5.1.0"
-    "minimatch" "^5.1.1"
+    "minimatch" "^6.1.6"
     "npm-package-arg" "^10.1.0"
-    "pacote" "^15.0.7"
+    "pacote" "^15.0.8"
     "tar" "^6.1.13"
 
-"libnpmexec@^5.0.9":
-  "version" "5.0.9"
+"libnpmexec@^5.0.10":
+  "version" "5.0.10"
   dependencies:
-    "@npmcli/arborist" "^6.2.1"
+    "@npmcli/arborist" "^6.2.2"
     "@npmcli/run-script" "^6.0.0"
     "chalk" "^4.1.0"
-    "ci-info" "^3.7.0"
+    "ci-info" "^3.7.1"
     "npm-package-arg" "^10.1.0"
     "npmlog" "^7.0.1"
-    "pacote" "^15.0.7"
+    "pacote" "^15.0.8"
     "proc-log" "^3.0.0"
-    "read" "^1.0.7"
-    "read-package-json-fast" "^3.0.1"
+    "read" "^2.0.0"
+    "read-package-json-fast" "^3.0.2"
     "semver" "^7.3.7"
     "walk-up-path" "^1.0.0"
 
-"libnpmfund@^4.0.9":
-  "version" "4.0.9"
+"libnpmfund@^4.0.10":
+  "version" "4.0.10"
   dependencies:
-    "@npmcli/arborist" "^6.2.1"
+    "@npmcli/arborist" "^6.2.2"
 
-"libnpmhook@^9.0.1":
-  "version" "9.0.1"
+"libnpmhook@^9.0.3":
+  "version" "9.0.3"
   dependencies:
     "aproba" "^2.0.0"
     "npm-registry-fetch" "^14.0.3"
 
-"libnpmorg@^5.0.1":
-  "version" "5.0.1"
+"libnpmorg@^5.0.3":
+  "version" "5.0.3"
   dependencies:
     "aproba" "^2.0.0"
     "npm-registry-fetch" "^14.0.3"
 
-"libnpmpack@^5.0.9":
-  "version" "5.0.9"
+"libnpmpack@^5.0.10":
+  "version" "5.0.10"
   dependencies:
-    "@npmcli/arborist" "^6.2.1"
+    "@npmcli/arborist" "^6.2.2"
     "@npmcli/run-script" "^6.0.0"
     "npm-package-arg" "^10.1.0"
-    "pacote" "^15.0.7"
+    "pacote" "^15.0.8"
 
-"libnpmpublish@^7.0.6":
-  "version" "7.0.6"
+"libnpmpublish@^7.0.8":
+  "version" "7.0.8"
   dependencies:
     "normalize-package-data" "^5.0.0"
     "npm-package-arg" "^10.1.0"
@@ -8062,19 +8077,19 @@
     "semver" "^7.3.7"
     "ssri" "^10.0.1"
 
-"libnpmsearch@^6.0.1":
-  "version" "6.0.1"
+"libnpmsearch@^6.0.2":
+  "version" "6.0.2"
   dependencies:
     "npm-registry-fetch" "^14.0.3"
 
-"libnpmteam@^5.0.1":
-  "version" "5.0.1"
+"libnpmteam@^5.0.2":
+  "version" "5.0.2"
   dependencies:
     "aproba" "^2.0.0"
     "npm-registry-fetch" "^14.0.3"
 
-"libnpmversion@^4.0.1":
-  "version" "4.0.1"
+"libnpmversion@^4.0.2":
+  "version" "4.0.2"
   dependencies:
     "@npmcli/git" "^4.0.1"
     "@npmcli/run-script" "^6.0.0"
@@ -8246,7 +8261,7 @@
     "yallist" "^4.0.0"
 
 "lru-cache@^7.4.4", "lru-cache@^7.5.1", "lru-cache@^7.7.1":
-  "version" "7.13.2"
+  "version" "7.14.1"
 
 "lz-string@^1.4.4":
   "integrity" "sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ=="
@@ -8314,18 +8329,17 @@
     "socks-proxy-agent" "^7.0.0"
     "ssri" "^9.0.0"
 
-"make-fetch-happen@^11.0.0", "make-fetch-happen@^11.0.2":
-  "version" "11.0.2"
+"make-fetch-happen@^11.0.0", "make-fetch-happen@^11.0.3":
+  "version" "11.0.3"
   dependencies:
     "agentkeepalive" "^4.2.1"
     "cacache" "^17.0.0"
-    "http-cache-semantics" "^4.1.0"
+    "http-cache-semantics" "^4.1.1"
     "http-proxy-agent" "^5.0.0"
     "https-proxy-agent" "^5.0.0"
     "is-lambda" "^1.0.1"
     "lru-cache" "^7.7.1"
     "minipass" "^4.0.0"
-    "minipass-collect" "^1.0.2"
     "minipass-fetch" "^3.0.0"
     "minipass-flush" "^1.0.5"
     "minipass-pipeline" "^1.2.4"
@@ -8497,8 +8511,8 @@
   dependencies:
     "brace-expansion" "^2.0.1"
 
-"minimatch@^5.1.1":
-  "version" "5.1.1"
+"minimatch@^6.1.6":
+  "version" "6.1.6"
   dependencies:
     "brace-expansion" "^2.0.1"
 
@@ -8551,14 +8565,9 @@
   dependencies:
     "minipass" "^3.0.0"
 
-"minipass@^3.0.0":
+"minipass@^3.0.0", "minipass@^3.1.1", "minipass@^3.1.6":
   "integrity" "sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw=="
   "resolved" "https://registry.npmjs.org/minipass/-/minipass-3.3.6.tgz"
-  "version" "3.3.6"
-  dependencies:
-    "yallist" "^4.0.0"
-
-"minipass@^3.1.1", "minipass@^3.1.6":
   "version" "3.3.6"
   dependencies:
     "yallist" "^4.0.0"
@@ -8569,6 +8578,9 @@
   "version" "4.0.0"
   dependencies:
     "yallist" "^4.0.0"
+
+"minipass@^4.0.2":
+  "version" "4.0.2"
 
 "minizlib@^2.1.1", "minizlib@^2.1.2":
   "integrity" "sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg=="
@@ -8626,8 +8638,8 @@
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz"
   "version" "2.1.3"
 
-"mute-stream@~0.0.4":
-  "version" "0.0.8"
+"mute-stream@~1.0.0":
+  "version" "1.0.0"
 
 "nanoid@^3.3.1", "nanoid@^3.3.4":
   "integrity" "sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw=="
@@ -8711,8 +8723,8 @@
   "resolved" "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.6.0.tgz"
   "version" "4.6.0"
 
-"node-gyp@^9.0.0", "node-gyp@^9.3.0":
-  "version" "9.3.0"
+"node-gyp@^9.0.0", "node-gyp@^9.3.1":
+  "version" "9.3.1"
   dependencies:
     "env-paths" "^2.2.0"
     "glob" "^7.1.4"
@@ -8866,55 +8878,54 @@
   dependencies:
     "path-key" "^4.0.0"
 
-"npm-user-validate@^1.0.1":
-  "version" "1.0.1"
+"npm-user-validate@^2.0.0":
+  "version" "2.0.0"
 
 "npm@^9.4.1":
-  "integrity" "sha512-yCtrPwN/vPtc2KRyIBLdTqPMFy0R9pPurr8wJKtDvDfzICY/3IBG6t2z+zHA79pl5R8+mVH8EcJICLUeU48oQQ=="
-  "resolved" "https://registry.npmjs.org/npm/-/npm-9.4.1.tgz"
-  "version" "9.4.1"
+  "integrity" "sha512-dIkwrPCq4+oeNU9I4B+tO4t+5lUL04XIgizpcwDbPM9vMeoVW54g3f5725FRLp10TH/5/KQWiTziGgILoCxP7w=="
+  "resolved" "https://registry.npmjs.org/npm/-/npm-9.4.2.tgz"
+  "version" "9.4.2"
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
-    "@npmcli/arborist" "^6.2.1"
-    "@npmcli/config" "^6.1.2"
-    "@npmcli/map-workspaces" "^3.0.0"
+    "@npmcli/arborist" "^6.2.2"
+    "@npmcli/config" "^6.1.3"
+    "@npmcli/map-workspaces" "^3.0.2"
     "@npmcli/package-json" "^3.0.0"
     "@npmcli/run-script" "^6.0.0"
     "abbrev" "^2.0.0"
     "archy" "~1.0.0"
-    "cacache" "^17.0.3"
+    "cacache" "^17.0.4"
     "chalk" "^4.1.2"
-    "ci-info" "^3.7.0"
+    "ci-info" "^3.7.1"
     "cli-columns" "^4.0.0"
     "cli-table3" "^0.6.3"
     "columnify" "^1.6.0"
     "fastest-levenshtein" "^1.0.16"
-    "fs-minipass" "^2.1.0"
-    "glob" "^8.0.1"
+    "fs-minipass" "^3.0.1"
+    "glob" "^8.1.0"
     "graceful-fs" "^4.2.10"
     "hosted-git-info" "^6.1.1"
     "ini" "^3.0.1"
-    "init-package-json" "^4.0.1"
+    "init-package-json" "^5.0.0"
     "is-cidr" "^4.0.2"
     "json-parse-even-better-errors" "^3.0.0"
-    "libnpmaccess" "^7.0.1"
-    "libnpmdiff" "^5.0.9"
-    "libnpmexec" "^5.0.9"
-    "libnpmfund" "^4.0.9"
-    "libnpmhook" "^9.0.1"
-    "libnpmorg" "^5.0.1"
-    "libnpmpack" "^5.0.9"
-    "libnpmpublish" "^7.0.6"
-    "libnpmsearch" "^6.0.1"
-    "libnpmteam" "^5.0.1"
-    "libnpmversion" "^4.0.1"
-    "make-fetch-happen" "^11.0.2"
-    "minimatch" "^5.1.1"
-    "minipass" "^4.0.0"
+    "libnpmaccess" "^7.0.2"
+    "libnpmdiff" "^5.0.10"
+    "libnpmexec" "^5.0.10"
+    "libnpmfund" "^4.0.10"
+    "libnpmhook" "^9.0.3"
+    "libnpmorg" "^5.0.3"
+    "libnpmpack" "^5.0.10"
+    "libnpmpublish" "^7.0.8"
+    "libnpmsearch" "^6.0.2"
+    "libnpmteam" "^5.0.2"
+    "libnpmversion" "^4.0.2"
+    "make-fetch-happen" "^11.0.3"
+    "minimatch" "^6.1.6"
+    "minipass" "^4.0.2"
     "minipass-pipeline" "^1.2.4"
-    "mkdirp" "^1.0.4"
     "ms" "^2.1.2"
-    "node-gyp" "^9.3.0"
+    "node-gyp" "^9.3.1"
     "nopt" "^7.0.0"
     "npm-audit-report" "^4.0.0"
     "npm-install-checks" "^6.0.0"
@@ -8922,16 +8933,16 @@
     "npm-pick-manifest" "^8.0.1"
     "npm-profile" "^7.0.1"
     "npm-registry-fetch" "^14.0.3"
-    "npm-user-validate" "^1.0.1"
+    "npm-user-validate" "^2.0.0"
     "npmlog" "^7.0.1"
     "p-map" "^4.0.0"
-    "pacote" "^15.0.7"
+    "pacote" "^15.0.8"
     "parse-conflict-json" "^3.0.0"
     "proc-log" "^3.0.0"
     "qrcode-terminal" "^0.12.0"
-    "read" "~1.0.7"
+    "read" "^2.0.0"
     "read-package-json" "^6.0.0"
-    "read-package-json-fast" "^3.0.1"
+    "read-package-json-fast" "^3.0.2"
     "semver" "^7.3.8"
     "ssri" "^10.0.1"
     "tar" "^6.1.13"
@@ -9187,15 +9198,15 @@
   "resolved" "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz"
   "version" "2.2.0"
 
-"pacote@^15.0.0", "pacote@^15.0.7":
-  "version" "15.0.7"
+"pacote@^15.0.0", "pacote@^15.0.8":
+  "version" "15.0.8"
   dependencies:
     "@npmcli/git" "^4.0.0"
     "@npmcli/installed-package-contents" "^2.0.1"
     "@npmcli/promise-spawn" "^6.0.1"
     "@npmcli/run-script" "^6.0.0"
     "cacache" "^17.0.0"
-    "fs-minipass" "^2.1.0"
+    "fs-minipass" "^3.0.0"
     "minipass" "^4.0.0"
     "npm-package-arg" "^10.0.0"
     "npm-packlist" "^7.0.0"
@@ -9677,10 +9688,10 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"promzard@^0.3.0":
-  "version" "0.3.0"
+"promzard@^1.0.0":
+  "version" "1.0.0"
   dependencies:
-    "read" "1"
+    "read" "^2.0.0"
 
 "prop-types@^15.7.2":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
@@ -9832,8 +9843,8 @@
 "read-cmd-shim@^4.0.0":
   "version" "4.0.0"
 
-"read-package-json-fast@^3.0.0", "read-package-json-fast@^3.0.1":
-  "version" "3.0.1"
+"read-package-json-fast@^3.0.0", "read-package-json-fast@^3.0.2":
+  "version" "3.0.2"
   dependencies:
     "json-parse-even-better-errors" "^3.0.0"
     "npm-normalize-package-bin" "^3.0.0"
@@ -9874,10 +9885,10 @@
     "parse-json" "^5.0.0"
     "type-fest" "^0.6.0"
 
-"read@^1.0.7", "read@~1.0.7", "read@1":
-  "version" "1.0.7"
+"read@^2.0.0":
+  "version" "2.0.0"
   dependencies:
-    "mute-stream" "~0.0.4"
+    "mute-stream" "~1.0.0"
 
 "readable-stream@^2.2.2":
   "integrity" "sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw=="
@@ -9902,7 +9913,7 @@
     "util-deprecate" "^1.0.1"
 
 "readable-stream@^4.1.0":
-  "version" "4.2.0"
+  "version" "4.3.0"
   dependencies:
     "abort-controller" "^3.0.0"
     "buffer" "^6.0.3"
@@ -10595,7 +10606,7 @@
     "socks" "^2.6.2"
 
 "socks@^2.6.2":
-  "version" "2.7.0"
+  "version" "2.7.1"
   dependencies:
     "ip" "^2.0.0"
     "smart-buffer" "^4.2.0"

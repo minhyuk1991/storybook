@@ -21,7 +21,7 @@
                 <DarkModeToggleButton />
                 <dvi>
                     <a href="/test1">test1</a>
-                    <a href="/test2">test2</a>
+                    <!-- <a href="/test2">test2</a> -->
                 </dvi>
             </div>
             <div
@@ -32,5 +32,4 @@
             <slot />
         </main>
     </div>
-    <!-- <footer class="bg-gray-800  text-white">footer</footer> -->
 </div>
