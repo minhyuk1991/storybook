@@ -8,12 +8,11 @@ module.exports = {
   "noHashScroll": false,
   "distDir": "dist",
   "hashScroll": true,
-  "childProcess": "dev-vite",
   "extensions": [
     "html",
     "svelte",
     "md",
     "svx"
   ],
-  "started": "2023-02-15T07:30:55.877Z"
+  "started": "2023-02-15T08:01:56.322Z"
 }

@@ -7,7 +7,7 @@
         "prepare": "husky install",
         "dev": "routify -c dev-vite",
         "dev-vite": "vite",
-        "build": "routify build && vite build",
+        "build": "npm run routify -- -b vite build",
         "preview": "vite preview",
         "lint": "prettier --plugin-search-dir . --check . && eslint .",
         "lint-staged": "lint-staged",
@@ -18,7 +18,8 @@
         "test:watch": "npm run test -- --watch",
         "check": "svelte-check --tsconfig ./tsconfig.json",
         "sb": "storybook dev -p 6006",
-        "bsb": "storybook build"
+        "bsb": "storybook build",
+        "routify": "routify -D"
     },
     "lint-staged": {
         "*.\"{,!(node_modules|public)/**/}*.{js,svelte,ts}\"": [
