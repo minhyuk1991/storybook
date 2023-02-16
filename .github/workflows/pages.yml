@@ -36,6 +36,9 @@ jobs:
               run: npm i
             - name: Build Pages
               run: ISPORD=production npm run build
+                  - npm install
+                  - npm run build
+                  - cp -a dist/. public/
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v1
               with:

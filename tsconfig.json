@@ -23,7 +23,7 @@
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "importHelpers": true,
-        "baseUrl": "./",
+        "baseUrl": "/",
         "allowJs": true,
         "checkJs": true,
         "types": ["node", "node-fetch", "jest"],
