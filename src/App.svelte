@@ -1,7 +1,7 @@
 <script lang="ts">
-    // import { Router } from '@roxi/routify';
-    // import { routes } from '../.routify/routes';
+    import { Router } from '@roxi/routify';
+    import { routes } from '../.routify/routes';
 </script>
 
-<!-- <Router routes="{routes}" /> -->
+<Router routes="{routes}" />
 <div>aaa</div>

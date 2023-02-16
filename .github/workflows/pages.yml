@@ -35,7 +35,7 @@ jobs:
             - name: Install Modules
               run: npm i
             - name: Build Pages
-              run: ISPORD=production npm run build
+              run: ISPORD=true npm run build
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v1
               with:
