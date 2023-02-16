@@ -21,26 +21,21 @@
     </head>
     <body>
         <script>
-            //  const person = {
-            //      name: 'aaa',
-            //  };
+            const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-            //  const getName = (person) => person.name;
-            //  //선언을 해야만 함;;
+            array.map((number) => number * 5);
 
-            //  getName(person); //' aaa'
+            const map2 = (array, f) => {
+                const result = [];
+                for (let index = 0; index < array.length; index++) {
+                    const currentTarget = array[index];
+                    const nextValue = f(currentTarget);
+                    result.push(nextValue);
+                }
+                return result;
+            };
 
-            (function () {
-                console.log('aaa');
-            })();
-            //호출도 해야함;;
-
-            if (
-                (() => {
-                    return 1;
-                })() > 4
-            ) {
-            }
+            map2(array, (n) => n * 2);
         </script>
     </body>
 </html>

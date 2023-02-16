@@ -3,7 +3,7 @@ import { defineConfig, BuildOptions } from 'vite';
 // eslint-disable-next-line import/no-unresolved
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import sveltePreprocess from 'svelte-preprocess';
-
+import dotenv from 'dotenv';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
@@ -11,6 +11,9 @@ import path from 'path';
 // import topLevelAwait from 'vite-plugin-top-level-await';
 // https://vitejs.dev/config/
 
+const isProd = Boolean(dotenv.config()?.parsed?.ISPORD) === true;
+const basePath = isProd ? '/storybook/' : './';
+console.log('dotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenv', isProd, basePath);
 export default defineConfig({
     plugins: [
         // wasm(),
@@ -29,7 +32,7 @@ export default defineConfig({
     optimizeDeps: {
         exclude: ['@roxi/routify'],
     },
-    base: './',
+    base: basePath,
     build: {
         target: 'esnext',
     },
