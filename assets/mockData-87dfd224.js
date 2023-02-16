@@ -1,0 +1,1 @@
+const r=a=>{const t=`host-${a}`;return{hostName:t,top:Math.floor(Math.random()*100),cpu:Math.floor(Math.random()*100),mem:Math.floor(Math.random()*100),swap:Math.floor(Math.random()*100),disk:Math.floor(Math.random()*100),diskName:`${t}-disk`}},h=a=>new Array(a).fill(0).map((t,o)=>r(o));export{h as c};
