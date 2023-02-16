@@ -11,7 +11,7 @@ import path from 'path';
 // import topLevelAwait from 'vite-plugin-top-level-await';
 // https://vitejs.dev/config/
 
-const isProd = Boolean(dotenv.config()?.parsed?.ISPORD) === true;
+// const isProd = Boolean(dotenv.config()?.parsed?.ISPORD) === true;
 const basePath = isProd ? '/storybook/' : './';
 console.log('dotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenv', isProd, basePath);
 export default defineConfig({
@@ -32,7 +32,7 @@ export default defineConfig({
     optimizeDeps: {
         exclude: ['@roxi/routify'],
     },
-    base: basePath,
+    base: './',
     build: {
         target: 'esnext',
     },
