@@ -4,4 +4,5 @@
 </script>
 
 <Router routes="{routes}" />
+<a href="/test1">test1</a>
 <div>aaa</div>
