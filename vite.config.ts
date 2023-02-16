@@ -12,8 +12,8 @@ import path from 'path';
 // https://vitejs.dev/config/
 
 // const isProd = Boolean(dotenv.config()?.parsed?.ISPORD) === true;
-const basePath = isProd ? '/storybook/' : './';
-console.log('dotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenv', isProd, basePath);
+// const basePath = isProd ? '/storybook/' : './';
+// console.log('dotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenvdotenv', isProd, basePath);
 export default defineConfig({
     plugins: [
         // wasm(),
