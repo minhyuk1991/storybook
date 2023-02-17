@@ -20,6 +20,7 @@ export type MockData = {
     swap: number;
     disk: number;
     diskName: string;
+    id: string;
 };
 
 export type MockDataColumn = {

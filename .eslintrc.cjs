@@ -48,6 +48,7 @@ module.exports = {
 		],
 		'no-unused-vars': 'warn',
     "@typescript-eslint/no-inferrable-types": "off",
+	"@typescript-eslint/no-unsafe-assignment": "off"
 	},
   ignorePatterns: ['build/*', 'node_modules/*','.eslintrc.cjs'],
 	overrides: [

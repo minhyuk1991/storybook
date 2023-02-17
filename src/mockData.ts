@@ -1,8 +1,10 @@
 import type { MockData } from './types';
+import { v4 as uuidv4 } from 'uuid';
 
 export const creatMockData = (index: number): MockData => {
     const hostName = `host-${index}`;
     return {
+        id: uuidv4(),
         hostName,
         top: Math.floor(Math.random() * 100),
         cpu: Math.floor(Math.random() * 100),

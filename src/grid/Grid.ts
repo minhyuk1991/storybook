@@ -1,14 +1,14 @@
 type Option = { resizable?: boolean };
 
-type RenderColumn = {
-    name: string;
-    visible: boolean;
-    width: '100%' | 'auto' | number;
-    minWidth?: 'auto' | number;
-    maxWidth?: 'auto' | number;
-    resizable?: boolean;
-    dragable?: boolean;
-};
+// type RenderColumn = {
+//     name: string;
+//     visible: boolean;
+//     width: '100%' | 'auto' | number;
+//     minWidth?: 'auto' | number;
+//     maxWidth?: 'auto' | number;
+//     resizable?: boolean;
+//     dragable?: boolean;
+// };
 
 // type RenderItem<T> = {};
 
@@ -17,31 +17,31 @@ export class Grid<T extends { [key: string]: number | string }> {
 
     columns: { [key: string]: any };
 
-    renderRows: Array<T & { a: number }>;
+    renderRows: Map<string, T>;
 
-    renderColumns: Map<string, RenderColumn>;
+    renderColumns: string[];
 
     constructor(items: T[], option?: Option) {
         this.items = items;
         this.columns = items.length > 0 ? (Object.keys(items[0]) as Array<keyof T>) : [];
-        this.renderRows = items.map((item) => ({ ...item, a: 1 }));
-        this.renderColumns = new Map<string, RenderColumn>();
+        this.renderRows = new Map();
+        this.renderColumns = [];
 
-        this.renderColumns = new Map<string, RenderColumn>(
-            items.map((item) => [
-                String(item.dataName),
-                {
-                    name: 'a',
-                    visible: true,
-                    resizable: false,
-                    width: 'auto',
-                    minWidth: 'auto',
-                    maxWidth: 'auto',
-                    dragable: true,
-                    ...item,
-                },
-            ]),
-        );
+        //init Columns
+        const firstItem = items[0];
+        if (firstItem) {
+            for (const key in firstItem) {
+                if (Object.prototype.hasOwnProperty.call(firstItem, key)) {
+                    this.renderColumns.push(key);
+                }
+            }
+        }
+
+        //init Rows
+        items.forEach((item) => {
+            if (typeof item.id !== 'string') throw new Error('item.id is not string');
+            if (typeof item.id === 'string') this.renderRows.set(item.id, item);
+        });
     }
 
     getRenderRowList() {
@@ -54,10 +54,10 @@ export class Grid<T extends { [key: string]: number | string }> {
 
     setColumnOption(columnOptions: ({ [key: string]: unknown } & { dataName: string })[]) {
         columnOptions.map((item) => {
-            const target = this.renderColumns.get(item.dataName);
-            if (!target) throw new Error('dataName not found');
-            const nextValue = { ...target, ...item };
-            this.renderColumns.set(item.dataName, nextValue);
+            // const target = this.renderColumns.get();
+            // if (!target) throw new Error('dataName not found');
+            // const nextValue = { ...target, ...item };
+            // this.renderColumns.set(item.dataName, nextValue);
         });
     }
 
