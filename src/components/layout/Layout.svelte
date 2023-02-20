@@ -22,6 +22,7 @@
                 <dvi>
                     <a href="/test1">test1</a>
                     <a href="/test2">test2</a>
+                    <a href="/test3">test3</a>
                 </dvi>
             </div>
             <div

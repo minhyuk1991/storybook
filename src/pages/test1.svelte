@@ -66,7 +66,6 @@
         on:columnOrderUpdated="{saveNewColumnOrder}"
         rowHeightHeader="{40}"
     />
-    <p class="text-[400px]">Main page</p>
 
     <!-- <div class="lin-chart-cell">
 	  <svg width="960" height="520" />
