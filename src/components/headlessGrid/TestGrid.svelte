@@ -1,4 +1,4 @@
-<style>
+<style global>
     table {
         border-spacing: 0;
         border-top: 1px solid black;
@@ -42,6 +42,12 @@
     }
     .selected {
         background: rgb(148, 205, 255, 0.5);
+    }
+    .virtual-list-wrapper {
+    }
+    tbody {
+        display: flex;
+        width: 100%;
     }
 </style>
 
@@ -578,21 +584,22 @@
                 </tr>
             </Subscribe>
         {/each}
-    </thead>
-    <VirtualList width="100%" height="{600}" itemCount="{$rows.length}" itemSize="{50}">
-        <svelte:fragment slot="item" let:index let:style>
-            {@const row = $rows[index]}
-            <Subscribe rowAttrs="{row.attrs()}">
+    </thead><tbody class="tbody">
+        <VirtualList width="100%" height="{600}" itemCount="{$rows.length}" itemSize="{50}">
+            <svelte:fragment slot="item" let:index let:style>
+                {@const row = $rows[index]}
                 <tr style="{style}" {...row.attrs()}>
-                    {#each row.cells as cell (cell.id)}
-                        <Subscribe attrs="{cell.attrs()}" let:attrs>
-                            <td {...attrs}>
-                                <Render of="{cell.render()}" />
-                            </td>
-                        </Subscribe>
-                    {/each}
+                    <Subscribe rowAttrs="{row.attrs()}">
+                        {#each row.cells as cell (cell.id)}
+                            <Subscribe attrs="{cell.attrs()}" let:attrs>
+                                <td {...attrs}>
+                                    <Render of="{cell.render()}" />
+                                </td>
+                            </Subscribe>
+                        {/each}
+                    </Subscribe>
                 </tr>
-            </Subscribe>
-        </svelte:fragment>
-    </VirtualList>
+            </svelte:fragment>
+        </VirtualList>
+    </tbody>
 </table>
