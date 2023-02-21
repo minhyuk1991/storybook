@@ -11,7 +11,7 @@
         cursor: pointer;
     }
     .row + .row {
-        margin-top: 10p;
+        margin-top: 10px;
     }
 
     .row:hover > div {

@@ -15,7 +15,10 @@ type Option = { resizable?: boolean };
 export class Grid<T extends { [key: string]: number | string }> {
     items: Array<T>;
 
-    columns: { [key: string]: any };
+    columns: {
+        name: keyof T;
+        index: number;
+    }[];
 
     renderRows: Map<string, T>;
 
@@ -23,9 +26,22 @@ export class Grid<T extends { [key: string]: number | string }> {
 
     constructor(items: T[], option?: Option) {
         this.items = items;
-        this.columns = items.length > 0 ? (Object.keys(items[0]) as Array<keyof T>) : [];
+        // this.columns = items.length > 0 ? (Object.keys(items[0]) as Array<keyof T>) : [];
+        // this.columns =
+        //     items.length > 0
+        //         ? (Object.keys(items[0].map((item, index) => ({ index, item }))) as Array<{
+        //               index: keyof T;
+        //               item: string;
+        //           }>)
+        //         : [];
         this.renderRows = new Map();
         this.renderColumns = [];
+
+        const columnkeys = Object.keys(items[0]) as Array<keyof T>;
+        this.columns = columnkeys.map((item, index) => ({
+            name: item,
+            index,
+        }));
 
         //init Columns
         const firstItem = items[0];
