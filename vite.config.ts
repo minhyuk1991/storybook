@@ -37,6 +37,7 @@ export default defineConfig({
     resolve: {
         dedupe: ['@roxi/routify'],
         alias: {
+            svelte: path.resolve(__dirname, 'node_modules/svelte'),
             '@': path.resolve(__dirname, './src'),
         },
     },
