@@ -29,7 +29,7 @@
         "checkJs": true,
         "types": ["node", "node-fetch", "jest", "vite/client"],
         "paths": {
-            "@/*": ["src/*"]
+            // "@/*": ["src/*"]
         }
     },
     "include": [
