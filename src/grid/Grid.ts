@@ -49,6 +49,7 @@ export class Grid<T extends { [key: string]: number | string }> {
             for (const key in firstItem) {
                 if (Object.prototype.hasOwnProperty.call(firstItem, key)) {
                     this.renderColumns.push(key);
+                    console.log(this.renderColumns);
                 }
             }
         }
@@ -58,10 +59,11 @@ export class Grid<T extends { [key: string]: number | string }> {
             if (typeof item.id !== 'string') throw new Error('item.id is not string');
             if (typeof item.id === 'string') this.renderRows.set(item.id, item);
         });
+        console.log('this.items', this.items);
     }
 
     getRenderRowList() {
-        return this.renderRows;
+        return this.items;
     }
 
     getRenderColumnList() {
@@ -81,7 +83,29 @@ export class Grid<T extends { [key: string]: number | string }> {
 
     _rowChange() {}
 
-    _columnChange() {}
+    _columnChange(from: number, to: number) {
+        const errorCase =
+            from === to ||
+            from < 0 ||
+            to < 0 ||
+            from > this.columns.length - 1 ||
+            to > this.columns.length - 1;
+        if (errorCase) throw new Error('error');
+
+        const nextColumns = [...this.columns];
+
+        nextColumns.splice(to, 0, nextColumns.splice(from, 1)[0]);
+
+        for (let i = from + 1; i <= to; i++) {
+            nextColumns[i].index -= 1;
+        }
+
+        this.columns = nextColumns;
+
+        this.renderColumns = nextColumns.map((item) => item.name as string);
+
+        console.log(nextColumns);
+    }
 
     _columnFloat() {}
 

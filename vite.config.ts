@@ -31,7 +31,6 @@ export default defineConfig({
     optimizeDeps: {
         exclude: ['@roxi/routify'],
     },
-    base: '.',
     build: {
         target: 'esnext',
     },

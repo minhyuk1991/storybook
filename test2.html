@@ -21,24 +21,67 @@
     </head>
     <body>
         <script>
-            class Human {
-                #name;
-                #age;
-                aasdasdasdasd;
-                constructor(name, age) {
-                    this.#name = name;
-                    this.#age = age;
-                    this.aasdasdasdasd = true;
-                }
+            const a = 10;
+            const b = 20;
 
-                set age(number) {
-                    this.#age = number;
-                }
+            const person1 = {
+                age: 10,
+                name: 'aa1',
+            };
+            const person2 = {
+                age: 10,
+                name: 'aa2',
+            };
+            const person3 = {
+                age: 10,
+                name: 'a3a',
+            };
+            const person4 = {
+                age: 10,
+                name: 'a4a',
+            };
+
+            function createPersonMaker() {
+                let name = 'a';
+                let age = 0;
+
+                return () => {
+                    name = name + 'a';
+                    return {
+                        name,
+                        age: age++,
+                        speakNameAndAge: function () {
+                            return this.age + this.name;
+                        },
+                    };
+                };
             }
 
-            const h1 = new Human('aa', 33);
-            h1.age = 300;
-            console.log(h1);
+            function PersonMaker() {
+                (this.age = 10), (this.name = 'aa');
+            }
+            PersonMaker.prototype.speakNameAndAge = function () {
+                return this.age + this.name;
+            };
+            const aa = new PersonMaker();
+
+            console.log(aa.speakNameAndAge());
+
+            const personMaker = createPersonMaker();
+
+            const person5 = personMaker();
+            const person6 = personMaker();
+            const person7 = personMaker();
+
+            const result = [];
+            for (let index = 0; index < 100; index++) {
+                result.push(personMaker());
+            }
+            const people = [person5, person6, person7];
+            console.log(result[0].speakNameAndAge);
+            // const speakNameAndAge = (name, age) => {
+            //     return name + age;
+            // };
         </script>
     </body>
 </html>
