@@ -28,7 +28,6 @@ jobs:
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./dist
-                  cname: your-custom-domain.com # custom domain
                   enable_jekyll: false # disable Jekyll
                   clean: true # remove old files
                   commit_message: Deploy to GitHub Pages # commit message
