@@ -34,7 +34,7 @@ export default defineConfig({
     build: {
         target: 'esnext',
     },
-    base: './',
+    base: '/storybook/',
     resolve: {
         dedupe: ['@roxi/routify'],
         alias: {
