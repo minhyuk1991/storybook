@@ -25,9 +25,8 @@
 
 <script lang="ts">
     import VirtualList from './Vl.svelte';
-    export let rowsData: { [type: string]: any }[];
-    export let renderColumnList: string[];
-    console.log('rowsData', rowsData);
+    export let rowsData: { [type: string]: any }[] = [];
+    export let renderColumnList: string[] = [];
     let start: number;
     let end: number;
 </script>
