@@ -4,7 +4,7 @@
     import LineChartCell from '../components/svelte-data-grid/src/lineChart-cell.svelte';
     import PercentageChartCell from '../components/svelte-data-grid/src/percentageChart-cell.svelte';
 
-    import { createMockDataList } from '../mockData';
+    import { createMockDataList, createMockDataListPromise } from '../mockData';
     import { onDestroy } from 'svelte';
 
     const myColumnDefinitions = [
@@ -49,8 +49,18 @@
 
     const saveNewColumnOrder = () => {};
 
-    let mockData = createMockDataList(20000);
-    const interValMockData = setInterval(() => (mockData = createMockDataList(20000)), 1000);
+    let mockData = createMockDataList(400);
+
+    const interValMockData = setInterval(() => {
+        createMockDataListPromise(400)
+            .then((result) => {
+                mockData = result;
+                console.log('result', result);
+                console.log(mockData);
+                return (mockData = result);
+            })
+            .catch(() => {});
+    }, 1000);
     onDestroy(() => {
         clearInterval(interValMockData);
     });
@@ -59,13 +69,15 @@
 </script>
 
 <Layout>
-    <DataGrid
-        rows="{mockData}"
-        allowColumnReordering="{true}"
-        columns="{myColumnDefinitions}"
-        on:columnOrderUpdated="{saveNewColumnOrder}"
-        rowHeightHeader="{40}"
-    />
+    {#if mockData}
+        <DataGrid
+            rows="{mockData}"
+            allowColumnReordering="{true}"
+            columns="{myColumnDefinitions}"
+            on:columnOrderUpdated="{saveNewColumnOrder}"
+            rowHeightHeader="{40}"
+        />
+    {/if}
 
     <!-- <div class="lin-chart-cell">
 	  <svg width="960" height="520" />

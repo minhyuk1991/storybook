@@ -895,14 +895,14 @@
     });
 </script>
 
-<svelte:window
+<!-- <svelte:window
     on:mouseup="{onMouseUp}"
     on:mouseup="{(e) => {}}"
     on:mousemove="{onMouseMove}"
     on:mousemove="{(e) => {}}"
     on:keydown="{onWindowKeyDown}"
     on:keydown="{(e) => {}}"
-/>
+/> -->
 <div
     class="data-grid-wrapper {__resizing || __columnDragging ? 'resizing' : ''}"
     style="padding-top: {rowHeightHeader}px;"
