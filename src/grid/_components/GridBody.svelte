@@ -25,22 +25,25 @@
         position: relative;
         white-space: nowrap;
     }
+    .tbody.overflow_x {
+        width: calc(1200px - 17px);
+    }
 </style>
 
 <script lang="ts">
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
     export let renderColumnList: string[] = [];
+    export let scrollHandler: (
+        e: UIEvent & {
+            currentTarget: EventTarget & HTMLDivElement;
+        },
+    ) => void;
     let start: number;
     let end: number;
 </script>
 
 <div class="tbody">
-    <!-- <div class="row">
-            {#each renderColumnList as cell}
-                <div>{row[cell]}</div>
-            {/each}
-        </div> -->
     <VirtualList
         items="{rowsData}"
         height="500px"
@@ -48,31 +51,12 @@
         bind:start="{start}"
         bind:end="{end}"
         let:item
+        scrollHandler="{scrollHandler}"
     >
         <div class="row">
             {#each renderColumnList as cell}
                 <div>{item[cell]}</div>
             {/each}
         </div>
-        <!-- {#each rowsData as row}
-            <div class="row">
-                {#each item as cell}
-                    {console.log()}
-                    <div>row{cell}</div>
-                {/each}
-            </div>
-        {/each} -->
     </VirtualList>
-    <!-- <div class="row">
-            {#each renderColumnList as cell}
-                <div>{row[cell]}</div>
-            {/each}
-        </div> -->
-    <!-- {#each rowsData as row}
-            <div class="row">
-                {#each renderColumnList as cell}
-                    <div>{row[cell]}</div>
-                {/each}
-            </div>
-        {/each} -->
 </div>

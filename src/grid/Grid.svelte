@@ -18,6 +18,7 @@
     import { createMockDataList } from '../mockData';
     import { Grid } from './Grid';
     import GridBody from './_components/GridBody.svelte';
+    import GridHeader from './_components/GridHeader.svelte';
     let mockData = createMockDataList(400);
 
     const test = new Grid(mockData, { resizable: true });
@@ -27,6 +28,21 @@
     // let rowsData = [...renderRowList].map((item) => item[1]).map((item) => Object.values(item));
     let renderRowList = test.items;
     let count = 0;
+
+    let scrollX = 0;
+
+    const scrollHandler = (
+        e: UIEvent & {
+            currentTarget: EventTarget & HTMLDivElement;
+        },
+    ) => {
+        scrollX = (e.target as HTMLDivElement).scrollLeft;
+        console.log((e.target as HTMLDivElement).scrollLeft, 'scrollLeft');
+    };
+
+    $: {
+        console.log(scrollX, 'scrollX2');
+    }
 </script>
 
 <div class="test">
@@ -41,8 +57,12 @@
     >
     <!-- <div class="table_wrapper"> -->
     <!-- <div class="table"> -->
-    <!-- <GridHeader grid="{test}" renderColumnList="{renderColumnList}" /> -->
-    <GridBody rowsData="{renderRowList}" renderColumnList="{renderColumnList}" />
+    <GridHeader scrollX="{scrollX}" grid="{test}" renderColumnList="{renderColumnList}" />
+    <GridBody
+        scrollHandler="{scrollHandler}"
+        rowsData="{renderRowList}"
+        renderColumnList="{renderColumnList}"
+    />
     <!-- </div> -->
     <!-- </div> -->
 </div>

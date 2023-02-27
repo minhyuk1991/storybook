@@ -36,7 +36,11 @@
     export let itemHeight: VirtualListProps['itemHeight'];
     export let start: VirtualListProps['start'] = 0;
     export let end: VirtualListProps['end'] = 0;
-
+    export let scrollHandler: (
+        e: UIEvent & {
+            currentTarget: EventTarget & HTMLDivElement;
+        },
+    ) => void;
     // local state
     let heightMap: number[] = [];
     let rows: HTMLCollectionOf<HTMLDivElement>;
@@ -167,6 +171,7 @@
     bind:this="{viewport}"
     bind:offsetHeight="{viewportHeight}"
     on:scroll="{handleScroll}"
+    on:scroll="{scrollHandler}"
     style="height: {height};"
 >
     <svelte-virtual-list-contents
