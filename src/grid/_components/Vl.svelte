@@ -12,7 +12,6 @@
     }
 
     svelte-virtual-list-row {
-        overflow: hidden;
     }
 </style>
 

@@ -20,6 +20,10 @@
     }
     .tbody {
         margin-top: 4px;
+        width: 1200px;
+        overflow: auto;
+        position: relative;
+        white-space: nowrap;
     }
 </style>
 
@@ -40,17 +44,16 @@
     <VirtualList
         items="{rowsData}"
         height="500px"
-        itemHeight="{30}"
+        itemHeight="{25}"
         bind:start="{start}"
         bind:end="{end}"
         let:item
     >
-        <li>aa</li>
-        <!-- <div class="row">
-                {#each renderColumnList as cell}
-                    <div>{row[cell]}</div>
-                {/each}
-            </div> -->
+        <div class="row">
+            {#each renderColumnList as cell}
+                <div>{item[cell]}</div>
+            {/each}
+        </div>
         <!-- {#each rowsData as row}
             <div class="row">
                 {#each item as cell}
