@@ -33,7 +33,11 @@
 <script lang="ts">
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
-    export let renderColumnList: string[] = [];
+    export let renderColumnList: Array<
+        Record<string, string> & {
+            name: string;
+        }
+    > = [];
     export let scrollY: number;
     export let scrollX: number;
 
@@ -59,7 +63,7 @@
     >
         <div class="row">
             {#each renderColumnList as cell}
-                <div>{item[cell]}</div>
+                <div>{item[cell.name]}</div>
             {/each}
         </div>
     </VirtualList>

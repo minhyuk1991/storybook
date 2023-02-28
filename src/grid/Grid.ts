@@ -1,4 +1,4 @@
-type Option = { resizable?: boolean; isReorderLock?: boolean };
+type Option = { resizable?: boolean; isReorder?: boolean };
 
 // type RenderColumn = {
 //     name: string;
@@ -22,18 +22,10 @@ export class Grid<T extends { [key: string]: number | string }> {
 
     renderRows: Map<string, T>;
 
-    renderColumns: string[];
+    renderColumns: Record<string, string>[];
 
     constructor(items: T[], option?: Option) {
         this.items = items;
-        // this.columns = items.length > 0 ? (Object.keys(items[0]) as Array<keyof T>) : [];
-        // this.columns =
-        //     items.length > 0
-        //         ? (Object.keys(items[0].map((item, index) => ({ index, item }))) as Array<{
-        //               index: keyof T;
-        //               item: string;
-        //           }>)
-        //         : [];
         this.renderRows = new Map();
         this.renderColumns = [];
 
@@ -47,9 +39,11 @@ export class Grid<T extends { [key: string]: number | string }> {
         const firstItem = items[0];
         if (firstItem) {
             for (const key in firstItem) {
-                if (Object.prototype.hasOwnProperty.call(firstItem, key)) {
-                    this.renderColumns.push(key);
-                    console.log(this.renderColumns);
+                const hasProperty = Object.prototype.hasOwnProperty.call(firstItem, key);
+                const insertColumnObj: Record<string, string> = {};
+                if (hasProperty) {
+                    insertColumnObj.name = key;
+                    this.renderColumns.push(insertColumnObj);
                 }
             }
         }
@@ -102,7 +96,7 @@ export class Grid<T extends { [key: string]: number | string }> {
 
         this.columns = nextColumns;
 
-        this.renderColumns = nextColumns.map((item) => item.name as string);
+        // this.renderColumns = nextColumns.map((item) => item);
 
         console.log(nextColumns);
     }

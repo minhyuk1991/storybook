@@ -37,16 +37,17 @@
     import { v4 as uuidv4 } from 'uuid';
 
     export let grid: Grid<MockData>;
-    export let renderColumnList: string[];
+    export let renderColumnList: {
+        name: string;
+        ['key']: string;
+    }[];
     export let scrollX: number;
     let scrollEl: HTMLDivElement;
     let elementId = uuidv4();
+
     onMount(() => {
         const headerEl = document.querySelector('.header') as HTMLDivElement;
-        headerEl.addEventListener('click', () => {
-            console.log('aa');
-            console.log('grid', grid);
-        });
+        headerEl.addEventListener('click', () => {});
     });
 
     $: {
@@ -59,7 +60,6 @@
         scrollEl = document.querySelector(`.class-${elementId}`) as HTMLDivElement;
         scrollEl.scrollLeft = scrollX;
         scrollEl.scrollTop = scrollY;
-        console.log(scrollEl.scrollLeft, 'aa');
     });
 </script>
 
@@ -68,7 +68,7 @@
     <div class="header">
         <div class="row">
             {#each renderColumnList as cell}
-                <div draggable="true">{cell}</div>
+                <div draggable="true">{cell.name}</div>
             {/each}
             <div class=""></div>
         </div>

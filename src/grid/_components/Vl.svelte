@@ -137,10 +137,8 @@
         // prevent jumping if we scrolled up into unknown territory
         if (start! < oldStart!) {
             await tick();
-
             let expectedHeight = 0;
             let actualHeight = 0;
-
             for (let i = start; i! < oldStart!; i! += 1) {
                 if (rows[i! - start!]) {
                     expectedHeight += heightMap[i!];
