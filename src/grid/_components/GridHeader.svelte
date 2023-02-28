@@ -39,7 +39,6 @@
     export let grid: Grid<MockData>;
     export let renderColumnList: {
         name: string;
-        ['key']: string;
     }[];
     export let scrollX: number;
     let scrollEl: HTMLDivElement;

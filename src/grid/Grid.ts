@@ -22,7 +22,9 @@ export class Grid<T extends { [key: string]: number | string }> {
 
     renderRows: Map<string, T>;
 
-    renderColumns: Record<string, string>[];
+    renderColumns: {
+        name: string;
+    }[];
 
     constructor(items: T[], option?: Option) {
         this.items = items;
@@ -40,9 +42,11 @@ export class Grid<T extends { [key: string]: number | string }> {
         if (firstItem) {
             for (const key in firstItem) {
                 const hasProperty = Object.prototype.hasOwnProperty.call(firstItem, key);
-                const insertColumnObj: Record<string, string> = {};
+                let insertColumnObj: {
+                    name: string;
+                };
                 if (hasProperty) {
-                    insertColumnObj.name = key;
+                    insertColumnObj = { name: key };
                     this.renderColumns.push(insertColumnObj);
                 }
             }
