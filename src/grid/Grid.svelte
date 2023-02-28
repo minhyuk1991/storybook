@@ -19,11 +19,12 @@
     import { Grid } from './Grid';
     import GridBody from './_components/GridBody.svelte';
     import GridHeader from './_components/GridHeader.svelte';
-    let mockData = createMockDataList(400);
+    let mockData = createMockDataList(40000);
 
     const test = new Grid(mockData, { resizable: true });
 
     let renderColumnList = test.getRenderColumnList();
+    console.log('renderColumnList', renderColumnList);
     // let renderRowList = test.getRenderRowList();
     // let rowsData = [...renderRowList].map((item) => item[1]).map((item) => Object.values(item));
     let renderRowList = test.items;
@@ -48,7 +49,7 @@
         on:click="{() => {
             test._columnChange(0, 7);
             const next = test.getRenderColumnList();
-            renderColumnList = [...next];
+            renderColumnList = next;
         }}">aaa</button
     >
     <!-- <div class="table_wrapper"> -->

@@ -1,16 +1,47 @@
 type Option = { resizable?: boolean; isReorder?: boolean };
 
-// type RenderColumn = {
-//     name: string;
-//     visible: boolean;
-//     width: '100%' | 'auto' | number;
-//     minWidth?: 'auto' | number;
-//     maxWidth?: 'auto' | number;
-//     resizable?: boolean;
-//     dragable?: boolean;
-// };
+const getKeys = <T extends object>(obj: T) => Object.keys(obj);
+const getColumns = (keys: string[]) =>
+    keys.map((item, index) => ({
+        isHidden: false,
+        isVisible: true,
+        name: item,
+        index,
+    }));
 
-// type RenderItem<T> = {};
+const getRenderColumn = <T extends { [key: string]: string | number }>(firstItem: T) => {
+    const result: {
+        name: string;
+    }[] = [];
+    for (const key in firstItem) {
+        const hasProperty = Object.prototype.hasOwnProperty.call(firstItem, key);
+        let insertColumnObj: {
+            name: string;
+        };
+        if (hasProperty) {
+            insertColumnObj = { name: key };
+            result.push(insertColumnObj);
+        }
+    }
+    return result;
+};
+
+const getRenderRows = <T extends { [key: string]: any }>(items: T[]) => {
+    const result = new Map();
+    items.forEach((item) => {
+        const value: { [key: string]: string } = {};
+        for (const key in item) {
+            if (Object.prototype.hasOwnProperty.call(item, key)) {
+                value[key] = {
+                    value: item[key],
+                };
+            }
+        }
+        if (typeof item.id !== 'string') throw new Error('item.id is not string');
+        if (typeof item.id === 'string') result.set(item.id, { item });
+    });
+    return result;
+};
 
 export class Grid<T extends { [key: string]: number | string }> {
     items: Array<T>;
@@ -18,6 +49,8 @@ export class Grid<T extends { [key: string]: number | string }> {
     columns: {
         name: keyof T;
         index: number;
+        isVisible: boolean;
+        isHidden: boolean;
     }[];
 
     renderRows: Map<string, T>;
@@ -27,37 +60,18 @@ export class Grid<T extends { [key: string]: number | string }> {
     }[];
 
     constructor(items: T[], option?: Option) {
+        const columnkeys = getKeys<T>(items[0]);
+
         this.items = items;
         this.renderRows = new Map();
+        this.columns = getColumns(columnkeys);
         this.renderColumns = [];
 
-        const columnkeys = Object.keys(items[0]) as Array<keyof T>;
-        this.columns = columnkeys.map((item, index) => ({
-            name: item,
-            index,
-        }));
-
         //init Columns
-        const firstItem = items[0];
-        if (firstItem) {
-            for (const key in firstItem) {
-                const hasProperty = Object.prototype.hasOwnProperty.call(firstItem, key);
-                let insertColumnObj: {
-                    name: string;
-                };
-                if (hasProperty) {
-                    insertColumnObj = { name: key };
-                    this.renderColumns.push(insertColumnObj);
-                }
-            }
-        }
+        this.renderColumns = getRenderColumn(items[0]);
 
         //init Rows
-        items.forEach((item) => {
-            if (typeof item.id !== 'string') throw new Error('item.id is not string');
-            if (typeof item.id === 'string') this.renderRows.set(item.id, item);
-        });
-        console.log('this.items', this.items);
+        this.renderRows = getRenderRows(items);
     }
 
     getRenderRowList() {
@@ -65,7 +79,7 @@ export class Grid<T extends { [key: string]: number | string }> {
     }
 
     getRenderColumnList() {
-        return this.renderColumns;
+        return this.columns.filter((item) => item.isVisible);
     }
 
     setColumnOption(columnOptions: ({ [key: string]: unknown } & { dataName: string })[]) {
@@ -88,6 +102,7 @@ export class Grid<T extends { [key: string]: number | string }> {
             to < 0 ||
             from > this.columns.length - 1 ||
             to > this.columns.length - 1;
+
         if (errorCase) throw new Error('error');
 
         const nextColumns = [...this.columns];
