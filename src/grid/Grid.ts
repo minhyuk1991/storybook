@@ -1,4 +1,4 @@
-type Option = { resizable?: boolean };
+type Option = { resizable?: boolean; isReorderLock?: boolean };
 
 // type RenderColumn = {
 //     name: string;

@@ -41,6 +41,7 @@
             currentTarget: EventTarget & HTMLDivElement;
         },
     ) => void;
+    export let scrollX: number;
     // local state
     let heightMap: number[] = [];
     let rows: HTMLCollectionOf<HTMLDivElement>;
@@ -148,7 +149,7 @@
             }
 
             const d = actualHeight - expectedHeight;
-            viewport.scrollTo(0, scrollTop + d);
+            viewport.scrollTo(scrollX, scrollTop + d);
         }
 
         // TODO if we overestimated the space these

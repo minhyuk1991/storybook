@@ -22,7 +22,11 @@
         width: 1200px;
         overflow: hidden;
         position: relative;
+        overflow-y: scroll;
         white-space: nowrap;
+    }
+    .header-wrapper::-webkit-scrollbar {
+        background: transparent;
     }
 </style>
 
@@ -54,6 +58,7 @@
     onMount(() => {
         scrollEl = document.querySelector(`.class-${elementId}`) as HTMLDivElement;
         scrollEl.scrollLeft = scrollX;
+        scrollEl.scrollTop = scrollY;
         console.log(scrollEl.scrollLeft, 'aa');
     });
 </script>
@@ -65,6 +70,7 @@
             {#each renderColumnList as cell}
                 <div draggable="true">{cell}</div>
             {/each}
+            <div class=""></div>
         </div>
     </div>
 </div>

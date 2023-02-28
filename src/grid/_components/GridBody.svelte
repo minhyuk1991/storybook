@@ -34,6 +34,9 @@
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
     export let renderColumnList: string[] = [];
+    export let scrollY: number;
+    export let scrollX: number;
+
     export let scrollHandler: (
         e: UIEvent & {
             currentTarget: EventTarget & HTMLDivElement;
@@ -52,6 +55,7 @@
         bind:end="{end}"
         let:item
         scrollHandler="{scrollHandler}"
+        scrollX="{scrollX}"
     >
         <div class="row">
             {#each renderColumnList as cell}

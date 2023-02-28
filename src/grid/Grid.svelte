@@ -29,20 +29,16 @@
     let renderRowList = test.items;
     let count = 0;
 
-    let scrollX = 0;
-
+    let scrollX: number;
+    let scrollY: number;
     const scrollHandler = (
         e: UIEvent & {
             currentTarget: EventTarget & HTMLDivElement;
         },
     ) => {
         scrollX = (e.target as HTMLDivElement).scrollLeft;
-        console.log((e.target as HTMLDivElement).scrollLeft, 'scrollLeft');
+        scrollY = (e.target as HTMLDivElement).scrollTop;
     };
-
-    $: {
-        console.log(scrollX, 'scrollX2');
-    }
 </script>
 
 <div class="test">
@@ -61,6 +57,8 @@
     <GridBody
         scrollHandler="{scrollHandler}"
         rowsData="{renderRowList}"
+        scrollY="{scrollY}"
+        scrollX="{scrollX}"
         renderColumnList="{renderColumnList}"
     />
     <!-- </div> -->
