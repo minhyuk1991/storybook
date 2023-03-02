@@ -1,118 +1,144 @@
 type Option = { resizable?: boolean; isReorder?: boolean };
 
+export type ColumnDataType = 'string' | 'int' | 'stringInt' | 'email' | 'url';
+
+export type InputColumnConfig = {
+    name: string;
+    type: ColumnDataType;
+    accessor: string;
+    columnWidth?: string;
+    columnFixed?: boolean;
+    onlyDev?: boolean;
+    isHide?: boolean;
+};
+export type InputColumnConfigs = InputColumnConfig[];
+export type DerivedColumnConfig = InputColumnConfig & {
+    columnWidth: string;
+    columnFixed: boolean;
+    onlyDev: boolean;
+    isHide: boolean;
+};
+export type DerivedColumnConfigs = DerivedColumnConfig[];
+
 export type RenderColumnList = {
     name: string;
     isHidden: boolean;
 }[];
-const getKeys = <T extends object>(obj: T) => Object.keys(obj);
-const getColumns = (keys: string[]) =>
-    keys.map((item, index) => {
-        console.log(item);
-        return {
-            isHidden: item === 'id' ? true : false,
-            isVisible: true,
-            name: item,
-            index,
-        };
-    });
+// const getKeys = <T extends object>(obj: T) => Object.keys(obj);
+// const getColumns = (keys: string[]) =>
+//     keys.map((item, index) => {
+//         console.log(item);
+//         return {
+//             isHidden: item === 'id' ? true : false,
+//             isVisible: true,
+//             name: item,
+//             index,
+//         };
+//     });
 
-const getRenderColumn = <T extends { [key: string]: string | number }>(firstItem: T) => {
-    const result: {
-        name: string;
-    }[] = [];
-    for (const key in firstItem) {
-        const hasProperty = Object.prototype.hasOwnProperty.call(firstItem, key);
-        let insertColumnObj: {
-            name: string;
-        };
-        if (hasProperty) {
-            insertColumnObj = { name: key };
-            result.push(insertColumnObj);
-        }
-    }
-    return result;
+// const getRenderColumn = <T extends { [key: string]: string | number }>(firstItem: T) => {
+//     const result: {
+//         name: string;
+//     }[] = [];
+//     for (const key in firstItem) {
+//         const hasProperty = Object.prototype.hasOwnProperty.call(firstItem, key);
+//         let insertColumnObj: {
+//             name: string;
+//         };
+//         if (hasProperty) {
+//             insertColumnObj = { name: key };
+//             result.push(insertColumnObj);
+//         }
+//     }
+//     return result;
+// };
+
+const getRenderRows = <T>(items: T[]) => {
+    return items;
 };
-
-const getRenderRows = <T extends { [key: string]: any }>(items: T[]) => {
-    const result = new Map();
-    items.forEach((item) => {
-        const value: Record<string, any> = {};
-        for (const key in item) {
-            if (Object.prototype.hasOwnProperty.call(item, key)) {
-                if (key === 'id') {
-                    value[key as string] = {
-                        value: item[key],
-                        isHidden: true,
-                    } as Record<string, any> & { isHidden: boolean };
-                }
-                if (key !== 'id') {
-                    value[key as string] = {
-                        value: item[key],
-                        isHidden: false,
-                    } as Record<string, any> & { isHidden: boolean };
-                }
-            }
-        }
-        if (typeof item.id !== 'string') throw new Error('item.id is not string');
-        if (typeof item.id === 'string') result.set(item.id, value);
-    });
-    return result;
+const createItem = ({
+    name,
+    type,
+    accessor,
+    columnWidth = 'auto',
+    columnFixed = false,
+    onlyDev = false,
+    isHide = false,
+}: {
+    name: string;
+    type: ColumnDataType;
+    accessor: string;
+    columnWidth?: string | undefined;
+    columnFixed?: boolean | undefined;
+    onlyDev?: boolean | undefined;
+    isHide?: boolean | undefined;
+}) => {
+    return {
+        name,
+        type,
+        accessor,
+        columnWidth,
+        columnFixed,
+        onlyDev,
+        isHide,
+    };
 };
-
 export class Grid<T extends { [key: string]: number | string }> {
     items: Array<T>;
 
-    columns: {
-        name: keyof T;
-        index: number;
-        isVisible: boolean;
-        isHidden: boolean;
-    }[];
+    columns: DerivedColumnConfigs;
 
-    renderRows: Map<string, T>;
-
-    renderColumns: {
-        name: string;
-    }[];
+    renderRows: T[];
 
     constructor(items: T[], option?: Option) {
-        const columnkeys = getKeys<T>(items[0]);
+        // const columnkeys = getKeys<T>(items[0]);
 
         this.items = items;
-        this.renderRows = new Map();
-        this.columns = getColumns(columnkeys);
-        this.renderColumns = [];
+        this.renderRows = [];
+        this.columns = [];
+        // this.columns = getColumns(columnkeys);
+        // this.columns = getColumns(columnkeys);
 
         //init Columns
-        this.renderColumns = getRenderColumn(items[0]);
+        // this.renderColumns = getRenderColumn(items[0]);
 
         //init Rows
-        this.renderRows = getRenderRows(items);
+        this.renderRows = getRenderRows<T>(items);
         console.log(this.renderRows);
     }
 
-    getRenderRowList() {
+    addColumn(config: InputColumnConfig | InputColumnConfigs) {
+        const isArray = Array.isArray(config);
+
+        if (isArray) {
+            this.columns = config.map((column) => {
+                const derivedColumn = createItem(column);
+                return derivedColumn;
+            });
+        }
+
+        if (!isArray) {
+            const derivedColumn = createItem(config);
+            this.columns.push(derivedColumn);
+        }
+    }
+
+    // getRenderColumnList() {
+    //     return this.columns.filter((item) => item.isVisible);
+    // }
+
+    getColumns() {
+        return this.columns;
+    }
+
+    getRows() {
         return this.items;
     }
+    // setColumnOption(columnOptions: ({ [key: string]: unknown } & { dataName: string })[]) {
+    //     columnOptions.map((item) => {});
+    // }
 
-    getRenderColumnList() {
-        return this.columns.filter((item) => item.isVisible);
-    }
-
-    setColumnOption(columnOptions: ({ [key: string]: unknown } & { dataName: string })[]) {
-        columnOptions.map((item) => {
-            // const target = this.renderColumns.get();
-            // if (!target) throw new Error('dataName not found');
-            // const nextValue = { ...target, ...item };
-            // this.renderColumns.set(item.dataName, nextValue);
-        });
-    }
-
-    _setRenderList() {}
-
-    _rowChange() {}
-
-    _columnChange(from: number, to: number) {
+    columnChange(from: number, to: number) {
         const errorCase =
             from === to ||
             from < 0 ||
@@ -136,12 +162,4 @@ export class Grid<T extends { [key: string]: number | string }> {
 
         console.log(nextColumns);
     }
-
-    _columnFloat() {}
-
-    _columnDown() {}
-
-    _columnMove() {}
-
-    columnChange() {}
 }

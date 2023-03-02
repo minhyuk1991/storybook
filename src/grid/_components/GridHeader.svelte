@@ -31,9 +31,9 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { v4 as uuidv4 } from 'uuid';
-    import type { RenderColumnList } from '../Grid';
+    import type { DerivedColumnConfig } from '../Grid';
 
-    export let renderColumnList: RenderColumnList;
+    export let renderColumnList: DerivedColumnConfig[];
     export let scrollX: number;
     export let isDevMode: boolean;
     let scrollEl: HTMLDivElement;
@@ -46,6 +46,7 @@
 
     $: {
         if (scrollEl) {
+            console.log(scrollEl);
             scrollEl.scrollLeft = scrollX;
         }
     }
@@ -62,11 +63,11 @@
     <div class="header">
         <div class="row">
             {#each renderColumnList as cell}
-                {#if isDevMode || cell.isHidden === false}
+                <!-- {console.log(cell.onlyDev)} -->
+                {#if !cell.onlyDev}
                     <div draggable="true">{cell.name}</div>
                 {/if}
             {/each}
-            <div class=""></div>
         </div>
     </div>
 </div>

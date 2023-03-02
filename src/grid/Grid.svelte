@@ -26,15 +26,80 @@
     export let isDevMode: boolean;
     const test = new Grid(mockData, { resizable: true });
     $: {
-        console.log(isDevMode, 'isDevModeisDevMode');
     }
-    let renderColumnList = test.getRenderColumnList();
-    console.log('renderColumnList', renderColumnList);
-    // let renderRowList = test.getRenderRowList();
+
+    test.addColumn([
+        {
+            name: 'id',
+            type: 'string',
+            accessor: 'id',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: true,
+            isHide: false,
+        },
+        {
+            name: 'hostName',
+            type: 'string',
+            accessor: 'hostName',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: false,
+            isHide: false,
+        },
+        {
+            name: 'top',
+            type: 'string',
+            accessor: 'top',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: false,
+            isHide: false,
+        },
+        {
+            name: 'cpu',
+            type: 'string',
+            accessor: 'cpu',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: false,
+            isHide: false,
+        },
+        {
+            name: 'mem',
+            type: 'string',
+            accessor: 'mem',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: false,
+            isHide: false,
+        },
+        {
+            name: 'diskName',
+            type: 'string',
+            accessor: 'diskName',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: false,
+            isHide: false,
+        },
+        {
+            name: 'disk',
+            type: 'string',
+            accessor: 'disk',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: false,
+            isHide: false,
+        },
+    ]);
+    let renderColumnList = test.getColumns();
+    let renderRowList = test.getRows();
     // let rowsData = [...renderRowList].map((item) => item[1]).map((item) => Object.values(item));
-    let renderRowList = test.items;
+    // let renderRowList = test.items;
     let count = 0;
     let isSelect = false;
+
     let scrollX: number;
     let scrollY: number;
     const scrollHandler = (
@@ -59,13 +124,13 @@
 <div class="{`${isSelect ? 'select' : ''} test grid`}" on:click="{() => {}}">
     <button on:click="{() => count++}">count+1</button>
     <p>{count}</p>
-    <button
+    <!-- <button
         on:click="{() => {
             test._columnChange(0, 7);
             const next = test.getRenderColumnList();
             renderColumnList = next;
         }}">chage column</button
-    >
+    > -->
     <GridHeader isDevMode="{isDevMode}" scrollX="{scrollX}" renderColumnList="{renderColumnList}" />
     <GridBody
         isDevMode="{isDevMode}"
