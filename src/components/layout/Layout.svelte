@@ -11,14 +11,10 @@
     let isPressedKey0 = false;
 
     $: {
-        const isDeveModeCase = isPressedKeyD && isPressedKey0;
-        console.log(isDeveModeCase);
-        if (isDeveModeCase) {
-            $isDevMode = true;
-            console.log('isDevMode', $isDevMode);
-        }
-        if (!isDeveModeCase) {
-            $isDevMode = false;
+        const isDeveModeToggleCase = isPressedKeyD && isPressedKey0;
+        console.log(isDeveModeToggleCase);
+        if (isDeveModeToggleCase) {
+            $isDevMode = !$isDevMode;
             console.log('isDevMode', $isDevMode);
         }
     }

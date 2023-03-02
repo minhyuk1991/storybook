@@ -12,6 +12,9 @@
     }
     .table {
     }
+    .test.select {
+        border: 3px solid gold;
+    }
 </style>
 
 <script lang="ts">
@@ -31,7 +34,7 @@
     // let rowsData = [...renderRowList].map((item) => item[1]).map((item) => Object.values(item));
     let renderRowList = test.items;
     let count = 0;
-
+    let isSelect = false;
     let scrollX: number;
     let scrollY: number;
     const scrollHandler = (
@@ -42,9 +45,18 @@
         scrollX = (e.target as HTMLDivElement).scrollLeft;
         scrollY = (e.target as HTMLDivElement).scrollTop;
     };
+
+    const a = (
+        e: MouseEvent & {
+            currentTarget: EventTarget & Window;
+        },
+    ) => {
+        console.log((e.target as HTMLElement).classList);
+    };
 </script>
 
-<div class="test">
+<svelte:window on:click="{a}" />
+<div class="{`${isSelect ? 'select' : ''} test grid`}" on:click="{() => {}}">
     <button on:click="{() => count++}">count+1</button>
     <p>{count}</p>
     <button
