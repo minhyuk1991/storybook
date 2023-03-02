@@ -29,16 +29,25 @@ const getRenderColumn = <T extends { [key: string]: string | number }>(firstItem
 const getRenderRows = <T extends { [key: string]: any }>(items: T[]) => {
     const result = new Map();
     items.forEach((item) => {
-        const value: { [key: string]: string } = {};
+        const value: Record<string, any> = {};
         for (const key in item) {
             if (Object.prototype.hasOwnProperty.call(item, key)) {
-                value[key] = {
-                    value: item[key],
-                };
+                if (key === 'id') {
+                    value[key as string] = {
+                        value: item[key],
+                        isHidden: true,
+                    } as Record<string, any> & { isHidden: boolean };
+                }
+                if (key !== 'id') {
+                    value[key as string] = {
+                        value: item[key],
+                        isHidden: false,
+                    } as Record<string, any> & { isHidden: boolean };
+                }
             }
         }
         if (typeof item.id !== 'string') throw new Error('item.id is not string');
-        if (typeof item.id === 'string') result.set(item.id, { item });
+        if (typeof item.id === 'string') result.set(item.id, value);
     });
     return result;
 };
@@ -72,6 +81,7 @@ export class Grid<T extends { [key: string]: number | string }> {
 
         //init Rows
         this.renderRows = getRenderRows(items);
+        console.log(this.renderRows);
     }
 
     getRenderRowList() {

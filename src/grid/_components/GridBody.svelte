@@ -33,11 +33,9 @@
 <script lang="ts">
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
-    export let renderColumnList: Array<
-        Record<string, string> & {
-            name: string;
-        }
-    > = [];
+    export let renderColumnList: {
+        name: string;
+    }[];
     export let scrollY: number;
     export let scrollX: number;
 

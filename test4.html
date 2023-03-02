@@ -8,16 +8,37 @@
     </head>
     <body>
         <script>
-            class Person {
-                constructor(name, age) {
-                    this.name = name;
-                    this.age = age;
-                }
-
-                getAge() {
-                    return this.age;
+            class 붕어빵 {
+                반죽;
+                속;
+                constructor(반죽, 속) {
+                    this.반죽 = 반죽;
+                    this.속 = 속;
                 }
             }
+
+            class 팥붕 extends 붕어빵 {
+                constructor(반죽, 팥) {
+                    super(반죽, 팥);
+                    this.반죽 = 반죽;
+                    this.속 = 팥;
+                }
+            }
+
+            class 슈붕 extends 붕어빵 {
+                constructor(반죽, 슈) {
+                    if (슈.원재료 !== 슈) throw new Error('슈 넣으세요.');
+                    super(반죽, 슈);
+                    this.반죽 = 반죽;
+                    this.속 = 슈;
+                }
+            }
+
+            const 붕어빵1 = new 붕어빵('좋은반죽', '팥');
+            const 팥붕어빵1 = new 붕어빵('좋은반죽', '팥');
+            const 슈붕어빵1 = new 붕어빵('좋은반죽', '슈');
+
+            console.log(팥붕어빵1, 슈붕어빵1);
         </script>
     </body>
 </html>
