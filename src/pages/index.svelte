@@ -3,6 +3,6 @@
     import Grid from '../grid/Grid.svelte';
 </script>
 
-<Layout>
-    <Grid />
-</Layout>>
+<Layout let:isDevMode>
+    <Grid isDevMode="{isDevMode}" />
+</Layout>

@@ -31,14 +31,13 @@
 </style>
 
 <script lang="ts">
+    import type { RenderColumnList } from '../Grid';
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
-    export let renderColumnList: {
-        name: string;
-    }[];
+    export let renderColumnList: RenderColumnList;
     export let scrollY: number;
     export let scrollX: number;
-
+    export let isDevMode: boolean;
     export let scrollHandler: (
         e: UIEvent & {
             currentTarget: EventTarget & HTMLDivElement;
@@ -61,7 +60,9 @@
     >
         <div class="row">
             {#each renderColumnList as cell}
-                <div>{item[cell.name]}</div>
+                {#if isDevMode || cell.isHidden === false}
+                    <div>{item[cell.name]}</div>
+                {/if}
             {/each}
         </div>
     </VirtualList>

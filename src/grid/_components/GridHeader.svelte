@@ -14,8 +14,6 @@
         position: sticky;
         top: 0;
     }
-    .row > div {
-    }
 
     .header-wrapper {
         margin-top: 4px;
@@ -32,15 +30,12 @@
 
 <script lang="ts">
     import { onMount } from 'svelte';
-    import type { MockData } from '../../types';
-    import type { Grid } from '../Grid';
     import { v4 as uuidv4 } from 'uuid';
+    import type { RenderColumnList } from '../Grid';
 
-    export let grid: Grid<MockData>;
-    export let renderColumnList: {
-        name: string;
-    }[];
+    export let renderColumnList: RenderColumnList;
     export let scrollX: number;
+    export let isDevMode: boolean;
     let scrollEl: HTMLDivElement;
     let elementId = uuidv4();
 
@@ -67,7 +62,9 @@
     <div class="header">
         <div class="row">
             {#each renderColumnList as cell}
-                <div draggable="true">{cell.name}</div>
+                {#if isDevMode || cell.isHidden === false}
+                    <div draggable="true">{cell.name}</div>
+                {/if}
             {/each}
             <div class=""></div>
         </div>

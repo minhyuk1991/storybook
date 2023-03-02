@@ -20,9 +20,11 @@
     import GridBody from './_components/GridBody.svelte';
     import GridHeader from './_components/GridHeader.svelte';
     let mockData = createMockDataList(40000);
-
+    export let isDevMode: boolean;
     const test = new Grid(mockData, { resizable: true });
-
+    $: {
+        console.log(isDevMode, 'isDevModeisDevMode');
+    }
     let renderColumnList = test.getRenderColumnList();
     console.log('renderColumnList', renderColumnList);
     // let renderRowList = test.getRenderRowList();
@@ -50,18 +52,15 @@
             test._columnChange(0, 7);
             const next = test.getRenderColumnList();
             renderColumnList = next;
-        }}">aaa</button
+        }}">chage column</button
     >
-    <!-- <div class="table_wrapper"> -->
-    <!-- <div class="table"> -->
-    <GridHeader scrollX="{scrollX}" grid="{test}" renderColumnList="{renderColumnList}" />
+    <GridHeader isDevMode="{isDevMode}" scrollX="{scrollX}" renderColumnList="{renderColumnList}" />
     <GridBody
+        isDevMode="{isDevMode}"
         scrollHandler="{scrollHandler}"
         rowsData="{renderRowList}"
         scrollY="{scrollY}"
         scrollX="{scrollX}"
         renderColumnList="{renderColumnList}"
     />
-    <!-- </div> -->
-    <!-- </div> -->
 </div>

@@ -3,7 +3,60 @@
     import Sidebar from './sidebar/Sidebar.svelte';
     export let isOpen = false;
     const clickHandler = () => (isOpen = !isOpen);
+
+    import { writable } from 'svelte/store';
+    export const isDevMode = writable(false);
+
+    let isPressedKeyD = false;
+    let isPressedKey0 = false;
+
+    $: {
+        const isDeveModeCase = isPressedKeyD && isPressedKey0;
+        console.log(isDeveModeCase);
+        if (isDeveModeCase) {
+            $isDevMode = true;
+            console.log('isDevMode', $isDevMode);
+        }
+        if (!isDeveModeCase) {
+            $isDevMode = false;
+            console.log('isDevMode', $isDevMode);
+        }
+    }
+
+    $: {
+        console.log($isDevMode, 'isDevMode :', $isDevMode);
+    }
+
+    const handleKeydown = (
+        e: KeyboardEvent & {
+            currentTarget: EventTarget & Window;
+        },
+    ) => {
+        if (e.key === 'd') {
+            isPressedKeyD = true;
+            console.log('dd');
+        }
+        if (e.key === '0') {
+            isPressedKey0 = true;
+            console.log('0');
+        }
+    };
+
+    const handleKeyUp = (
+        e: KeyboardEvent & {
+            currentTarget: EventTarget & Window;
+        },
+    ) => {
+        if (e.key === 'd') {
+            isPressedKeyD = false;
+        }
+        if (e.key === '0') {
+            isPressedKey0 = false;
+        }
+    };
 </script>
+
+<svelte:window on:keydown="{handleKeydown}" on:keyup="{handleKeyUp}" />
 
 <div class="flex min-h-[100vh] w-full items-stretch">
     <Sidebar clickHandler="{clickHandler}" isOpen="{isOpen}" />
@@ -30,7 +83,7 @@
             >
                 Main contents
             </div>
-            <slot />
+            <slot isDevMode="{$isDevMode}" />
         </main>
     </div>
 </div>

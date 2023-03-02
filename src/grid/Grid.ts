@@ -1,13 +1,20 @@
 type Option = { resizable?: boolean; isReorder?: boolean };
 
+export type RenderColumnList = {
+    name: string;
+    isHidden: boolean;
+}[];
 const getKeys = <T extends object>(obj: T) => Object.keys(obj);
 const getColumns = (keys: string[]) =>
-    keys.map((item, index) => ({
-        isHidden: false,
-        isVisible: true,
-        name: item,
-        index,
-    }));
+    keys.map((item, index) => {
+        console.log(item);
+        return {
+            isHidden: item === 'id' ? true : false,
+            isVisible: true,
+            name: item,
+            index,
+        };
+    });
 
 const getRenderColumn = <T extends { [key: string]: string | number }>(firstItem: T) => {
     const result: {
