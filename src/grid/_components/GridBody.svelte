@@ -7,7 +7,7 @@
         padding: 0 20px;
         background: rgb(25, 5, 46);
         color: white;
-        min-width: 400px;
+        /* min-width: 400px; */
         cursor: pointer;
     }
     .row + .row {
@@ -35,6 +35,9 @@
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
     export let renderColumnList: DerivedColumnConfigs;
+    const a = renderColumnList[1];
+    const b = a.size;
+    console.log(b);
     export let scrollY: number;
     export let scrollX: number;
     export let isDevMode: boolean;
@@ -60,8 +63,8 @@
     >
         <div class="row">
             {#each renderColumnList as cell}
-                {#if isDevMode || cell.onlyDev === false}
-                    <div>{item[cell.name]}</div>
+                {#if isDevMode || cell.onlyDev === false || typeof cell.size === 'string'}
+                    <div style="{`min-width:${cell.size}`}">{item[cell.name]}</div>
                 {/if}
             {/each}
         </div>

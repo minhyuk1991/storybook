@@ -4,12 +4,31 @@
         gap: 4px;
     }
     .row > div {
+        position: relative;
+    }
+    .row > div > .cell {
         padding: 0 20px;
         background: rebeccapurple;
         color: white;
-        min-width: 400px;
         cursor: pointer;
+        position: relative;
     }
+
+    .row > div .line {
+        top: 0;
+        right: -3px;
+        height: 100%;
+        width: 2px;
+        background-color: aqua;
+        cursor: w-resize;
+        position: absolute;
+        -ms-user-select: none;
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
     .header {
         position: sticky;
         top: 0;
@@ -46,7 +65,6 @@
 
     $: {
         if (scrollEl) {
-            console.log(scrollEl);
             scrollEl.scrollLeft = scrollX;
         }
     }
@@ -56,16 +74,32 @@
         scrollEl.scrollLeft = scrollX;
         scrollEl.scrollTop = scrollY;
     });
+
+    const widthControll = {
+        mouseDownHandler: () => {
+            console.log('dd');
+        },
+        mouseMoveHandler: () => {},
+        mouseUpHandler: () => {},
+    };
+
+    const { mouseDownHandler } = widthControll;
 </script>
 
 <!-- //scrollX -->
+
 <div class="{`class-${elementId} header-wrapper`}">
     <div class="header">
         <div class="row">
             {#each renderColumnList as cell}
                 <!-- {console.log(cell.onlyDev)} -->
-                {#if !cell.onlyDev}
-                    <div draggable="true">{cell.name}</div>
+                {#if !cell.onlyDev || isDevMode}
+                    <div>
+                        <div class="cell" draggable="true" style="{`min-width: ${cell.size}`}"
+                            >{cell.name}</div
+                        >
+                        <div class="line" on:mousedown="{mouseDownHandler}"></div>
+                    </div>
                 {/if}
             {/each}
         </div>

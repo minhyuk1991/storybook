@@ -18,6 +18,7 @@
 </style>
 
 <script lang="ts">
+    import { onDestroy } from 'svelte';
     import { createMockDataList } from '../mockData';
     import { Grid } from './Grid';
     import GridBody from './_components/GridBody.svelte';
@@ -37,6 +38,7 @@
             columnFixed: true,
             onlyDev: true,
             isHide: false,
+            size: '200px',
         },
         {
             name: 'hostName',
@@ -93,11 +95,12 @@
             isHide: false,
         },
     ]);
+    const unSubscribeDevMode = test.subscribeDevMode((v: boolean) => {
+        console.log('ddd');
+        isDevMode = v;
+    });
     let renderColumnList = test.getColumns();
     let renderRowList = test.getRows();
-    // let rowsData = [...renderRowList].map((item) => item[1]).map((item) => Object.values(item));
-    // let renderRowList = test.items;
-    let count = 0;
     let isSelect = false;
 
     let scrollX: number;
@@ -118,19 +121,32 @@
     ) => {
         console.log((e.target as HTMLElement).classList);
     };
+    onDestroy(() => {
+        unSubscribeDevMode();
+    });
 </script>
 
 <svelte:window on:click="{a}" />
 <div class="{`${isSelect ? 'select' : ''} test grid`}" on:click="{() => {}}">
-    <button on:click="{() => count++}">count+1</button>
-    <p>{count}</p>
-    <!-- <button
+    <button
         on:click="{() => {
-            test._columnChange(0, 7);
-            const next = test.getRenderColumnList();
-            renderColumnList = next;
+            test.setDevMode(!test.isDevMode);
+        }}"
+        >devModeToggle
+    </button>
+    <button
+        on:click="{() => {
+            test.columnChange(0, 5);
+            console.log(test.currentColumns);
+            renderColumnList = test.currentColumns;
         }}">chage column</button
-    > -->
+    >
+    <button
+        on:click="{() => {
+            const next = test.resetColumns();
+            renderColumnList = next;
+        }}">reset column</button
+    >
     <GridHeader isDevMode="{isDevMode}" scrollX="{scrollX}" renderColumnList="{renderColumnList}" />
     <GridBody
         isDevMode="{isDevMode}"
