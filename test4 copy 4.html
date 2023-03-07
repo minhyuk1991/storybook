@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>s</h1>
+        <script>
+            class 달고나기계 {
+                constructor(재료) {
+                    this.설탕 = 재료.설탕;
+                    this.소다 = 재료.소다;
+                    this.재고 = [];
+                }
+
+                설탕충전하기(충전할설탕의양) {
+                    this.설탕 = this.설탕 + 충전할설탕의양;
+                }
+                소다충전하기(충전할소다의양) {
+                    this.소다 = this.소다 + 충전할소다의양;
+                }
+
+                만들기() {
+                    this.설탕넣기();
+                    this.설탕녹이기();
+                    this.소다넣기();
+                    this.틀찍기();
+                    console.log('달고나 완성!');
+                    this.재고.push({ 설탕: true, 소다: true, 모양: '사각형' });
+                }
+
+                설탕넣기() {
+                    this.설탕 = this.설탕 - 10;
+                }
+                설탕녹이기() {
+                    console.log('설탕녹입니다');
+                }
+                소다넣기() {
+                    this.소다 = this.소다 - 10;
+                }
+                틀찍기() {
+                    //사각형?
+                    console.log('틀찍습니다');
+                }
+            }
+
+            const 유정이네달고나 = new 달고나기계({ 설탕: 100, 소다: 200 });
+            유정이네달고나.설탕충전하기(1000);
+            console.log(유정이네달고나);
+            유정이네달고나.소다충전하기(500);
+            console.log(유정이네달고나);
+            유정이네달고나.만들기();
+            유정이네달고나.만들기();
+            유정이네달고나.만들기();
+            console.log(유정이네달고나);
+        </script>
+    </body>
+</html>

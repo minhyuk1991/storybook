@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>s</h1>
+        <script>
+            //커피머신을 만들떄, 커피콩을 받아서 만듬(생성자에서 받음)
+            //처음 받아온 커피콩이 커피머신의 커피콩에 할당됨
+            //아메리카노를 만들 때마다 커피콩이 -10 씩 차감됨
+
+            class 커피머신 {
+                constructor(커피콩) {
+                    this.커피콩 = 커피콩;
+                }
+                아메리카노만들기(샷추가) {
+                    const 샷 = 샷추가 ? 샷추가 + 1 : 1;
+                    this.커피콩 = this.커피콩 - 샷 * 10;
+                    return { 음료이름: '아메리카노', 샷 };
+                }
+            }
+
+            const 우리집커피머신 = new 커피머신(200);
+            const coffee1 = 우리집커피머신.아메리카노만들기(5);
+            const coffee2 = 우리집커피머신.아메리카노만들기();
+            const coffee3 = 우리집커피머신.아메리카노만들기();
+            const coffee4 = 우리집커피머신.아메리카노만들기();
+            const coffee5 = 우리집커피머신.아메리카노만들기();
+            const coffee6 = 우리집커피머신.아메리카노만들기();
+            const coffee7 = 우리집커피머신.아메리카노만들기();
+            const coffee8 = 우리집커피머신.아메리카노만들기();
+            const coffee9 = 우리집커피머신.아메리카노만들기();
+            const coffee10 = 우리집커피머신.아메리카노만들기();
+            console.log(
+                coffee1,
+                coffee2,
+                coffee3,
+                coffee4,
+                coffee5,
+                coffee6,
+                coffee7,
+                coffee8,
+                coffee9,
+                coffee10,
+            );
+            console.log(우리집커피머신);
+            const 너네집커피머신 = new 커피머신(50);
+            console.log(너네집커피머신);
+        </script>
+    </body>
+</html>

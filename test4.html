@@ -7,38 +7,36 @@
         <title>Document</title>
     </head>
     <body>
+        <h1>s</h1>
         <script>
-            class 붕어빵 {
-                반죽;
-                속;
-                constructor(반죽, 속) {
-                    this.반죽 = 반죽;
-                    this.속 = 속;
+            class Calc {
+                #count;
+                #age;
+                constructor() {
+                    this.#count = 0;
+                    this.#age = 10;
+                }
+                getAge() {
+                    this.#count = this.#count + 1;
+                    console.log(this.#count);
+                    return this.#age;
+                }
+                plus(number) {
+                    this.#count = this.#count + number;
+                }
+
+                getCount() {
+                    return this.#count;
                 }
             }
+            const test = new Calc();
+            console.log(test);
 
-            class 팥붕 extends 붕어빵 {
-                constructor(반죽, 팥) {
-                    super(반죽, 팥);
-                    this.반죽 = 반죽;
-                    this.속 = 팥;
-                }
-            }
-
-            class 슈붕 extends 붕어빵 {
-                constructor(반죽, 슈) {
-                    if (슈.원재료 !== 슈) throw new Error('슈 넣으세요.');
-                    super(반죽, 슈);
-                    this.반죽 = 반죽;
-                    this.속 = 슈;
-                }
-            }
-
-            const 붕어빵1 = new 붕어빵('좋은반죽', '팥');
-            const 팥붕어빵1 = new 붕어빵('좋은반죽', '팥');
-            const 슈붕어빵1 = new 붕어빵('좋은반죽', '슈');
-
-            console.log(팥붕어빵1, 슈붕어빵1);
+            console.log(test.getAge());
+            console.log(test.getAge());
+            console.log(test.getAge());
+            test.plus(3);
+            console.log(test);
         </script>
     </body>
 </html>

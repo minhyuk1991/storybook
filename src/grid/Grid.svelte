@@ -124,31 +124,48 @@
     onDestroy(() => {
         unSubscribeDevMode();
     });
+
+    const updateGridColumn = () => {
+        renderColumnList = test.getColumns();
+    };
 </script>
 
-<svelte:window on:click="{a}" />
-<div class="{`${isSelect ? 'select' : ''} test grid`}" on:click="{() => {}}">
+<svelte:window on:click="{a}" on:keydown="{() => {}}" />
+<div
+    class="{`${isSelect ? 'select' : ''} test grid`}"
+    on:click="{() => {}}"
+    on:keydown="{() => {}}"
+>
     <button
+        on:keydown="{() => {}}"
         on:click="{() => {
             test.setDevMode(!test.isDevMode);
         }}"
         >devModeToggle
     </button>
     <button
+        on:keydown="{() => {}}"
         on:click="{() => {
             test.columnChange(0, 5);
-            console.log(test.currentColumns);
             renderColumnList = test.currentColumns;
         }}">chage column</button
     >
     <button
+        on:keydown="{() => {}}"
         on:click="{() => {
             const next = test.resetColumns();
             renderColumnList = next;
         }}">reset column</button
     >
-    <GridHeader isDevMode="{isDevMode}" scrollX="{scrollX}" renderColumnList="{renderColumnList}" />
+    <GridHeader
+        gridInstance="{test}"
+        isDevMode="{isDevMode}"
+        scrollX="{scrollX}"
+        renderColumnList="{renderColumnList}"
+        updateGridColumn="{updateGridColumn}"
+    />
     <GridBody
+        gridInstance="{test}"
         isDevMode="{isDevMode}"
         scrollHandler="{scrollHandler}"
         rowsData="{renderRowList}"

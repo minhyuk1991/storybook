@@ -31,7 +31,9 @@
 </style>
 
 <script lang="ts">
-    import type { DerivedColumnConfigs } from '../Grid';
+    import type { MockData } from '../../types';
+    import type { DerivedColumnConfigs, Grid } from '../Grid';
+
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
     export let renderColumnList: DerivedColumnConfigs;
@@ -40,6 +42,7 @@
     console.log(b);
     export let scrollY: number;
     export let scrollX: number;
+    export let gridInstance: Grid<MockData>;
     export let isDevMode: boolean;
     export let scrollHandler: (
         e: UIEvent & {
@@ -63,8 +66,10 @@
     >
         <div class="row">
             {#each renderColumnList as cell}
-                {#if isDevMode || cell.onlyDev === false || typeof cell.size === 'string'}
-                    <div style="{`min-width:${cell.size}`}">{item[cell.name]}</div>
+                {#if isDevMode || cell.onlyDev === false}
+                    <div style="{`min-width: ${typeof cell.size === 'string' ? cell.size : ''}`}"
+                        >{item[cell.name]}</div
+                    >
                 {/if}
             {/each}
         </div>

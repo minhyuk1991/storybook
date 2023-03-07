@@ -56,6 +56,14 @@ export type RenderColumnList = {
 //     }
 //     return result;
 // };
+const getOnlyNumber = (pxString: string) => {
+    const hasPXstring = pxString.slice(pxString.length - 2, pxString.length);
+    if (!hasPXstring) {
+        throw new Error("Unable to find string 'px'.");
+    }
+    const a = pxString.slice(0, pxString.length - 2);
+    return a;
+};
 
 const getRenderRows = <T>(items: T[]) => {
     return items;
@@ -94,6 +102,7 @@ const createItem = (
         size,
     };
 };
+
 export class Grid<T extends { [key: string]: number | string }> {
     items: Array<T>;
 
@@ -178,6 +187,18 @@ export class Grid<T extends { [key: string]: number | string }> {
 
     resetColumns() {
         return (this.currentColumns = [...this.originalColumnState]);
+    }
+
+    updateColumnWidth(width: string, column: DerivedColumnConfig) {
+        const changeSize = getOnlyNumber(width);
+        console.log(getOnlyNumber(width));
+        console.log(width, column);
+        const target = this.currentColumns.find((item) => item.name === column.name);
+        if (target && target.size) {
+            target.size = `${String(Number(getOnlyNumber(target.size)) + Number(changeSize))}px`;
+        }
+        console.log('target', target);
+        // target?.size = target?.size + width;
     }
 
     columnChange(from: number, to: number) {
