@@ -100,7 +100,8 @@
                 currentTarget: EventTarget & HTMLDivElement;
             },
         ) => {
-            mouseDownSnapShotSizeX = Number(getOnlyNumber(currentCell!.size));
+            mouseDownSnapShotSizeX = e.pageX;
+            console.log(mouseDownSnapShotSizeX, 'mouseDownSnapShotSizeX');
             window.addEventListener('mousemove', widthControl.mouseMoveHandler);
             window.addEventListener('mouseup', widthControl.mouseUpHandler);
         },
@@ -112,6 +113,8 @@
                 //     mouseDownSnapShotSizeX.pageX - pageX
                 // }px`;
                 deltaMovement = mouseDownSnapShotSizeX - pageX;
+                console.log('pageX', pageX);
+                console.log('deltaMovement', deltaMovement);
                 const width = currentCellSize - deltaMovement;
                 if (currentCell) {
                     console.log(width);
@@ -125,7 +128,7 @@
             window.removeEventListener('mouseup', widthControl.mouseUpHandler);
             mouseDownSnapShotSizeX = null;
             currentCell = null;
-            deltaMovement = 0;
+            deltaMovement = null;
         },
     };
 </script>
@@ -145,8 +148,11 @@
                         <div
                             class="line"
                             on:mousedown="{(e) => {
+                                console.log('click');
                                 currentCell = cell;
+                                mouseDownSnapShotSizeX = e.pageX;
                                 currentCellSize = Number(getOnlyNumber(cell.size));
+                                console.log('currentCellSize', currentCellSize);
                                 widthControl.mouseDownHandler(e);
                             }}"></div>
                     </div>
