@@ -56,7 +56,7 @@ export type RenderColumnList = {
 //     }
 //     return result;
 // };
-const getOnlyNumber = (pxString: string) => {
+export const getOnlyNumber = (pxString: string) => {
     const hasPXstring = pxString.slice(pxString.length - 2, pxString.length);
     if (!hasPXstring) {
         throw new Error("Unable to find string 'px'.");
@@ -190,12 +190,16 @@ export class Grid<T extends { [key: string]: number | string }> {
     }
 
     updateColumnWidth(width: string, column: DerivedColumnConfig) {
-        const changeSize = getOnlyNumber(width);
-        console.log(getOnlyNumber(width));
-        console.log(width, column);
+        // const changeSize = getOnlyNumber(width);
+        // console.log(getOnlyNumber(width));
+        // console.log(width, column);
+        //컬럼기존사이즈스냅샷, 시작점스냅샷, - 현재 변경된 크기
+        console.log('update!!', width);
         const target = this.currentColumns.find((item) => item.name === column.name);
         if (target && target.size) {
-            target.size = `${String(Number(getOnlyNumber(target.size)) + Number(changeSize))}px`;
+            console.log('if');
+            // target.size = `${String(Number(getOnlyNumber(target.size)) + Number(changeSize))}px`;
+            target.size = width;
         }
         console.log('target', target);
         // target?.size = target?.size + width;

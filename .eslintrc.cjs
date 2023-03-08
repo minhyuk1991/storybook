@@ -52,7 +52,8 @@ module.exports = {
 	"@typescript-eslint/no-shadow": "off",
 	"@typescript-eslint/no-floating-promises": "off",
 	"@typescript-eslint/no-unsafe-member-access": "off",
-	"@typescript-eslint/restrict-template-expressions": "off"
+	"@typescript-eslint/restrict-template-expressions": "off",
+	"@typescript-eslint/no-unsafe-argument": "off"
 	},
   ignorePatterns: ['build/*', 'node_modules/*','.eslintrc.cjs'],
 	overrides: [

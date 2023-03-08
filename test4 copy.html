@@ -8,15 +8,29 @@
     </head>
     <body>
         <h1>s</h1>
-        <script>
-            class Test {
-                count;
-                constructor(initialValue) {
-                    this.count = initialValue;
-                }
-            }
+        <button>button</button>
+        <ul>
+            <li></li>
+            <li class="li2"></li>
+            <li></li>
+        </ul>
 
-            const a = new Test(10);
+        <script>
+            const a = document.querySelector('h1');
+            const button = document.querySelector('button');
+            const li2 = document.querySelector('.li2');
+            const numberElement1 = document.querySelector('.li2');
+
+            const onClickHandler = () => {
+                if (a.style.color === 'red') {
+                    a.style.color = 'black';
+                } else {
+                    a.style.color = 'red';
+                }
+            };
+
+            button.addEventListener('click', onClickHandler);
+
             console.log(a);
         </script>
     </body>

@@ -61,7 +61,7 @@
     import { onMount } from 'svelte';
     import { v4 as uuidv4 } from 'uuid';
     import type { MockData } from '../../types';
-    import type { DerivedColumnConfig, Grid } from '../Grid';
+    import { DerivedColumnConfig, getOnlyNumber, Grid } from '../Grid';
 
     export let renderColumnList: DerivedColumnConfig[];
     export let scrollX: number;
@@ -71,12 +71,10 @@
     export let updateGridColumn: () => void;
     let scrollEl: HTMLDivElement;
     let elementId = uuidv4();
-    type Point = { pageX: number; pageY: number };
     type CurrentCell = DerivedColumnConfig | null;
-    let mouseDownPoint: Point;
-    let mouseUpPoint: Point;
-    let isDown = false;
 
+    let mouseDownSnapShotSizeX: number | null;
+    let deltaMovement;
     onMount(() => {
         const headerEl = document.querySelector('.header') as HTMLDivElement;
         headerEl.addEventListener('click', () => {});
@@ -94,34 +92,42 @@
         scrollEl.scrollTop = scrollY;
     });
     let currentCell: CurrentCell = null;
-
-    const widthControll = {
-        mouseDownHandler: () => {
-            isDown = true;
-
-            window.addEventListener('mousemove', widthControll.mouseMoveHandler);
-            window.addEventListener('mouseup', widthControll.mouseUpHandler);
+    let currentCellSize: number;
+    const widthControl = {
+        //
+        mouseDownHandler: (
+            e: MouseEvent & {
+                currentTarget: EventTarget & HTMLDivElement;
+            },
+        ) => {
+            mouseDownSnapShotSizeX = Number(getOnlyNumber(currentCell!.size));
+            window.addEventListener('mousemove', widthControl.mouseMoveHandler);
+            window.addEventListener('mouseup', widthControl.mouseUpHandler);
         },
+
         mouseMoveHandler: function mouseMoveHandler(e: MouseEvent) {
-            const { pageX, pageY } = e;
-            mouseUpPoint = { pageX, pageY };
+            const { pageX } = e;
+            if (currentCell && mouseDownSnapShotSizeX && currentCellSize) {
+                // const width = `${getOnlyNumber(currentCell.size)} ${
+                //     mouseDownSnapShotSizeX.pageX - pageX
+                // }px`;
+                deltaMovement = mouseDownSnapShotSizeX - pageX;
+                const width = currentCellSize - deltaMovement;
+                if (currentCell) {
+                    console.log(width);
+                    gridInstance.updateColumnWidth(`${width}px`, currentCell);
+                }
+                updateGridColumn();
+            }
         },
         mouseUpHandler: function mouseUpHandler(e: MouseEvent) {
-            const width = `${mouseUpPoint.pageX - mouseDownPoint.pageX}px`;
-            isDown = false;
-            window.removeEventListener('mousemove', widthControll.mouseMoveHandler);
-            window.removeEventListener('mouseup', widthControll.mouseUpHandler);
-
-            if (currentCell) {
-                console.log(width);
-                gridInstance.updateColumnWidth(width, currentCell);
-            }
+            window.removeEventListener('mousemove', widthControl.mouseMoveHandler);
+            window.removeEventListener('mouseup', widthControl.mouseUpHandler);
+            mouseDownSnapShotSizeX = null;
             currentCell = null;
-            updateGridColumn();
+            deltaMovement = 0;
         },
     };
-
-    const { mouseDownHandler } = widthControll;
 </script>
 
 <!-- //scrollX -->
@@ -139,10 +145,9 @@
                         <div
                             class="line"
                             on:mousedown="{(e) => {
-                                const { pageX, pageY } = e;
-                                mouseDownPoint = { pageX, pageY };
                                 currentCell = cell;
-                                mouseDownHandler();
+                                currentCellSize = Number(getOnlyNumber(cell.size));
+                                widthControl.mouseDownHandler(e);
                             }}"></div>
                     </div>
                 {/if}
