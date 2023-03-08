@@ -9,7 +9,10 @@
         color: white;
         /* min-width: 400px; */
         cursor: pointer;
+        position: relative;
         overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .row + .row {
         margin-top: 4px;
@@ -18,6 +21,8 @@
     .row:hover > div {
         background: rgb(220, 193, 248);
         color: #000;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .tbody {
         margin-top: 4px;

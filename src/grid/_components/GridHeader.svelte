@@ -13,6 +13,8 @@
         cursor: pointer;
         position: relative;
         overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .row > div .line {
