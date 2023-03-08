@@ -68,8 +68,9 @@
     export let scrollX: number;
     export let isDevMode: boolean;
     export let gridInstance: Grid<MockData>;
-
+    export let mouseDownLockChange: (v: boolean) => void;
     export let updateGridColumn: () => void;
+    export let mouseDownLock: boolean;
     let scrollEl: HTMLDivElement;
     let elementId = uuidv4();
     type CurrentCell = DerivedColumnConfig | null;
@@ -130,6 +131,7 @@
             mouseDownSnapShotSizeX = null;
             currentCell = null;
             deltaMovement = null;
+            mouseDownLockChange(false);
         },
     };
 </script>
@@ -145,7 +147,7 @@
                     <div>
                         <div
                             class="cell"
-                            draggable="true"
+                            draggable="{`${mouseDownLock ? 'false' : 'true'}`}"
                             style="{`min-width: ${cell.size}; width: ${cell.size};`}"
                             >{cell.name}</div
                         >
@@ -158,6 +160,7 @@
                                 currentCellSize = Number(getOnlyNumber(cell.size));
                                 console.log('currentCellSize', currentCellSize);
                                 widthControl.mouseDownHandler(e);
+                                mouseDownLockChange(true);
                             }}"></div>
                     </div>
                 {/if}

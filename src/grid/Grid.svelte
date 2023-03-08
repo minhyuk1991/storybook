@@ -125,8 +125,13 @@
         unSubscribeDevMode();
     });
 
+    let mouseDownLock = false;
     const updateGridColumn = () => {
         renderColumnList = test.getColumns();
+    };
+
+    const mouseDownLockChange = (v: boolean) => {
+        mouseDownLock = v;
     };
 </script>
 
@@ -163,6 +168,8 @@
         scrollX="{scrollX}"
         renderColumnList="{renderColumnList}"
         updateGridColumn="{updateGridColumn}"
+        mouseDownLockChange="{mouseDownLockChange}"
+        mouseDownLock="{mouseDownLock}"
     />
     <GridBody
         gridInstance="{test}"
