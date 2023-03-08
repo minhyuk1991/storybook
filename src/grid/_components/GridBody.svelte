@@ -9,6 +9,7 @@
         color: white;
         /* min-width: 400px; */
         cursor: pointer;
+        overflow: hidden;
     }
     .row + .row {
         margin-top: 4px;
@@ -67,8 +68,10 @@
         <div class="row">
             {#each renderColumnList as cell}
                 {#if isDevMode || cell.onlyDev === false}
-                    <div style="{`min-width: ${typeof cell.size === 'string' ? cell.size : ''}`}"
-                        >{item[cell.name]}</div
+                    <div
+                        style="{`min-width: ${
+                            typeof cell.size === 'string' ? cell.size : ''
+                        };width:${cell.size}`}">{item[cell.name]}</div
                     >
                 {/if}
             {/each}

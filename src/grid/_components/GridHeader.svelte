@@ -12,6 +12,7 @@
         color: white;
         cursor: pointer;
         position: relative;
+        overflow: hidden;
     }
 
     .row > div .line {
@@ -142,7 +143,10 @@
                 <!-- {console.log(cell.onlyDev)} -->
                 {#if !cell.onlyDev || isDevMode}
                     <div>
-                        <div class="cell" draggable="true" style="{`min-width: ${cell.size}`}"
+                        <div
+                            class="cell"
+                            draggable="true"
+                            style="{`min-width: ${cell.size}; width: ${cell.size};`}"
                             >{cell.name}</div
                         >
                         <div
