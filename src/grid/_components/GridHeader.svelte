@@ -89,8 +89,11 @@
     let rectInfoList: { index: number; width: number; height: number; x: number; y: number }[] = [];
     let draggableElement: Node | null = null;
 
+    let order: { where: 'after' | 'before'; index: number } | null = null;
+
     let dndTargetLeft: number | null = null;
     let adjustedDndTargetLeft: number | null = null;
+
     onMount(() => {
         const headerEl = document.querySelector('.header') as HTMLDivElement;
         headerEl.addEventListener('click', () => {});
@@ -111,7 +114,7 @@
             y: number;
         },
         taget: MouseEvent,
-    ) => {
+    ): { where: 'before' | 'after'; index: number } => {
         const isInsideX = item.x < taget?.pageX && item.x + item.width > taget?.pageX;
         //아이템 시작지점보다 포인터가 커야함 //포인터가 아이템
         const isInsideY = item.y < taget?.pageY && item.y + item.height > taget?.pageY;
@@ -123,13 +126,13 @@
             if (isBefore) {
                 console.log('before');
                 console.log(taget.pageX, taget.pageY, item.index);
-                return { where: 'before' };
+                return { where: 'before', index: item.index };
             }
             if (isAfter) {
                 console.log('after');
                 console.log(taget.pageX, taget.pageY, item.index);
 
-                return { where: 'after' };
+                return { where: 'after', index: item.index };
             }
         }
     };
@@ -231,6 +234,7 @@
             const headerEl = document.querySelector('.header-wrapper') as HTMLDivElement;
             console.log(headerEl.getBoundingClientRect().left);
             rectInfoList.forEach((item) => {
+                order = isInsideArea(item, e) ?? null;
                 console.log('aa', isInsideArea(item, e));
             });
             if ((draggableElement as unknown as HTMLDivElement) && adjustedDndTargetLeft) {
