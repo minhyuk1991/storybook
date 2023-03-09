@@ -15,6 +15,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        cursor: move;
+    }
+
+    .row > div > .cell:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
     }
 
     .row > div .line {
@@ -79,6 +86,11 @@
 
     let mouseDownSnapShotSizeX: number | null;
     let deltaMovement;
+    let rectInfoList: { index: number; width: number; height: number; x: number; y: number }[] = [];
+    let draggableElement: Node | null = null;
+
+    let dndTargetLeft: number | null = null;
+    let adjustedDndTargetLeft: number | null = null;
     onMount(() => {
         const headerEl = document.querySelector('.header') as HTMLDivElement;
         headerEl.addEventListener('click', () => {});
@@ -90,10 +102,53 @@
         }
     }
 
+    const isInsideArea = (
+        item: {
+            index: number;
+            width: number;
+            height: number;
+            x: number;
+            y: number;
+        },
+        taget: MouseEvent,
+    ) => {
+        const isInsideX = item.x < taget?.pageX && item.x + item.width > taget?.pageX;
+        //아이템 시작지점보다 포인터가 커야함 //포인터가 아이템
+        const isInsideY = item.y < taget?.pageY && item.y + item.height > taget?.pageY;
+
+        const isBefore = isInsideX && item.x + item.width * 0.3 > taget.pageX;
+        const isAfter = isInsideX && item.x + item.width * 0.7 < taget.pageX;
+
+        if (isInsideX && isInsideY) {
+            if (isBefore) {
+                console.log('before');
+                console.log(taget.pageX, taget.pageY, item.index);
+                return { where: 'before' };
+            }
+            if (isAfter) {
+                console.log('after');
+                console.log(taget.pageX, taget.pageY, item.index);
+
+                return { where: 'after' };
+            }
+        }
+    };
     onMount(() => {
         scrollEl = document.querySelector(`.class-${elementId}`) as HTMLDivElement;
         scrollEl.scrollLeft = scrollX;
         scrollEl.scrollTop = scrollY;
+        const coulmnElList = Array.from(document.querySelectorAll('.cell'));
+        rectInfoList = coulmnElList.map((item, i) => {
+            const rect: DOMRect = item.getBoundingClientRect();
+            return {
+                index: i,
+                width: rect.width,
+                height: rect.height,
+                x: rect.left,
+                y: rect.top,
+            };
+        });
+        console.log(rectInfoList);
     });
     let currentCell: CurrentCell = null;
     let currentCellSize: number;
@@ -136,22 +191,105 @@
             mouseDownLockChange(false);
         },
     };
+
+    const dndControl = {
+        mouseDownHandler: (
+            e: MouseEvent & {
+                target: HTMLDivElement;
+                currentTarget: EventTarget & HTMLDivElement;
+            },
+            cell: DerivedColumnConfig,
+        ) => {
+            e.preventDefault();
+            dndTargetLeft = e.target.getBoundingClientRect().left;
+            adjustedDndTargetLeft = dndTargetLeft - e.pageX;
+            if (e.target) {
+                draggableElement = (e.target as Node).cloneNode(true) as HTMLElement;
+                // draggableElement.style = { ...e.target.style };
+                if (draggableElement) {
+                    // draggableElement.style.width = '200px';
+                    (draggableElement as HTMLElement).style.position = 'absolute';
+                    // draggableElement.style.height = '400px';
+                    // draggableElement.style.background = 'red';
+                    (draggableElement as HTMLElement).style.opacity = '0.5'; // 투명도를 50%로 설정
+                    document.body.appendChild(draggableElement);
+                }
+            }
+
+            // 드래그 앤 드롭 이벤트가 발생하지 않도록 이벤트 취소
+            // 마우스 이동 처리
+            mouseDownLockChange(true);
+            // xPositionList = renderColumnList.sort((a, b) => a.index - b.index);
+            // const a = renderColumnList.
+
+            window.addEventListener('mousemove', dndControl.mouseMoveHandler);
+            window.addEventListener('mouseup', dndControl.mouseUpHandler);
+        },
+
+        //눌린 x좌표 - e.target
+        mouseMoveHandler: (e: MouseEvent) => {
+            const headerEl = document.querySelector('.header-wrapper') as HTMLDivElement;
+            console.log(headerEl.getBoundingClientRect().left);
+            rectInfoList.forEach((item) => {
+                console.log('aa', isInsideArea(item, e));
+            });
+            if ((draggableElement as unknown as HTMLDivElement) && adjustedDndTargetLeft) {
+                (draggableElement as HTMLDivElement).style.left =
+                    String(e.pageX + adjustedDndTargetLeft) + 'px';
+                (draggableElement as HTMLDivElement).style.top = String(e.pageY) + 'px';
+            }
+        },
+        mouseUpHandler: (e: MouseEvent) => {
+            window.removeEventListener('mousemove', dndControl.mouseMoveHandler);
+            window.removeEventListener('mouseout', dndControl.mouseUpHandler);
+            console.log('aaaaa');
+            console.log(e.pageX);
+            if (draggableElement) {
+                document.body.removeChild(draggableElement);
+                draggableElement = null;
+            }
+        },
+    };
 </script>
 
+<!-- 
+    1.마우스다운 (무브,업 이벤트 부여)
+    - 쿼리셀렉터올로 아이템들 잡기->각각 rect x,y,width,height 배열생성
+    [ {x,y,width,height,index,}]
+
+    2.마우스무브 시에 검사함수 실행
+    - 위에서 얻은 좌표값으로 비교,
+    - 비교식 :
+    - 결과 : from,to 
+
+    3.바우스 업 시에 무브 업 이벤트 클린
+    - 위 결과 적용 columnChange(결과)
+ -->
 <!-- //scrollX -->
 
 <div class="{`class-${elementId} header-wrapper`}">
     <div class="header">
         <div class="row">
-            {#each renderColumnList as cell}
+            {#each renderColumnList as cell, index}
                 <!-- {console.log(cell.onlyDev)} -->
                 {#if !cell.onlyDev || isDevMode}
                     <div>
                         <div
-                            class="cell"
-                            draggable="{`${mouseDownLock ? 'false' : 'true'}`}"
-                            style="{`min-width: ${cell.size}; width: ${cell.size};`}"
-                            >{cell.name}</div
+                            class="{`cell cell-${cell.index}`}"
+                            on:mousedown="{(e) => {
+                                dndControl.mouseDownHandler(e, cell);
+                            }}"
+                            draggable="{true}"
+                            style="{`
+                            min-width: ${cell.size}; 
+                            width: ${cell.size};
+                            padding: '0 20px';
+                            background: 'rebeccapurple'
+                            color:'white';
+                            position:'absolute'
+                            
+                            
+                            `}">{cell.name}{index}</div
                         >
                         <div
                             class="line"

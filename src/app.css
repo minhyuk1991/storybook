@@ -26,3 +26,12 @@ html.dark body {
     background: #333;
     transition: 0.5s;
 }
+
+.cell {
+    padding: 0 20px;
+    background: rebeccapurple;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
