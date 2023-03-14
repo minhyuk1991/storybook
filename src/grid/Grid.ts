@@ -191,6 +191,7 @@ export class Grid<T extends { [key: string]: number | string }> {
         const nextColumns = [...this.currentColumns];
         nextColumns.splice(from, 1);
         nextColumns.splice(to === 0 ? to : to, 0, insertTarget);
+        nextColumns.map((item, index) => ({ ...item, index }));
         this.currentColumns = nextColumns;
     }
 }

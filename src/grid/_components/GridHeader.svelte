@@ -108,10 +108,6 @@
     let currentGuideIndex: number | null = null;
     let fromIndex: number | null = null;
     let coulmnElList: Element[];
-    onMount(() => {
-        const headerEl = document.querySelector('.header') as HTMLDivElement;
-        headerEl.addEventListener('click', () => {});
-    });
 
     $: {
         if (scrollEl) {
@@ -131,22 +127,17 @@
     ): { where: 'before' | 'after'; index: number } | undefined => {
         const isInsideX =
             item.x < e?.pageX + (scrollX || 0) && item.x + item.width > e?.pageX + (scrollX || 0);
-        //아이템 시작지점보다 포인터가 커야함 //포인터가 아이템
-        // console.log(isInsideX);
-        // console.log('window.scrollY', window.scrollY);
-
         const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
-
         const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX + (scrollX || 0);
         const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX + (scrollX || 0);
+        const isInsideXY = isInsideX && isInsideY;
 
-        if (isInsideX && isInsideY) {
-            if (isBefore) {
-                return { where: 'before', index: item.index };
-            }
-            if (isAfter) {
-                return { where: 'after', index: item.index };
-            }
+        if (isInsideXY && isBefore) {
+            return { where: 'before', index: item.index };
+        }
+
+        if (isInsideXY && isAfter) {
+            return { where: 'after', index: item.index };
         }
     };
     onMount(() => {
@@ -157,6 +148,20 @@
 
     let currentCell: CurrentCell = null;
     let currentCellSize: number;
+    const elSet = () => {
+        coulmnElList = Array.from(document.querySelectorAll('.cell'));
+        console.log('coulmnElList재수집', coulmnElList);
+        rectInfoList = coulmnElList.map((item, i) => {
+            const rect: DOMRect = item.getBoundingClientRect();
+            return {
+                index: i,
+                width: rect.width,
+                height: rect.height,
+                x: rect.left,
+                y: rect.top,
+            };
+        });
+    };
     const widthControl = {
         //
         mouseDownHandler: (
@@ -194,23 +199,13 @@
             currentCell = null;
             deltaMovement = null;
             mouseDownLockChange(false);
+            elSet();
         },
     };
 
     const dndControl = {
         mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => {
-            coulmnElList = Array.from(document.querySelectorAll('.cell'));
-            console.log('coulmnElList재수집', coulmnElList);
-            rectInfoList = coulmnElList.map((item, i) => {
-                const rect: DOMRect = item.getBoundingClientRect();
-                return {
-                    index: i,
-                    width: rect.width,
-                    height: rect.height,
-                    x: rect.left,
-                    y: rect.top,
-                };
-            });
+            elSet();
             console.log(e);
             e.preventDefault();
             const target = e.target as HTMLElement;
@@ -301,38 +296,7 @@
             mouseDownLockChange(false);
         },
     };
-
-    $: {
-        coulmnElList = Array.from(document.querySelectorAll('.cell'));
-        console.log('coulmnElList재수집', coulmnElList);
-        rectInfoList = coulmnElList.map((item, i) => {
-            const rect: DOMRect = item.getBoundingClientRect();
-            return {
-                index: i,
-                width: rect.width,
-                height: rect.height,
-                x: rect.left,
-                y: rect.top,
-            };
-        });
-        console.log(renderColumnList, 'renderColumnList바뀜');
-    }
 </script>
-
-<!-- 
-    1.마우스다운 (무브,업 이벤트 부여)
-    - 쿼리셀렉터올로 아이템들 잡기->각각 rect x,y,width,height 배열생성
-    [ {x,y,width,height,index,}]
-
-    2.마우스무브 시에 검사함수 실행
-    - 위에서 얻은 좌표값으로 비교,
-    - 비교식 :
-    - 결과 : from,to 
-
-    3.바우스 업 시에 무브 업 이벤트 클린
-    - 위 결과 적용 columnChange(결과)
- -->
-<!-- //scrollX -->
 
 <div class="{`class-${elementId} header-wrapper`}">
     <div class="header">
@@ -356,11 +320,11 @@
                             position:'absolute'
                             
                             
-                            `}">{cell.name}{index}</div
+                            `}">{cell.name}{cell.index}</div
                     >
                     <div
                         class="{`line line-${cell.index} ${
-                            currentGuideIndex - 1 === cell.index ? 'guide' : ''
+                            currentGuideIndex === cell.index ? 'guide' : ''
                         }`}"
                         on:mousedown="{(e) => {
                             console.log('click');
