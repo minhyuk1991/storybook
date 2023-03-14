@@ -127,7 +127,6 @@
 
     let mouseDownLock = false;
     const updateGridColumn = () => {
-        console.log('test.getColumns()', test.getColumns());
         renderColumnList = test.getColumns();
     };
 

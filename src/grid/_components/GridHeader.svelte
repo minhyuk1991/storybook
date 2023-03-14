@@ -200,6 +200,7 @@
     const dndControl = {
         mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => {
             coulmnElList = Array.from(document.querySelectorAll('.cell'));
+            console.log('coulmnElList재수집', coulmnElList);
             rectInfoList = coulmnElList.map((item, i) => {
                 const rect: DOMRect = item.getBoundingClientRect();
                 return {
@@ -289,6 +290,7 @@
             if ((fromIndex === 0 || fromIndex) && (currentGuideIndex === 0 || currentGuideIndex)) {
                 console.log('fromIndex,currentGuideIndex', fromIndex, currentGuideIndex);
                 gridInstance.columnChange(fromIndex, currentGuideIndex);
+                console.log('updateGridColumn');
                 updateGridColumn();
             }
             if (draggableElement) {
@@ -296,8 +298,25 @@
                 draggableElement = null;
             }
             currentGuideIndex = null;
+            mouseDownLockChange(false);
         },
     };
+
+    $: {
+        coulmnElList = Array.from(document.querySelectorAll('.cell'));
+        console.log('coulmnElList재수집', coulmnElList);
+        rectInfoList = coulmnElList.map((item, i) => {
+            const rect: DOMRect = item.getBoundingClientRect();
+            return {
+                index: i,
+                width: rect.width,
+                height: rect.height,
+                x: rect.left,
+                y: rect.top,
+            };
+        });
+        console.log(renderColumnList, 'renderColumnList바뀜');
+    }
 </script>
 
 <!-- 
@@ -341,7 +360,7 @@
                     >
                     <div
                         class="{`line line-${cell.index} ${
-                            currentGuideIndex === cell.index ? 'guide' : ''
+                            currentGuideIndex - 1 === cell.index ? 'guide' : ''
                         }`}"
                         on:mousedown="{(e) => {
                             console.log('click');
