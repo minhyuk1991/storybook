@@ -36,7 +36,7 @@
             accessor: 'id',
             columnWidth: 'string',
             columnFixed: true,
-            onlyDev: true,
+            onlyDev: false,
             isHide: false,
             size: '200px',
         },
@@ -127,6 +127,7 @@
 
     let mouseDownLock = false;
     const updateGridColumn = () => {
+        console.log('test.getColumns()', test.getColumns());
         renderColumnList = test.getColumns();
     };
 
@@ -158,7 +159,9 @@
     <button
         on:keydown="{() => {}}"
         on:click="{() => {
+            console.log(test.resetColumns());
             const next = test.resetColumns();
+            console.log(next);
             renderColumnList = next;
         }}">reset column</button
     >

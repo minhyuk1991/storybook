@@ -16,22 +16,29 @@
         </ul>
 
         <script>
-            const a = document.querySelector('h1');
-            const button = document.querySelector('button');
-            const li2 = document.querySelector('.li2');
-            const numberElement1 = document.querySelector('.li2');
+            console.log(Math.random() > 0.5 ? true : false);
+            const createMock = (id, isOn) => ({
+                id,
+                isOn,
+                cpu: parseInt(Math.random() * 100),
+                mem: parseInt(Math.random() * 100),
+                ssd: parseInt(Math.random() * 100),
+            });
 
-            const onClickHandler = () => {
-                if (a.style.color === 'red') {
-                    a.style.color = 'black';
-                } else {
-                    a.style.color = 'red';
+            const createMockArray = (length, isAllOn) => {
+                const result = [];
+
+                for (let index = 0; index < length; index++) {
+                    isAllOn
+                        ? result.push(createMock(index, true))
+                        : result.push(createMock(index, Math.random() > 0.5 ? true : false));
                 }
+                return result;
             };
 
-            button.addEventListener('click', onClickHandler);
-
-            console.log(a);
+            const myMockArray = createMockArray(500, false);
+            const nextMyMockArray = createMockArray(500, false);
+            console.log(myMockArray);
         </script>
     </body>
 </html>

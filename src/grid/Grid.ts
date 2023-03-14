@@ -28,34 +28,7 @@ export type RenderColumnList = {
     name: string;
     isHidden: boolean;
 }[];
-// const getKeys = <T extends object>(obj: T) => Object.keys(obj);
-// const getColumns = (keys: string[]) =>
-//     keys.map((item, index) => {
-//         console.log(item);
-//         return {
-//             isHidden: item === 'id' ? true : false,
-//             isVisible: true,
-//             name: item,
-//             index,
-//         };
-//     });
 
-// const getRenderColumn = <T extends { [key: string]: string | number }>(firstItem: T) => {
-//     const result: {
-//         name: string;
-//     }[] = [];
-//     for (const key in firstItem) {
-//         const hasProperty = Object.prototype.hasOwnProperty.call(firstItem, key);
-//         let insertColumnObj: {
-//             name: string;
-//         };
-//         if (hasProperty) {
-//             insertColumnObj = { name: key };
-//             result.push(insertColumnObj);
-//         }
-//     }
-//     return result;
-// };
 export const getOnlyNumber = (pxString: string) => {
     const hasPXstring = pxString.slice(pxString.length - 2, pxString.length);
     if (!hasPXstring) {
@@ -132,6 +105,14 @@ export class Grid<T extends { [key: string]: number | string }> {
         this.isDevModeSubscribeFunctionList = [];
     }
 
+    getOnlyDevColumnLength() {
+        console.log(
+            'getOnlyDevColumnLength',
+            this.currentColumns.filter((item) => item.onlyDev === true).length,
+        );
+        return this.currentColumns.filter((item) => item.onlyDev === true).length;
+    }
+
     addColumn(config: InputColumnConfig | InputColumnConfigs) {
         const isArray = Array.isArray(config);
 
@@ -155,7 +136,7 @@ export class Grid<T extends { [key: string]: number | string }> {
     // }
 
     getColumns() {
-        return this.originalColumnState;
+        return this.currentColumns;
     }
 
     getRows() {
@@ -206,23 +187,10 @@ export class Grid<T extends { [key: string]: number | string }> {
     }
 
     columnChange(from: number, to: number) {
-        const errorCase =
-            from === to ||
-            from < 0 ||
-            to < 0 ||
-            from > this.currentColumns.length - 1 ||
-            to > this.currentColumns.length - 1;
-
-        if (errorCase) throw new Error('error');
-
+        const insertTarget = this.currentColumns.slice(from, from + 1)[0];
         const nextColumns = [...this.currentColumns];
-
-        nextColumns.splice(to, 0, nextColumns.splice(from, 1)[0]);
-
-        for (let i = from + 1; i <= to; i++) {
-            nextColumns[i].index -= 1;
-        }
-
+        nextColumns.splice(from, 1);
+        nextColumns.splice(to === 0 ? to : to, 0, insertTarget);
         this.currentColumns = nextColumns;
     }
 }

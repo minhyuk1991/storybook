@@ -49,6 +49,18 @@
         content: '';
         display: flex;
     }
+    .row > div .line.guide::after {
+        width: 2px;
+        position: absolute;
+        top: 0;
+        right: -5px;
+        background: rgb(255, 3, 3);
+        height: 100%;
+        width: 2px;
+        content: '';
+        display: flex;
+    }
+
     .header {
         position: sticky;
         top: 0;
@@ -93,7 +105,9 @@
 
     let dndTargetLeft: number | null = null;
     let adjustedDndTargetLeft: number | null = null;
-
+    let currentGuideIndex: number | null = null;
+    let fromIndex: number | null = null;
+    let coulmnElList: Element[];
     onMount(() => {
         const headerEl = document.querySelector('.header') as HTMLDivElement;
         headerEl.addEventListener('click', () => {});
@@ -113,25 +127,24 @@
             x: number;
             y: number;
         },
-        taget: MouseEvent,
-    ): { where: 'before' | 'after'; index: number } => {
-        const isInsideX = item.x < taget?.pageX && item.x + item.width > taget?.pageX;
+        e: MouseEvent,
+    ): { where: 'before' | 'after'; index: number } | undefined => {
+        const isInsideX =
+            item.x < e?.pageX + (scrollX || 0) && item.x + item.width > e?.pageX + (scrollX || 0);
         //아이템 시작지점보다 포인터가 커야함 //포인터가 아이템
-        const isInsideY = item.y < taget?.pageY && item.y + item.height > taget?.pageY;
+        // console.log(isInsideX);
+        // console.log('window.scrollY', window.scrollY);
 
-        const isBefore = isInsideX && item.x + item.width * 0.3 > taget.pageX;
-        const isAfter = isInsideX && item.x + item.width * 0.7 < taget.pageX;
+        const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
+
+        const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX + (scrollX || 0);
+        const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX + (scrollX || 0);
 
         if (isInsideX && isInsideY) {
             if (isBefore) {
-                console.log('before');
-                console.log(taget.pageX, taget.pageY, item.index);
                 return { where: 'before', index: item.index };
             }
             if (isAfter) {
-                console.log('after');
-                console.log(taget.pageX, taget.pageY, item.index);
-
                 return { where: 'after', index: item.index };
             }
         }
@@ -140,19 +153,8 @@
         scrollEl = document.querySelector(`.class-${elementId}`) as HTMLDivElement;
         scrollEl.scrollLeft = scrollX;
         scrollEl.scrollTop = scrollY;
-        const coulmnElList = Array.from(document.querySelectorAll('.cell'));
-        rectInfoList = coulmnElList.map((item, i) => {
-            const rect: DOMRect = item.getBoundingClientRect();
-            return {
-                index: i,
-                width: rect.width,
-                height: rect.height,
-                x: rect.left,
-                y: rect.top,
-            };
-        });
-        console.log(rectInfoList);
     });
+
     let currentCell: CurrentCell = null;
     let currentCellSize: number;
     const widthControl = {
@@ -196,18 +198,32 @@
     };
 
     const dndControl = {
-        mouseDownHandler: (
-            e: MouseEvent & {
-                target: HTMLDivElement;
-                currentTarget: EventTarget & HTMLDivElement;
-            },
-            cell: DerivedColumnConfig,
-        ) => {
+        mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => {
+            coulmnElList = Array.from(document.querySelectorAll('.cell'));
+            rectInfoList = coulmnElList.map((item, i) => {
+                const rect: DOMRect = item.getBoundingClientRect();
+                return {
+                    index: i,
+                    width: rect.width,
+                    height: rect.height,
+                    x: rect.left,
+                    y: rect.top,
+                };
+            });
+            console.log(e);
             e.preventDefault();
-            dndTargetLeft = e.target.getBoundingClientRect().left;
+            const target = e.target as HTMLElement;
+            dndTargetLeft = target.getBoundingClientRect().left;
+            console.log(target.getBoundingClientRect());
             adjustedDndTargetLeft = dndTargetLeft - e.pageX;
-            if (e.target) {
-                draggableElement = (e.target as Node).cloneNode(true) as HTMLElement;
+
+            [...coulmnElList].find((item, index) => {
+                if (item === target) {
+                    fromIndex = index;
+                }
+            });
+            if (target) {
+                draggableElement = (target as Node).cloneNode(true) as HTMLElement;
                 // draggableElement.style = { ...e.target.style };
                 if (draggableElement) {
                     // draggableElement.style.width = '200px';
@@ -224,18 +240,40 @@
             mouseDownLockChange(true);
             // xPositionList = renderColumnList.sort((a, b) => a.index - b.index);
             // const a = renderColumnList.
-
             window.addEventListener('mousemove', dndControl.mouseMoveHandler);
             window.addEventListener('mouseup', dndControl.mouseUpHandler);
         },
 
         //눌린 x좌표 - e.target
         mouseMoveHandler: (e: MouseEvent) => {
-            const headerEl = document.querySelector('.header-wrapper') as HTMLDivElement;
-            console.log(headerEl.getBoundingClientRect().left);
+            console.log(e.pageX);
             rectInfoList.forEach((item) => {
                 order = isInsideArea(item, e) ?? null;
-                console.log('aa', isInsideArea(item, e));
+                let currentTargetItem = isInsideArea(item, e);
+                if (currentTargetItem) {
+                    console.log('currentTargetItem', currentTargetItem);
+                    if (currentTargetItem.where === 'before') {
+                        console.log(currentTargetItem.index);
+                        if (currentTargetItem.index === 0) {
+                            currentGuideIndex = 0;
+                            console.log(currentGuideIndex);
+                        }
+                        if (currentTargetItem.index) {
+                            currentGuideIndex = currentTargetItem.index;
+                            console.log(currentGuideIndex);
+                        }
+                    }
+                    if (currentTargetItem.where === 'after') {
+                        // console.log('after', currentTargetItem.index);
+                        // currentGuideIndex = currentTargetItem.index;
+                        if (currentTargetItem.index === 0) {
+                            currentGuideIndex = 0;
+                        }
+                        if (currentTargetItem.index) {
+                            currentGuideIndex = currentTargetItem.index;
+                        }
+                    }
+                }
             });
             if ((draggableElement as unknown as HTMLDivElement) && adjustedDndTargetLeft) {
                 (draggableElement as HTMLDivElement).style.left =
@@ -246,12 +284,18 @@
         mouseUpHandler: (e: MouseEvent) => {
             window.removeEventListener('mousemove', dndControl.mouseMoveHandler);
             window.removeEventListener('mouseout', dndControl.mouseUpHandler);
-            console.log('aaaaa');
-            console.log(e.pageX);
+
+            console.log('up');
+            if ((fromIndex === 0 || fromIndex) && (currentGuideIndex === 0 || currentGuideIndex)) {
+                console.log('fromIndex,currentGuideIndex', fromIndex, currentGuideIndex);
+                gridInstance.columnChange(fromIndex, currentGuideIndex);
+                updateGridColumn();
+            }
             if (draggableElement) {
                 document.body.removeChild(draggableElement);
                 draggableElement = null;
             }
+            currentGuideIndex = null;
         },
     };
 </script>
@@ -276,15 +320,15 @@
         <div class="row">
             {#each renderColumnList as cell, index}
                 <!-- {console.log(cell.onlyDev)} -->
-                {#if !cell.onlyDev || isDevMode}
-                    <div>
-                        <div
-                            class="{`cell cell-${cell.index}`}"
-                            on:mousedown="{(e) => {
-                                dndControl.mouseDownHandler(e, cell);
-                            }}"
-                            draggable="{true}"
-                            style="{`
+                <!-- {#if !cell.onlyDev || isDevMode} -->
+                <div>
+                    <div
+                        class="{`cell cell-${cell.index}`}"
+                        on:mousedown="{(e) => {
+                            dndControl.mouseDownHandler(e, cell);
+                        }}"
+                        draggable="{true}"
+                        style="{`
                             min-width: ${cell.size}; 
                             width: ${cell.size};
                             padding: '0 20px';
@@ -294,20 +338,22 @@
                             
                             
                             `}">{cell.name}{index}</div
-                        >
-                        <div
-                            class="line"
-                            on:mousedown="{(e) => {
-                                console.log('click');
-                                currentCell = cell;
-                                mouseDownSnapShotSizeX = e.pageX;
-                                currentCellSize = Number(getOnlyNumber(cell.size));
-                                console.log('currentCellSize', currentCellSize);
-                                widthControl.mouseDownHandler(e);
-                                mouseDownLockChange(true);
-                            }}"></div>
-                    </div>
-                {/if}
+                    >
+                    <div
+                        class="{`line line-${cell.index} ${
+                            currentGuideIndex === cell.index ? 'guide' : ''
+                        }`}"
+                        on:mousedown="{(e) => {
+                            console.log('click');
+                            currentCell = cell;
+                            mouseDownSnapShotSizeX = e.pageX;
+                            currentCellSize = Number(getOnlyNumber(cell.size));
+                            console.log('currentCellSize', currentCellSize);
+                            widthControl.mouseDownHandler(e);
+                            mouseDownLockChange(true);
+                        }}"></div>
+                </div>
+                <!-- {/if} -->
             {/each}
         </div>
     </div>
