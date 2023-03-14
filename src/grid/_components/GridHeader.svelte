@@ -125,11 +125,10 @@
         },
         e: MouseEvent,
     ): { where: 'before' | 'after'; index: number } | undefined => {
-        const isInsideX =
-            item.x < e?.pageX + (scrollX || 0) && item.x + item.width > e?.pageX + (scrollX || 0);
+        const isInsideX = item.x < e?.pageX && item.x + item.width > e?.pageX;
         const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
-        const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX + (scrollX || 0);
-        const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX + (scrollX || 0);
+        const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX;
+        const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX;
         const isInsideXY = isInsideX && isInsideY;
 
         if (isInsideXY && isBefore) {
@@ -161,6 +160,7 @@
                 y: rect.top,
             };
         });
+        console.log('rectInfoList', rectInfoList);
     };
     const widthControl = {
         //
