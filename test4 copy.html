@@ -16,29 +16,53 @@
         </ul>
 
         <script>
-            console.log(Math.random() > 0.5 ? true : false);
-            const createMock = (id, isOn) => ({
+            const createMockUser = (id) => ({
                 id,
-                isOn,
-                cpu: parseInt(Math.random() * 100),
-                mem: parseInt(Math.random() * 100),
-                ssd: parseInt(Math.random() * 100),
+                cash: parseInt(Math.random() * 1000),
             });
 
-            const createMockArray = (length, isAllOn) => {
+            const createMockUserList = (length) => {
                 const result = [];
-
                 for (let index = 0; index < length; index++) {
-                    isAllOn
-                        ? result.push(createMock(index, true))
-                        : result.push(createMock(index, Math.random() > 0.5 ? true : false));
+                    result.push(createMockUser(index));
                 }
                 return result;
             };
 
-            const myMockArray = createMockArray(500, false);
-            const nextMyMockArray = createMockArray(500, false);
-            console.log(myMockArray);
+            let userList = createMockUserList(2000);
+            console.log(userList);
+
+            userList = userList.map((user) => ({ ...user, cash: user.cash + 1000 }));
+
+            console.log(userList);
+
+            let FilterUserList = userList.filter((item) => item.id !== 3);
+
+            console.log(
+                [...'abbbccc'].reduce(
+                    (obj, word, index) => {
+                        const hasProperty = obj[word] === 0 || (obj[word] && name.length > 5);
+                        obj[word] = hasProperty ? obj[word] + 1 : 1;
+                        console.log(obj);
+                        return obj;
+                    },
+                    { a: 1, b: 1 },
+                ),
+            );
+            // const filterFunction = (item) => item > 3
+            // const result = [];
+            // for (let index = 0; index < a.length; index++) {
+            //     if (filterFunction(a[index])) {
+            //         result.push(a[index]);
+            //     }
+            // }
+            // return result;
+
+            // const result = [];
+            // for (let index = 0; index < a.length; index++) {
+            //     result.push(plus10(a[index]));
+            // }
+            // return result;
         </script>
     </body>
 </html>

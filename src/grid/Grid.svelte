@@ -20,12 +20,12 @@
 <script lang="ts">
     import { onDestroy } from 'svelte';
     import { createMockDataList } from '../mockData';
-    import { Grid } from './Grid';
+    import { GridCore } from './GridCore';
     import GridBody from './_components/GridBody.svelte';
     import GridHeader from './_components/GridHeader.svelte';
     let mockData = createMockDataList(40000);
     export let isDevMode: boolean;
-    const test = new Grid(mockData, { resizable: true });
+    const test = new GridCore(mockData, { resizable: true });
     $: {
     }
 

@@ -83,12 +83,13 @@
     import { onMount } from 'svelte';
     import { v4 as uuidv4 } from 'uuid';
     import type { MockData } from '../../types';
-    import { DerivedColumnConfig, getOnlyNumber, Grid } from '../Grid';
+    import { DerivedColumnConfig, getOnlyNumber, GridCore } from '../GridCore';
+    import { updateCurrentGuideIndex } from './utils';
 
     export let renderColumnList: DerivedColumnConfig[];
     export let scrollX: number;
     export let isDevMode: boolean;
-    export let gridInstance: Grid<MockData>;
+    export let gridInstance: GridCore<MockData>;
     export let mouseDownLockChange: (v: boolean) => void;
     export let updateGridColumn: () => void;
     export let mouseDownLock: boolean;
@@ -102,19 +103,56 @@
     let draggableElement: Node | null = null;
 
     let order: { where: 'after' | 'before'; index: number } | null = null;
+    console.log(order);
 
     let dndTargetLeft: number | null = null;
     let adjustedDndTargetLeft: number | null = null;
     let currentGuideIndex: number | null = null;
     let fromIndex: number | null = null;
     let coulmnElList: Element[];
-
+    let guideIndex: number | null = null;
+    let currentTargetItem:
+        | {
+              where: 'before' | 'after';
+              index: number;
+          }
+        | undefined;
     $: {
         if (scrollEl) {
             scrollEl.scrollLeft = scrollX;
         }
     }
 
+    const updateGuideIndex = () => {
+        if (currentTargetItem && (fromIndex === 0 || fromIndex)) {
+            const fineTuningValue = (() => {
+                const toIndex = currentTargetItem.index;
+                if (currentTargetItem.where === 'before') {
+                    if (fromIndex > toIndex) {
+                        return -1;
+                    }
+                    if (fromIndex < toIndex) {
+                        return -1;
+                    }
+                }
+                if (currentTargetItem.where === 'after') {
+                    if (fromIndex > toIndex) {
+                        return 0;
+                    }
+                    if (fromIndex < toIndex) {
+                        return 0;
+                    }
+                }
+                return 0;
+            })();
+
+            guideIndex = currentTargetItem?.index + fineTuningValue;
+            console.log('guideIndex', guideIndex);
+        }
+    };
+    const resetGuideIndex = () => {
+        guideIndex = null;
+    };
     const isInsideArea = (
         item: {
             index: number;
@@ -126,11 +164,21 @@
         e: MouseEvent,
     ): { where: 'before' | 'after'; index: number } | undefined => {
         const isInsideX = item.x < e?.pageX && item.x + item.width > e?.pageX;
+        // console.log('isInsideX', isInsideX);
+
         const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
+        // console.log('isInsideY', isInsideY);
         const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX;
         const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX;
         const isInsideXY = isInsideX && isInsideY;
 
+        // console.log('isInsideX, isInsideY, isBefore, isAfter, isInsideXY ', {
+        //     isInsideX,
+        //     isInsideY,
+        //     isBefore,
+        //     isAfter,
+        //     isInsideXY,
+        // });
         if (isInsideXY && isBefore) {
             return { where: 'before', index: item.index };
         }
@@ -158,9 +206,11 @@
                 height: rect.height,
                 x: rect.left,
                 y: rect.top,
+                el: item,
             };
         });
         console.log('rectInfoList', rectInfoList);
+        console.log('재수집 완료 ', coulmnElList, rectInfoList);
     };
     const widthControl = {
         //
@@ -240,51 +290,55 @@
             window.addEventListener('mouseup', dndControl.mouseUpHandler);
         },
 
-        //눌린 x좌표 - e.target
         mouseMoveHandler: (e: MouseEvent) => {
-            console.log(e.pageX);
+            // if (!fromIndex || !currentGuideIndex) throw new Error('aa');
             rectInfoList.forEach((item) => {
-                order = isInsideArea(item, e) ?? null;
-                let currentTargetItem = isInsideArea(item, e);
-                if (currentTargetItem) {
-                    console.log('currentTargetItem', currentTargetItem);
-                    if (currentTargetItem.where === 'before') {
-                        console.log(currentTargetItem.index);
-                        if (currentTargetItem.index === 0) {
-                            currentGuideIndex = 0;
-                            console.log(currentGuideIndex);
-                        }
-                        if (currentTargetItem.index) {
-                            currentGuideIndex = currentTargetItem.index;
-                            console.log(currentGuideIndex);
-                        }
+                // order = isInsideArea(item, e) ?? null;
+                const isInsideItem = isInsideArea(item, e);
+                if (isInsideItem) {
+                    currentTargetItem = isInsideArea(item, e);
+                    updateGuideIndex();
+                    const newGuideIndex = updateCurrentGuideIndex(currentTargetItem, fromIndex!);
+                    if (newGuideIndex !== null && newGuideIndex && currentTargetItem) {
+                        currentGuideIndex = currentTargetItem.index;
                     }
-                    if (currentTargetItem.where === 'after') {
-                        // console.log('after', currentTargetItem.index);
-                        // currentGuideIndex = currentTargetItem.index;
-                        if (currentTargetItem.index === 0) {
-                            currentGuideIndex = 0;
-                        }
-                        if (currentTargetItem.index) {
-                            currentGuideIndex = currentTargetItem.index;
-                        }
+                    if ((draggableElement as unknown as HTMLDivElement) && adjustedDndTargetLeft) {
+                        (draggableElement as HTMLDivElement).style.left =
+                            String(e.pageX + adjustedDndTargetLeft) + 'px';
+                        (draggableElement as HTMLDivElement).style.top = String(e.pageY) + 'px';
                     }
                 }
             });
-            if ((draggableElement as unknown as HTMLDivElement) && adjustedDndTargetLeft) {
-                (draggableElement as HTMLDivElement).style.left =
-                    String(e.pageX + adjustedDndTargetLeft) + 'px';
-                (draggableElement as HTMLDivElement).style.top = String(e.pageY) + 'px';
-            }
         },
         mouseUpHandler: (e: MouseEvent) => {
             window.removeEventListener('mousemove', dndControl.mouseMoveHandler);
             window.removeEventListener('mouseout', dndControl.mouseUpHandler);
 
-            console.log('up');
+            console.log('up currentGuideIndex', currentGuideIndex);
             if ((fromIndex === 0 || fromIndex) && (currentGuideIndex === 0 || currentGuideIndex)) {
                 console.log('fromIndex,currentGuideIndex', fromIndex, currentGuideIndex);
-                gridInstance.columnChange(fromIndex, currentGuideIndex);
+                if (currentTargetItem?.where === 'before') {
+                    console.log('before !');
+                    if (fromIndex > currentGuideIndex) {
+                        console.log('FROM > TO');
+                        gridInstance.columnChange(fromIndex, currentGuideIndex);
+                    }
+                    if (fromIndex < currentGuideIndex) {
+                        console.log('FROM < TO');
+                        gridInstance.columnChange(fromIndex, currentGuideIndex - 1);
+                    }
+                }
+                if (currentTargetItem?.where === 'after') {
+                    if (fromIndex > currentGuideIndex) {
+                        console.log('FROM > TO');
+                        gridInstance.columnChange(fromIndex, currentGuideIndex + 1);
+                    }
+                    if (fromIndex < currentGuideIndex) {
+                        console.log('after FROM < TO');
+                        gridInstance.columnChange(fromIndex, currentGuideIndex);
+                    }
+                }
+
                 console.log('updateGridColumn');
                 updateGridColumn();
             }
@@ -294,6 +348,7 @@
             }
             currentGuideIndex = null;
             mouseDownLockChange(false);
+            resetGuideIndex();
         },
     };
 </script>
@@ -323,8 +378,8 @@
                             `}">{cell.name}{cell.index}</div
                     >
                     <div
-                        class="{`line line-${cell.index} ${
-                            currentGuideIndex === cell.index ? 'guide' : ''
+                        class="{`line line-${cell.index} ${currentGuideIndex} ${
+                            guideIndex === cell.index ? 'guide' : ''
                         }`}"
                         on:mousedown="{(e) => {
                             console.log('click');

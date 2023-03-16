@@ -38,7 +38,7 @@
 
 <script lang="ts">
     import type { MockData } from '../../types';
-    import type { DerivedColumnConfigs, Grid } from '../Grid';
+    import type { DerivedColumnConfigs, GridCore } from '../GridCore';
 
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
@@ -48,7 +48,7 @@
     console.log(b);
     export let scrollY: number;
     export let scrollX: number;
-    export let gridInstance: Grid<MockData>;
+    export let gridInstance: GridCore<MockData>;
     export let isDevMode: boolean;
     export let scrollHandler: (
         e: UIEvent & {

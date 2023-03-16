@@ -76,7 +76,7 @@ const createItem = (
     };
 };
 
-export class Grid<T extends { [key: string]: number | string }> {
+export class GridCore<T extends { [key: string]: number | string }> {
     items: Array<T>;
 
     // columns: DerivedColumnConfigs;
@@ -152,8 +152,12 @@ export class Grid<T extends { [key: string]: number | string }> {
         this.isDevModeSubscribeFunctionList.push(result);
 
         //이건 리턴 해줄 녀석인데, 이걸 받아서 실행하면, 구독이 해제됨.
-        const unSubscribeFunction = () =>
-            this.isDevModeSubscribeFunctionList.filter((item) => item.id !== result.id);
+        const unSubscribeFunction = () => {
+            console.log(result);
+            this.isDevModeSubscribeFunctionList = this.isDevModeSubscribeFunctionList.filter(
+                (item) => item.id !== result.id,
+            );
+        };
         return unSubscribeFunction;
     }
 
@@ -171,27 +175,29 @@ export class Grid<T extends { [key: string]: number | string }> {
     }
 
     updateColumnWidth(width: string, column: DerivedColumnConfig) {
-        // const changeSize = getOnlyNumber(width);
-        // console.log(getOnlyNumber(width));
-        // console.log(width, column);
-        //컬럼기존사이즈스냅샷, 시작점스냅샷, - 현재 변경된 크기
-        console.log('update!!', width);
         const target = this.currentColumns.find((item) => item.name === column.name);
         if (target && target.size) {
-            console.log('if');
-            // target.size = `${String(Number(getOnlyNumber(target.size)) + Number(changeSize))}px`;
             target.size = width;
         }
-        console.log('target', target);
-        // target?.size = target?.size + width;
     }
 
     columnChange(from: number, to: number) {
         const insertTarget = this.currentColumns.slice(from, from + 1)[0];
         const nextColumns = [...this.currentColumns];
-        nextColumns.splice(from, 1);
-        nextColumns.splice(to === 0 ? to : to, 0, insertTarget);
-        nextColumns.map((item, index) => ({ ...item, index }));
+
+        if (from < to) {
+            nextColumns.splice(from, 1);
+            nextColumns.splice(to === 0 ? to : to, 0, insertTarget);
+        }
+        if (from > to) {
+            nextColumns.splice(from, 1);
+            nextColumns.splice(to, 0, insertTarget);
+        }
+
+        nextColumns.forEach((item, index) => {
+            item.index = index;
+        });
+
         this.currentColumns = nextColumns;
     }
 }
