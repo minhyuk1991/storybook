@@ -106,10 +106,6 @@ export class GridCore<T extends { [key: string]: number | string }> {
     }
 
     getOnlyDevColumnLength() {
-        console.log(
-            'getOnlyDevColumnLength',
-            this.currentColumns.filter((item) => item.onlyDev === true).length,
-        );
         return this.currentColumns.filter((item) => item.onlyDev === true).length;
     }
 
