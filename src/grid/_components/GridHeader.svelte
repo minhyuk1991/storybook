@@ -86,13 +86,14 @@
     import { DerivedColumnConfig, getOnlyNumber, GridCore } from '../GridCore';
     import { updateCurrentGuideIndex } from './utils';
 
-    export let renderColumnList: DerivedColumnConfig[];
-    export let scrollX: number;
-    export let isDevMode: boolean;
     export let gridInstance: GridCore<MockData>;
+    export let renderColumnList: DerivedColumnConfig[];
+    export let isDevMode: boolean;
     export let mouseDownLockChange: (v: boolean) => void;
     export let updateGridColumn: () => void;
     export let mouseDownLock: boolean;
+    export let scrollX: number;
+
     let scrollEl: HTMLDivElement;
     let elementId = uuidv4();
     type CurrentCell = DerivedColumnConfig | null;
@@ -105,8 +106,6 @@
     let order: { where: 'after' | 'before'; index: number } | null = null;
     console.log(order);
 
-    let dndTargetLeft: number | null = null;
-    let adjustedDndTargetLeft: number | null = null;
     let currentGuideIndex: number | null = null;
     let fromIndex: number | null = null;
     let coulmnElList: Element[];
@@ -127,27 +126,18 @@
         if (currentTargetItem && (fromIndex === 0 || fromIndex)) {
             const fineTuningValue = (() => {
                 const toIndex = currentTargetItem.index;
-                if (currentTargetItem.where === 'before') {
-                    if (fromIndex > toIndex) {
-                        return -1;
-                    }
-                    if (fromIndex < toIndex) {
-                        return -1;
-                    }
-                }
-                if (currentTargetItem.where === 'after') {
-                    if (fromIndex > toIndex) {
-                        return 0;
-                    }
-                    if (fromIndex < toIndex) {
-                        return 0;
-                    }
-                }
+                const beforCase = currentTargetItem.where === 'before';
+                const afterCase = currentTargetItem.where === 'before';
+                const fromGreaterThanTo = fromIndex > toIndex;
+                const ToGreaterThanFrom = fromIndex > toIndex;
+                if (beforCase && fromGreaterThanTo) return -1;
+                if (beforCase && ToGreaterThanFrom) return -1;
+                if (afterCase && fromIndex > toIndex) return 0;
+                if (afterCase && fromIndex < toIndex) return 0;
                 return 0;
             })();
 
             guideIndex = currentTargetItem?.index + fineTuningValue;
-            console.log('guideIndex', guideIndex);
         }
     };
     const resetGuideIndex = () => {
@@ -164,21 +154,12 @@
         e: MouseEvent,
     ): { where: 'before' | 'after'; index: number } | undefined => {
         const isInsideX = item.x < e?.pageX && item.x + item.width > e?.pageX;
-        // console.log('isInsideX', isInsideX);
 
         const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
-        // console.log('isInsideY', isInsideY);
         const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX;
         const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX;
         const isInsideXY = isInsideX && isInsideY;
 
-        // console.log('isInsideX, isInsideY, isBefore, isAfter, isInsideXY ', {
-        //     isInsideX,
-        //     isInsideY,
-        //     isBefore,
-        //     isAfter,
-        //     isInsideXY,
-        // });
         if (isInsideXY && isBefore) {
             return { where: 'before', index: item.index };
         }
@@ -254,14 +235,15 @@
     };
 
     const dndControl = {
+        adjustedDndTargetLeft: null,
         mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => {
             elSet();
             console.log(e);
             e.preventDefault();
             const target = e.target as HTMLElement;
-            dndTargetLeft = target.getBoundingClientRect().left;
+            const dndTargetLeft = target.getBoundingClientRect().left;
             console.log(target.getBoundingClientRect());
-            adjustedDndTargetLeft = dndTargetLeft - e.pageX;
+            dndControl.adjustedDndTargetLeft = dndTargetLeft - e.pageX;
 
             [...coulmnElList].find((item, index) => {
                 if (item === target) {
@@ -280,12 +262,7 @@
                     document.body.appendChild(draggableElement);
                 }
             }
-
-            // 드래그 앤 드롭 이벤트가 발생하지 않도록 이벤트 취소
-            // 마우스 이동 처리
             mouseDownLockChange(true);
-            // xPositionList = renderColumnList.sort((a, b) => a.index - b.index);
-            // const a = renderColumnList.
             window.addEventListener('mousemove', dndControl.mouseMoveHandler);
             window.addEventListener('mouseup', dndControl.mouseUpHandler);
         },
@@ -302,9 +279,12 @@
                     if (newGuideIndex !== null && newGuideIndex && currentTargetItem) {
                         currentGuideIndex = currentTargetItem.index;
                     }
-                    if ((draggableElement as unknown as HTMLDivElement) && adjustedDndTargetLeft) {
+                    if (
+                        (draggableElement as unknown as HTMLDivElement) &&
+                        dndControl.adjustedDndTargetLeft
+                    ) {
                         (draggableElement as HTMLDivElement).style.left =
-                            String(e.pageX + adjustedDndTargetLeft) + 'px';
+                            String(e.pageX + dndControl.adjustedDndTargetLeft) + 'px';
                         (draggableElement as HTMLDivElement).style.top = String(e.pageY) + 'px';
                     }
                 }
@@ -350,6 +330,11 @@
             mouseDownLockChange(false);
             resetGuideIndex();
         },
+    } as {
+        adjustedDndTargetLeft: number | null;
+        readonly mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => void;
+        readonly mouseMoveHandler: (e: MouseEvent) => void;
+        readonly mouseUpHandler: (e: MouseEvent) => void;
     };
 </script>
 

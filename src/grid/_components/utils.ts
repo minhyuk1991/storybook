@@ -1,3 +1,6 @@
+import type { MockData } from '../../types';
+import type { DerivedColumnConfig, GridCore } from '../GridCore';
+
 export const updateCurrentGuideIndex = (
     currentTargetItem:
         | {
@@ -64,4 +67,34 @@ export const isInsideArea = (
     if (isInsideXY && isAfter) {
         return { where: 'after', index: item.index };
     }
+};
+
+export type DndControl = {
+    mouseDownHandler: (
+        e: MouseEvent,
+        cell: DerivedColumnConfig,
+        coulmnElList: Element[],
+        mouseDownLockChange: (v: boolean) => void,
+        gridInstance: GridCore<MockData>,
+        updateGridColumn: () => void,
+    ) => void;
+    mouseMoveHandler: (e: MouseEvent) => void;
+    mouseUpHandler: (e: MouseEvent) => void;
+};
+
+// widthControl.ts
+
+export type WidthControl = {
+    mouseDownHandler: (
+        e: MouseEvent & {
+            currentTarget: EventTarget & HTMLDivElement;
+        },
+        currentCell: DerivedColumnConfig,
+        currentCellSize: number,
+        gridInstance: GridCore<MockData>,
+        updateGridColumn: () => void,
+        mouseDownLockChange: (v: boolean) => void,
+    ) => void;
+    mouseMoveHandler: (e: MouseEvent) => void;
+    mouseUpHandler: (e: MouseEvent) => void;
 };
