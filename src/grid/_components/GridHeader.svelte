@@ -127,7 +127,7 @@
             const fineTuningValue = (() => {
                 const toIndex = currentTargetItem.index;
                 const beforCase = currentTargetItem.where === 'before';
-                const afterCase = currentTargetItem.where === 'before';
+                const afterCase = currentTargetItem.where === 'after';
                 const fromGreaterThanTo = fromIndex > toIndex;
                 const ToGreaterThanFrom = fromIndex > toIndex;
                 if (beforCase && fromGreaterThanTo) return -1;
