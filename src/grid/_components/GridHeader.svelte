@@ -165,11 +165,9 @@
     ): { where: 'before' | 'after'; index: number } | undefined => {
         const isInsideX =
             item.x < e?.pageX + floatingScrolledValue && item.x + item.width > e?.pageX;
-        const isInsideY =
-            item.y < e?.pageY + floatingScrolledValue &&
-            item.y + item.height > e?.pageY - window.scrollY;
-        const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX;
-        const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX;
+        const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
+        const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX + floatingScrolledValue;
+        const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX + floatingScrolledValue;
         const isInsideXY = isInsideX && isInsideY;
 
         if (isInsideXY && isBefore) {
@@ -179,7 +177,6 @@
 
         if (isInsideXY && isAfter) {
             console.log({ where: 'after', index: item.index });
-
             return { where: 'after', index: item.index };
         }
     };
@@ -189,14 +186,31 @@
         scrollEl.scrollTop = scrollY;
     });
 
-    //마우스 누른 상태로부터 floatScorll값을 더하거나 뺴서 연산해야함...
-
+    let animateMode: 'left' | 'conterLeft' | 'center' | 'centerRight' | 'right' | null = null;
     let currentCell: CurrentCell = null;
     let currentCellSize: number;
     const elSet = () => {
         coulmnElList = Array.from(document.querySelectorAll('.cell'));
         rectInfoList = coulmnElList.map((item, i) => {
             const rect: DOMRect = item.getBoundingClientRect();
+            if (i === coulmnElList.length - 1) {
+                console.log('return case', {
+                    index: i,
+                    width: rect.width * 0.5,
+                    height: rect.height,
+                    x: rect.left,
+                    y: rect.top,
+                    el: item,
+                });
+                return {
+                    index: i,
+                    width: rect.width,
+                    height: rect.height,
+                    x: rect.left,
+                    y: rect.top,
+                    el: item,
+                };
+            }
             return {
                 index: i,
                 width: rect.width,
@@ -305,6 +319,7 @@
             mouseDownLockChange(true);
             window.addEventListener('mousemove', dndControl.mouseMoveHandler);
             window.addEventListener('mouseup', dndControl.mouseUpHandler);
+            dndControl.animate();
         },
 
         scrollMoveHandler: (
@@ -312,6 +327,54 @@
         ) => {
             // setScrollX(number)로  반응성을 가지는 scorollX를 업데이트 할 수 있음.
             // left라면 scorollX를 0에 가깝게, right라면 scorollX0으로부터 멀게 해야함
+        },
+        animate: () => {
+            const start = () => {
+                if (animateMode) {
+                    const scrollElWidth =
+                        scrollEl.scrollWidth - scrollEl.getBoundingClientRect().width + 14;
+                    if (animateMode === 'center') {
+                        console.log('center');
+                        floatingScrolledValue = floatingScrolledValue + 0;
+                    }
+                    if (animateMode === 'centerRight') {
+                        if (scrollX + 1 <= scrollElWidth) {
+                            console.log('centerRight', scrollX, scrollElWidth);
+                            setScrollX(1);
+                            floatingScrolledValue = floatingScrolledValue + 1;
+                        } else {
+                            setScrollX(0);
+                        }
+                    }
+                    if (animateMode === 'conterLeft') {
+                        if (scrollX - 1 <= 0) {
+                            setScrollX(0);
+                        } else {
+                            setScrollX(-1);
+                            floatingScrolledValue = floatingScrolledValue - 1;
+                        }
+                    }
+                    if (animateMode === 'left') {
+                        if (scrollX - 2 <= 0) {
+                            setScrollX(0);
+                        } else {
+                            setScrollX(-2);
+                            floatingScrolledValue = floatingScrolledValue - 2;
+                        }
+                    }
+                    if (animateMode === 'right') {
+                        if (scrollX + 2 <= scrollElWidth) {
+                            setScrollX(2);
+                            floatingScrolledValue = floatingScrolledValue + 2;
+                        } else {
+                            setScrollX(0);
+                        }
+                    }
+                }
+                requestAnimationFrame(start);
+            };
+
+            start();
         },
         mouseMoveHandler: (e: MouseEvent) => {
             rectInfoList.forEach((item) => {
@@ -345,31 +408,26 @@
                         e.pageX > ScrollRectInfo.rightStart && e.pageX < ScrollRectInfo.rightEnd;
                     //
                     if (centerCase) {
+                        animateMode = 'center';
                     }
 
+                    // 마우스 다운되고 무브 된 순간부터, 리퀘스트 에니메이션 돌리는거고,
+                    // 마우스 무브시에 모드 변경,
+                    // 마우스 업에 정지.
                     if (centerRightCase) {
-                        setScrollX(1);
-                        floatingScrolledValue = floatingScrolledValue + 1;
+                        animateMode = 'centerRight';
                     }
 
                     if (centerLeftCase) {
-                        setScrollX(-1);
-                        floatingScrolledValue = floatingScrolledValue - 1;
-                    }
-
-                    if (centerRightCase) {
-                        setScrollX(1);
-                        floatingScrolledValue = floatingScrolledValue + 1;
+                        animateMode = 'conterLeft';
                     }
 
                     if (rightCase) {
-                        setScrollX(2);
-                        floatingScrolledValue = floatingScrolledValue + 2;
+                        animateMode = 'right';
                     }
 
                     if (leftCase) {
-                        setScrollX(-2);
-                        floatingScrolledValue = floatingScrolledValue - 2;
+                        animateMode = 'left';
                     }
                 }
             });
@@ -404,12 +462,14 @@
             mouseDownLockChange(false);
             resetGuideIndex();
             floatingScrolledValue = 0;
+            animateMode = null;
         },
     } as {
         adjustedDndTargetLeft: number | null;
         readonly mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => void;
         readonly mouseMoveHandler: (e: MouseEvent) => void;
         readonly mouseUpHandler: (e: MouseEvent) => void;
+        readonly animate: () => void;
     };
 
     // $: {

@@ -50,7 +50,7 @@ const createItem = (
         columnFixed = false,
         onlyDev = false,
         isHide = false,
-        size = '400px',
+        size = '300px',
     }: {
         name: string;
         type: ColumnDataType;
