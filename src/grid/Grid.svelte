@@ -24,10 +24,8 @@
     import GridBody from './_components/GridBody.svelte';
     import GridHeader from './_components/GridHeader.svelte';
     let mockData = createMockDataList(40000);
-    export let isDevMode: boolean;
+    export let isDevMode: boolean = false;
     const test = new GridCore(mockData, { resizable: true });
-    $: {
-    }
 
     test.addColumn([
         {
@@ -103,13 +101,14 @@
     let renderRowList = test.getRows();
     let isSelect = false;
 
-    let scrollX: number;
-    let scrollY: number;
+    let scrollX: number = 0;
+    let scrollY: number = 0;
     const scrollHandler = (
         e: UIEvent & {
             currentTarget: EventTarget & HTMLDivElement;
         },
     ) => {
+        console.log((e.target as HTMLDivElement).scrollWidth);
         scrollX = (e.target as HTMLDivElement).scrollLeft;
         scrollY = (e.target as HTMLDivElement).scrollTop;
     };
@@ -133,6 +132,12 @@
     const mouseDownLockChange = (v: boolean) => {
         mouseDownLock = v;
     };
+
+    const setScrollX = (value: number) => {
+        scrollX = scrollX + value;
+    };
+    // const scrollRightHandler = () => {
+    // };
 </script>
 
 <svelte:window on:click="{a}" on:keydown="{() => {}}" />
@@ -145,6 +150,7 @@
         on:keydown="{() => {}}"
         on:click="{() => {
             test.setDevMode(!test.isDevMode);
+            isDevMode = test.isDevMode;
         }}"
         >devModeToggle
     </button>
@@ -168,10 +174,12 @@
         gridInstance="{test}"
         isDevMode="{isDevMode}"
         scrollX="{scrollX}"
+        scrollHandler="{scrollHandler}"
         renderColumnList="{renderColumnList}"
         updateGridColumn="{updateGridColumn}"
         mouseDownLockChange="{mouseDownLockChange}"
         mouseDownLock="{mouseDownLock}"
+        setScrollX="{setScrollX}"
     />
     <GridBody
         gridInstance="{test}"

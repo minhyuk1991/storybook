@@ -98,3 +98,20 @@ export type WidthControl = {
     mouseMoveHandler: (e: MouseEvent) => void;
     mouseUpHandler: (e: MouseEvent) => void;
 };
+
+export function scrollRight(element: HTMLDivElement) {
+    // 현재 스크롤 위치
+    let scrollPos = element.scrollLeft;
+    // 초당 이동할 거리
+    const distance = 40;
+    // requestAnimationFrame을 이용하여 1초에 60번씩 이동
+    function animateScroll() {
+        scrollPos += distance / 60;
+        element.scrollLeft = scrollPos;
+
+        if (scrollPos < element.scrollWidth - element.clientWidth) {
+            requestAnimationFrame(animateScroll);
+        }
+    }
+    requestAnimationFrame(animateScroll);
+}

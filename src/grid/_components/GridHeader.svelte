@@ -92,10 +92,11 @@
     export let mouseDownLockChange: (v: boolean) => void;
     export let updateGridColumn: () => void;
     export let mouseDownLock: boolean;
+
     export let scrollX: number;
+    export let setScrollX: (value: number) => void;
 
     let scrollEl: HTMLDivElement;
-    let elementId = uuidv4();
     type CurrentCell = DerivedColumnConfig | null;
 
     let mouseDownSnapShotSizeX: number | null;
@@ -103,8 +104,17 @@
     let rectInfoList: { index: number; width: number; height: number; x: number; y: number }[] = [];
     let draggableElement: Node | null = null;
 
+    let elementId = uuidv4();
     let order: { where: 'after' | 'before'; index: number } | null = null;
     console.log(order);
+    $: {
+        console.log(isDevMode);
+    }
+    export let scrollHandler: (
+        e: UIEvent & {
+            currentTarget: EventTarget & HTMLDivElement;
+        },
+    ) => void;
 
     let currentGuideIndex: number | null = null;
     let fromIndex: number | null = null;
@@ -136,7 +146,6 @@
                 if (afterCase && fromIndex < toIndex) return 0;
                 return 0;
             })();
-
             guideIndex = currentTargetItem?.index + fineTuningValue;
         }
     };
@@ -154,7 +163,6 @@
         e: MouseEvent,
     ): { where: 'before' | 'after'; index: number } | undefined => {
         const isInsideX = item.x < e?.pageX && item.x + item.width > e?.pageX;
-
         const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
         const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX;
         const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX;
@@ -178,7 +186,6 @@
     let currentCellSize: number;
     const elSet = () => {
         coulmnElList = Array.from(document.querySelectorAll('.cell'));
-        console.log('coulmnElList재수집', coulmnElList);
         rectInfoList = coulmnElList.map((item, i) => {
             const rect: DOMRect = item.getBoundingClientRect();
             return {
@@ -190,8 +197,6 @@
                 el: item,
             };
         });
-        console.log('rectInfoList', rectInfoList);
-        console.log('재수집 완료 ', coulmnElList, rectInfoList);
     };
     const widthControl = {
         //
@@ -233,16 +238,46 @@
             elSet();
         },
     };
+    let scrollEnd: number;
+    let ScrollRectInfo = {
+        centerLeftStart: 0,
+        centerLeftEnd: 0,
+        centerRightStart: 0,
+        centerRightEnd: 0,
+        centerStart: 0,
+        centerEnd: 0,
+        leftStart: 0,
+        leftEnd: 0,
+        rightStart: 0,
+        rightEnd: 0,
+    };
+    onMount(() => {
+        scrollEnd =
+            scrollEl.scrollWidth - scrollX || 0 - scrollEl.getBoundingClientRect().width + 14;
+
+        if (scrollEl) {
+            const rect = scrollEl.getBoundingClientRect();
+            ScrollRectInfo.centerStart = rect.left + rect.width * 0.3;
+            ScrollRectInfo.centerEnd = rect.left + rect.width * 0.7;
+            ScrollRectInfo.centerLeftStart = rect.left + rect.width * 0.1;
+            ScrollRectInfo.centerLeftEnd = rect.left + rect.width * 0.3;
+            ScrollRectInfo.centerRightStart = rect.left + rect.width * 0.7;
+            ScrollRectInfo.centerRightEnd = rect.left + rect.width * 0.9;
+            ScrollRectInfo.leftStart = rect.left + rect.width * 0;
+            ScrollRectInfo.leftEnd = rect.left + rect.width * 0.1;
+            ScrollRectInfo.rightStart = rect.left + rect.width * 0.9;
+            ScrollRectInfo.rightEnd = rect.left + rect.width * 1;
+        }
+        console.log(ScrollRectInfo);
+    });
 
     const dndControl = {
         adjustedDndTargetLeft: null,
         mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => {
             elSet();
-            console.log(e);
             e.preventDefault();
             const target = e.target as HTMLElement;
             const dndTargetLeft = target.getBoundingClientRect().left;
-            console.log(target.getBoundingClientRect());
             dndControl.adjustedDndTargetLeft = dndTargetLeft - e.pageX;
 
             [...coulmnElList].find((item, index) => {
@@ -252,12 +287,8 @@
             });
             if (target) {
                 draggableElement = (target as Node).cloneNode(true) as HTMLElement;
-                // draggableElement.style = { ...e.target.style };
                 if (draggableElement) {
-                    // draggableElement.style.width = '200px';
                     (draggableElement as HTMLElement).style.position = 'absolute';
-                    // draggableElement.style.height = '400px';
-                    // draggableElement.style.background = 'red';
                     (draggableElement as HTMLElement).style.opacity = '0.5'; // 투명도를 50%로 설정
                     document.body.appendChild(draggableElement);
                 }
@@ -267,10 +298,14 @@
             window.addEventListener('mouseup', dndControl.mouseUpHandler);
         },
 
+        scrollMoveHandler: (
+            direction: 'left' | 'centerLeft' | 'center' | 'centerRight' | 'right',
+        ) => {
+            // setScrollX(number)로  반응성을 가지는 scorollX를 업데이트 할 수 있음.
+            // left라면 scorollX를 0에 가깝게, right라면 scorollX0으로부터 멀게 해야함
+        },
         mouseMoveHandler: (e: MouseEvent) => {
-            // if (!fromIndex || !currentGuideIndex) throw new Error('aa');
             rectInfoList.forEach((item) => {
-                // order = isInsideArea(item, e) ?? null;
                 const isInsideItem = isInsideArea(item, e);
                 if (isInsideItem) {
                     currentTargetItem = isInsideArea(item, e);
@@ -287,6 +322,43 @@
                             String(e.pageX + dndControl.adjustedDndTargetLeft) + 'px';
                         (draggableElement as HTMLDivElement).style.top = String(e.pageY) + 'px';
                     }
+                    const centerCase =
+                        e.pageX > ScrollRectInfo.centerStart && e.pageX < ScrollRectInfo.centerEnd;
+                    const centerLeftCase =
+                        e.pageX > ScrollRectInfo.centerLeftStart &&
+                        e.pageX < ScrollRectInfo.centerLeftEnd;
+                    const centerRightCase =
+                        e.pageX > ScrollRectInfo.centerRightStart &&
+                        e.pageX < ScrollRectInfo.centerRightEnd;
+                    const leftCase =
+                        e.pageX > ScrollRectInfo.leftStart && e.pageX < ScrollRectInfo.leftEnd;
+                    const rightCase =
+                        e.pageX > ScrollRectInfo.rightStart && e.pageX < ScrollRectInfo.rightEnd;
+                    //
+                    if (centerCase) {
+                        console.log('center');
+                    }
+                    if (centerLeftCase) {
+                        console.log('centerLeftCase');
+                        setScrollX(-1);
+                    }
+                    if (centerRightCase) {
+                        console.log('centerRightCase');
+                    }
+                    if (centerLeftCase) {
+                        console.log('centerLeftCase');
+                    }
+                    if (centerRightCase) {
+                        console.log('centerRightCase');
+                        setScrollX(1);
+                        console.log(scrollX);
+                    }
+                    if (rightCase) {
+                        console.log('rightCase');
+                    }
+                    if (leftCase) {
+                        console.log('leftCase');
+                    }
                 }
             });
         },
@@ -294,32 +366,22 @@
             window.removeEventListener('mousemove', dndControl.mouseMoveHandler);
             window.removeEventListener('mouseout', dndControl.mouseUpHandler);
 
-            console.log('up currentGuideIndex', currentGuideIndex);
             if ((fromIndex === 0 || fromIndex) && (currentGuideIndex === 0 || currentGuideIndex)) {
-                console.log('fromIndex,currentGuideIndex', fromIndex, currentGuideIndex);
-                if (currentTargetItem?.where === 'before') {
-                    console.log('before !');
-                    if (fromIndex > currentGuideIndex) {
-                        console.log('FROM > TO');
-                        gridInstance.columnChange(fromIndex, currentGuideIndex);
-                    }
-                    if (fromIndex < currentGuideIndex) {
-                        console.log('FROM < TO');
-                        gridInstance.columnChange(fromIndex, currentGuideIndex - 1);
-                    }
+                const beforCase = currentTargetItem?.where === 'before';
+                const afterCase = currentTargetItem?.where === 'after';
+                if (beforCase && fromIndex > currentGuideIndex)
+                    gridInstance.columnChange(fromIndex, currentGuideIndex);
+
+                if (beforCase && fromIndex < currentGuideIndex) {
+                    gridInstance.columnChange(fromIndex, currentGuideIndex - 1);
                 }
-                if (currentTargetItem?.where === 'after') {
-                    if (fromIndex > currentGuideIndex) {
-                        console.log('FROM > TO');
-                        gridInstance.columnChange(fromIndex, currentGuideIndex + 1);
-                    }
-                    if (fromIndex < currentGuideIndex) {
-                        console.log('after FROM < TO');
-                        gridInstance.columnChange(fromIndex, currentGuideIndex);
-                    }
+                if (afterCase && fromIndex > currentGuideIndex) {
+                    gridInstance.columnChange(fromIndex, currentGuideIndex + 1);
+                }
+                if (afterCase && fromIndex < currentGuideIndex) {
+                    gridInstance.columnChange(fromIndex, currentGuideIndex);
                 }
 
-                console.log('updateGridColumn');
                 updateGridColumn();
             }
             if (draggableElement) {
@@ -336,22 +398,36 @@
         readonly mouseMoveHandler: (e: MouseEvent) => void;
         readonly mouseUpHandler: (e: MouseEvent) => void;
     };
+
+    // $: {
+    //     if (scrollEl) {
+    //         console.log(
+    //             'scroll',
+    //             scrollEl.scrollWidth - scrollX - scrollEl.getBoundingClientRect().width + 14,
+    //         );
+
+    //         console.log('scrollX', scrollX);
+    //         console.log(
+    //             'reverse',
+    //             scrollEl.scrollWidth - scrollEl.getBoundingClientRect().width + 14 - scrollX || 0,
+    //         );
+    //     }
+    // }
 </script>
 
 <div class="{`class-${elementId} header-wrapper`}">
     <div class="header">
         <div class="row">
             {#each renderColumnList as cell, index}
-                <!-- {console.log(cell.onlyDev)} -->
-                <!-- {#if !cell.onlyDev || isDevMode} -->
-                <div>
-                    <div
-                        class="{`cell cell-${cell.index}`}"
-                        on:mousedown="{(e) => {
-                            dndControl.mouseDownHandler(e, cell);
-                        }}"
-                        draggable="{true}"
-                        style="{`
+                {#if !cell.onlyDev || isDevMode}
+                    <div>
+                        <div
+                            class="{`cell cell-${cell.index}`}"
+                            on:mousedown="{(e) => {
+                                dndControl.mouseDownHandler(e, cell);
+                            }}"
+                            draggable="{true}"
+                            style="{`
                             min-width: ${cell.size}; 
                             width: ${cell.size};
                             padding: '0 20px';
@@ -361,22 +437,22 @@
                             
                             
                             `}">{cell.name}{cell.index}</div
-                    >
-                    <div
-                        class="{`line line-${cell.index} ${currentGuideIndex} ${
-                            guideIndex === cell.index ? 'guide' : ''
-                        }`}"
-                        on:mousedown="{(e) => {
-                            console.log('click');
-                            currentCell = cell;
-                            mouseDownSnapShotSizeX = e.pageX;
-                            currentCellSize = Number(getOnlyNumber(cell.size));
-                            console.log('currentCellSize', currentCellSize);
-                            widthControl.mouseDownHandler(e);
-                            mouseDownLockChange(true);
-                        }}"></div>
-                </div>
-                <!-- {/if} -->
+                        >
+                        <div
+                            class="{`line line-${cell.index} ${currentGuideIndex} ${
+                                guideIndex === cell.index ? 'guide' : ''
+                            }`}"
+                            on:mousedown="{(e) => {
+                                console.log('click');
+                                currentCell = cell;
+                                mouseDownSnapShotSizeX = e.pageX;
+                                currentCellSize = Number(getOnlyNumber(cell.size));
+                                console.log('currentCellSize', currentCellSize);
+                                widthControl.mouseDownHandler(e);
+                                mouseDownLockChange(true);
+                            }}"></div>
+                    </div>
+                {/if}
             {/each}
         </div>
     </div>

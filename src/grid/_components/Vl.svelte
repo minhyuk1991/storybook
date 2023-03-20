@@ -16,6 +16,7 @@
 </style>
 
 <script lang="ts">
+    import { v4 as uuidv4 } from 'uuid';
     import { onMount, tick } from 'svelte';
     interface VirtualListItem {
         index: number;
@@ -164,6 +165,17 @@
         ) as HTMLCollectionOf<HTMLDivElement>;
         mounted = true;
     });
+    let scrollEl: HTMLDivElement;
+    let elementId = uuidv4();
+    onMount(() => {
+        scrollEl = document.querySelector(`.class-${elementId}`) as HTMLDivElement;
+        scrollEl.scrollLeft = scrollX;
+    });
+    $: {
+        if (scrollEl) {
+            scrollEl.scrollLeft = scrollX;
+        }
+    }
 </script>
 
 <svelte-virtual-list-viewport
@@ -172,6 +184,7 @@
     on:scroll="{handleScroll}"
     on:scroll="{scrollHandler}"
     style="height: {height};"
+    class="{`class-${elementId}`}"
 >
     <svelte-virtual-list-contents
         bind:this="{contents}"
