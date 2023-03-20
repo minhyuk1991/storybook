@@ -108,7 +108,6 @@
             currentTarget: EventTarget & HTMLDivElement;
         },
     ) => {
-        console.log((e.target as HTMLDivElement).scrollWidth);
         scrollX = (e.target as HTMLDivElement).scrollLeft;
         scrollY = (e.target as HTMLDivElement).scrollTop;
     };

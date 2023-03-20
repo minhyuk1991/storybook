@@ -39,16 +39,9 @@
 <script lang="ts">
     import type { MockData } from '../../types';
     import type { DerivedColumnConfigs, GridCore } from '../GridCore';
-    import { v4 as uuidv4 } from 'uuid';
     import VirtualList from './Vl.svelte';
-    import { onMount } from 'svelte';
     export let rowsData: { [type: string]: any }[] = [];
     export let renderColumnList: DerivedColumnConfigs;
-    const a = renderColumnList[1];
-    const b = a.size;
-    let elementId = uuidv4();
-    let scrollEl: HTMLDivElement;
-    console.log(b);
     export let scrollY: number;
     export let scrollX: number;
     export let gridInstance: GridCore<MockData>;
@@ -60,17 +53,6 @@
     ) => void;
     let start: number;
     let end: number;
-
-    $: {
-        if (scrollEl) {
-            scrollEl.scrollLeft = scrollX;
-        }
-    }
-
-    onMount(() => {
-        scrollEl = document.querySelector(`.class-${elementId}`) as HTMLDivElement;
-        scrollEl.scrollLeft = scrollX;
-    });
 </script>
 
 <div class="tbody">

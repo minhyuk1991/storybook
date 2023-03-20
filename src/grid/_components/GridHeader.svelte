@@ -95,7 +95,7 @@
 
     export let scrollX: number;
     export let setScrollX: (value: number) => void;
-
+    let floatingScrolledValue = 0;
     let scrollEl: HTMLDivElement;
     type CurrentCell = DerivedColumnConfig | null;
 
@@ -106,6 +106,7 @@
 
     let elementId = uuidv4();
     let order: { where: 'after' | 'before'; index: number } | null = null;
+
     console.log(order);
     $: {
         console.log(isDevMode);
@@ -138,7 +139,7 @@
                 const toIndex = currentTargetItem.index;
                 const beforCase = currentTargetItem.where === 'before';
                 const afterCase = currentTargetItem.where === 'after';
-                const fromGreaterThanTo = fromIndex > toIndex;
+                const fromGreaterThanTo = fromIndex < toIndex;
                 const ToGreaterThanFrom = fromIndex > toIndex;
                 if (beforCase && fromGreaterThanTo) return -1;
                 if (beforCase && ToGreaterThanFrom) return -1;
@@ -162,17 +163,23 @@
         },
         e: MouseEvent,
     ): { where: 'before' | 'after'; index: number } | undefined => {
-        const isInsideX = item.x < e?.pageX && item.x + item.width > e?.pageX;
-        const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
+        const isInsideX =
+            item.x < e?.pageX + floatingScrolledValue && item.x + item.width > e?.pageX;
+        const isInsideY =
+            item.y < e?.pageY + floatingScrolledValue &&
+            item.y + item.height > e?.pageY - window.scrollY;
         const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX;
         const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX;
         const isInsideXY = isInsideX && isInsideY;
 
         if (isInsideXY && isBefore) {
+            console.log({ where: 'before', index: item.index });
             return { where: 'before', index: item.index };
         }
 
         if (isInsideXY && isAfter) {
+            console.log({ where: 'after', index: item.index });
+
             return { where: 'after', index: item.index };
         }
     };
@@ -181,6 +188,8 @@
         scrollEl.scrollLeft = scrollX;
         scrollEl.scrollTop = scrollY;
     });
+
+    //마우스 누른 상태로부터 floatScorll값을 더하거나 뺴서 연산해야함...
 
     let currentCell: CurrentCell = null;
     let currentCellSize: number;
@@ -336,28 +345,31 @@
                         e.pageX > ScrollRectInfo.rightStart && e.pageX < ScrollRectInfo.rightEnd;
                     //
                     if (centerCase) {
-                        console.log('center');
                     }
-                    if (centerLeftCase) {
-                        console.log('centerLeftCase');
-                        setScrollX(-1);
-                    }
+
                     if (centerRightCase) {
-                        console.log('centerRightCase');
-                    }
-                    if (centerLeftCase) {
-                        console.log('centerLeftCase');
-                    }
-                    if (centerRightCase) {
-                        console.log('centerRightCase');
                         setScrollX(1);
-                        console.log(scrollX);
+                        floatingScrolledValue = floatingScrolledValue + 1;
                     }
+
+                    if (centerLeftCase) {
+                        setScrollX(-1);
+                        floatingScrolledValue = floatingScrolledValue - 1;
+                    }
+
+                    if (centerRightCase) {
+                        setScrollX(1);
+                        floatingScrolledValue = floatingScrolledValue + 1;
+                    }
+
                     if (rightCase) {
-                        console.log('rightCase');
+                        setScrollX(2);
+                        floatingScrolledValue = floatingScrolledValue + 2;
                     }
+
                     if (leftCase) {
-                        console.log('leftCase');
+                        setScrollX(-2);
+                        floatingScrolledValue = floatingScrolledValue - 2;
                     }
                 }
             });
@@ -391,6 +403,7 @@
             currentGuideIndex = null;
             mouseDownLockChange(false);
             resetGuideIndex();
+            floatingScrolledValue = 0;
         },
     } as {
         adjustedDndTargetLeft: number | null;
@@ -430,11 +443,13 @@
                             style="{`
                             min-width: ${cell.size}; 
                             width: ${cell.size};
-                            padding: '0 20px';
-                            background: 'rebeccapurple'
-                            color:'white';
-                            position:'absolute'
-                            
+                            padding: 0 20px;
+                            background: rebeccapurple;
+                            color:white;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            height:60px;
                             
                             `}">{cell.name}{cell.index}</div
                         >
