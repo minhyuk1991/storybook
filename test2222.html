@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .spinner {
+                width: 100px;
+                height: 100px;
+                background-color: red;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+        <title>피보나치 수열 (웹 워커 사용)</title>
+        <script>
+            const workers = [];
+            const numOfWorkers = 12;
+
+            function startCalculatingFibonacci(workerIndex) {
+                const n = 45;
+
+                if (workers[workerIndex]) {
+                    workers[workerIndex].terminate();
+                }
+
+                workers[workerIndex] = new Worker('fibonacci-worker.js');
+
+                workers[workerIndex].onmessage = function (event) {
+                    const { result, elapsedTime } = event.data;
+                    document.getElementById(
+                        `result${workerIndex + 1}`,
+                    ).innerText = `피보나치 결과: ${result}, 경과 시간: ${elapsedTime}ms`;
+                };
+
+                workers[workerIndex].postMessage({ n });
+            }
+
+            function fibonacci(n) {
+                if (n <= 1) return n;
+
+                return fibonacci(n - 1) + fibonacci(n - 2);
+            }
+
+            const onClickHandler = () => {
+                const el = document.querySelector('#result13');
+                el.innerText = fibonacci(45);
+            };
+        </script>
+    </head>
+    <body>
+        <h1>피보나치 수열 (웹 워커 사용)</h1>
+        <div>
+            <button onclick="startCalculatingFibonacci(0)">피보나치 계산 시작 1</button>
+            <div id="result1"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(1)">피보나치 계산 시작 2</button>
+            <div id="result2"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(2)">피보나치 계산 시작 2</button>
+            <div id="result3"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(3)">피보나치 계산 시작 2</button>
+            <div id="result4"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(4)">피보나치 계산 시작 2</button>
+            <div id="result5"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(5)">피보나치 계산 시작 2</button>
+            <div id="result6"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(6)">피보나치 계산 시작 2</button>
+            <div id="result7"></div>
+        </div>
+
+        <div>
+            <button onclick="startCalculatingFibonacci(7)">피보나치 계산 시작 2</button>
+            <div id="result8"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(8)">피보나치 계산 시작 2</button>
+            <div id="result9"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(9)">피보나치 계산 시작 2</button>
+            <div id="result10"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(10)">피보나치 계산 시작 2</button>
+            <div id="result11"></div>
+        </div>
+        <div>
+            <button onclick="startCalculatingFibonacci(11)">피보나치 계산 시작 12</button>
+            <div id="result12"></div>
+        </div>
+        <button onclick="onClickHandler()">피보나치 계산 시작 13</button>
+        <div id="result13"></div>
+    </body>
+</html>

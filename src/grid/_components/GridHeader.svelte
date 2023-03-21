@@ -85,7 +85,6 @@
     import type { MockData } from '../../types';
     import { DerivedColumnConfig, getOnlyNumber, GridCore } from '../GridCore';
     import { updateCurrentGuideIndex } from './utils';
-
     export let gridInstance: GridCore<MockData>;
     export let renderColumnList: DerivedColumnConfig[];
     export let isDevMode: boolean;
@@ -100,6 +99,8 @@
     type CurrentCell = DerivedColumnConfig | null;
 
     let mouseDownSnapShotSizeX: number | null;
+    let mouseDownDnDSnapShotSizeX: number | null;
+
     let deltaMovement;
     let rectInfoList: { index: number; width: number; height: number; x: number; y: number }[] = [];
     let draggableElement: Node | null = null;
@@ -221,6 +222,7 @@
             };
         });
     };
+
     const widthControl = {
         //
         mouseDownHandler: (
@@ -294,6 +296,8 @@
         console.log(ScrollRectInfo);
     });
 
+    // let isClickedItemOver: boolean = false;
+    let animationFrameId: number | null = null;
     const dndControl = {
         adjustedDndTargetLeft: null,
         mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => {
@@ -308,6 +312,7 @@
                     fromIndex = index;
                 }
             });
+
             if (target) {
                 draggableElement = (target as Node).cloneNode(true) as HTMLElement;
                 if (draggableElement) {
@@ -322,17 +327,21 @@
             dndControl.animate();
         },
 
-        scrollMoveHandler: (
-            direction: 'left' | 'centerLeft' | 'center' | 'centerRight' | 'right',
-        ) => {
-            // setScrollX(number)로  반응성을 가지는 scorollX를 업데이트 할 수 있음.
-            // left라면 scorollX를 0에 가깝게, right라면 scorollX0으로부터 멀게 해야함
-        },
         animate: () => {
             const start = () => {
+                if (animationFrameId !== null) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+                if (!animateMode && typeof animationFrameId === 'number') {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                    return;
+                }
                 if (animateMode) {
                     const scrollElWidth =
                         scrollEl.scrollWidth - scrollEl.getBoundingClientRect().width + 14;
+
                     if (animateMode === 'center') {
                         console.log('center');
                         floatingScrolledValue = floatingScrolledValue + 0;
@@ -373,13 +382,16 @@
                 }
                 requestAnimationFrame(start);
             };
-
-            start();
+            animationFrameId = requestAnimationFrame(start);
         },
         mouseMoveHandler: (e: MouseEvent) => {
             rectInfoList.forEach((item) => {
                 const isInsideItem = isInsideArea(item, e);
-                if (isInsideItem) {
+
+                console.log('mouseDownDnDSnapShotSizeX', mouseDownDnDSnapShotSizeX);
+                if (!mouseDownDnDSnapShotSizeX) return;
+                const isItemOver = Math.abs(mouseDownDnDSnapShotSizeX - e.pageX) > 100;
+                if (isInsideItem && isItemOver) {
                     currentTargetItem = isInsideArea(item, e);
                     updateGuideIndex();
                     const newGuideIndex = updateCurrentGuideIndex(currentTargetItem, fromIndex!);
@@ -458,6 +470,12 @@
                 document.body.removeChild(draggableElement);
                 draggableElement = null;
             }
+            if (animationFrameId) {
+                console.log('clear!');
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            animateMode = null;
             currentGuideIndex = null;
             mouseDownLockChange(false);
             resetGuideIndex();
@@ -471,21 +489,6 @@
         readonly mouseUpHandler: (e: MouseEvent) => void;
         readonly animate: () => void;
     };
-
-    // $: {
-    //     if (scrollEl) {
-    //         console.log(
-    //             'scroll',
-    //             scrollEl.scrollWidth - scrollX - scrollEl.getBoundingClientRect().width + 14,
-    //         );
-
-    //         console.log('scrollX', scrollX);
-    //         console.log(
-    //             'reverse',
-    //             scrollEl.scrollWidth - scrollEl.getBoundingClientRect().width + 14 - scrollX || 0,
-    //         );
-    //     }
-    // }
 </script>
 
 <div class="{`class-${elementId} header-wrapper`}">
@@ -497,6 +500,8 @@
                         <div
                             class="{`cell cell-${cell.index}`}"
                             on:mousedown="{(e) => {
+                                console.log('mouseDownSnapShotSizeXmouseDownSnapShotSizeX');
+                                mouseDownDnDSnapShotSizeX = e.pageX;
                                 dndControl.mouseDownHandler(e, cell);
                             }}"
                             draggable="{true}"
@@ -518,11 +523,10 @@
                                 guideIndex === cell.index ? 'guide' : ''
                             }`}"
                             on:mousedown="{(e) => {
-                                console.log('click');
+                                console.log('md');
                                 currentCell = cell;
                                 mouseDownSnapShotSizeX = e.pageX;
                                 currentCellSize = Number(getOnlyNumber(cell.size));
-                                console.log('currentCellSize', currentCellSize);
                                 widthControl.mouseDownHandler(e);
                                 mouseDownLockChange(true);
                             }}"></div>
