@@ -101,6 +101,7 @@
     type CurrentCell = DerivedColumnConfig | null;
 
     let mouseDownSnapShotSizeX: number | null;
+    let mouseDownSnapShotScrollLeft: number | null;
     let mouseDownDnDSnapShotSizeX: number | null;
 
     let deltaMovement;
@@ -305,6 +306,7 @@
         mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => {
             elSet();
             e.preventDefault();
+            mouseDownSnapShotScrollLeft = scrollEl.scrollLeft;
             const target = e.target as HTMLElement;
             const dndTargetLeft = target.getBoundingClientRect().left;
             dndControl.adjustedDndTargetLeft = dndTargetLeft - e.pageX;
@@ -320,6 +322,8 @@
                 if (draggableElement) {
                     (draggableElement as HTMLElement).style.position = 'absolute';
                     (draggableElement as HTMLElement).style.opacity = '0.5'; // 투명도를 50%로 설정
+                    (draggableElement as HTMLElement).style.pointerEvents = 'none'; // 투명도를 50%로 설정
+
                     document.body.appendChild(draggableElement);
                 }
             }
