@@ -347,34 +347,34 @@
                         floatingScrolledValue = floatingScrolledValue + 0;
                     }
                     if (animateMode === 'centerRight') {
-                        if (scrollX + 1 <= scrollElWidth) {
+                        if (scrollX + 3 <= scrollElWidth) {
                             console.log('centerRight', scrollX, scrollElWidth);
-                            setScrollX(1);
-                            floatingScrolledValue = floatingScrolledValue + 1;
+                            setScrollX(3);
+                            floatingScrolledValue = floatingScrolledValue + 3;
                         } else {
                             setScrollX(0);
                         }
                     }
                     if (animateMode === 'conterLeft') {
-                        if (scrollX - 1 <= 0) {
+                        if (scrollX - 3 <= 0) {
                             setScrollX(0);
                         } else {
-                            setScrollX(-1);
-                            floatingScrolledValue = floatingScrolledValue - 1;
+                            setScrollX(-3);
+                            floatingScrolledValue = floatingScrolledValue - 3;
                         }
                     }
                     if (animateMode === 'left') {
-                        if (scrollX - 2 <= 0) {
+                        if (scrollX - 5 <= 0) {
                             setScrollX(0);
                         } else {
-                            setScrollX(-2);
-                            floatingScrolledValue = floatingScrolledValue - 2;
+                            setScrollX(-5);
+                            floatingScrolledValue = floatingScrolledValue - 5;
                         }
                     }
                     if (animateMode === 'right') {
-                        if (scrollX + 2 <= scrollElWidth) {
-                            setScrollX(2);
-                            floatingScrolledValue = floatingScrolledValue + 2;
+                        if (scrollX + 5 <= scrollElWidth) {
+                            setScrollX(5);
+                            floatingScrolledValue = floatingScrolledValue + 5;
                         } else {
                             setScrollX(0);
                         }
