@@ -85,6 +85,8 @@
     import type { MockData } from '../../types';
     import { DerivedColumnConfig, getOnlyNumber, GridCore } from '../GridCore';
     import { updateCurrentGuideIndex } from './utils';
+    import { throttle } from 'lodash';
+
     export let gridInstance: GridCore<MockData>;
     export let renderColumnList: DerivedColumnConfig[];
     export let isDevMode: boolean;
@@ -385,64 +387,74 @@
             animationFrameId = requestAnimationFrame(start);
         },
         mouseMoveHandler: (e: MouseEvent) => {
-            rectInfoList.forEach((item) => {
-                const isInsideItem = isInsideArea(item, e);
+            const rectthrottle = throttle(() => {
+                console.log('throttle');
+                rectInfoList.forEach((item) => {
+                    const isInsideItem = isInsideArea(item, e);
 
-                console.log('mouseDownDnDSnapShotSizeX', mouseDownDnDSnapShotSizeX);
-                if (!mouseDownDnDSnapShotSizeX) return;
-                const isItemOver = Math.abs(mouseDownDnDSnapShotSizeX - e.pageX) > 100;
-                if (isInsideItem && isItemOver) {
-                    currentTargetItem = isInsideArea(item, e);
-                    updateGuideIndex();
-                    const newGuideIndex = updateCurrentGuideIndex(currentTargetItem, fromIndex!);
-                    if (newGuideIndex !== null && newGuideIndex && currentTargetItem) {
-                        currentGuideIndex = currentTargetItem.index;
-                    }
-                    if (
-                        (draggableElement as unknown as HTMLDivElement) &&
-                        dndControl.adjustedDndTargetLeft
-                    ) {
-                        (draggableElement as HTMLDivElement).style.left =
-                            String(e.pageX + dndControl.adjustedDndTargetLeft) + 'px';
-                        (draggableElement as HTMLDivElement).style.top = String(e.pageY) + 'px';
-                    }
-                    const centerCase =
-                        e.pageX > ScrollRectInfo.centerStart && e.pageX < ScrollRectInfo.centerEnd;
-                    const centerLeftCase =
-                        e.pageX > ScrollRectInfo.centerLeftStart &&
-                        e.pageX < ScrollRectInfo.centerLeftEnd;
-                    const centerRightCase =
-                        e.pageX > ScrollRectInfo.centerRightStart &&
-                        e.pageX < ScrollRectInfo.centerRightEnd;
-                    const leftCase =
-                        e.pageX > ScrollRectInfo.leftStart && e.pageX < ScrollRectInfo.leftEnd;
-                    const rightCase =
-                        e.pageX > ScrollRectInfo.rightStart && e.pageX < ScrollRectInfo.rightEnd;
-                    //
-                    if (centerCase) {
-                        animateMode = 'center';
-                    }
+                    console.log('mouseDownDnDSnapShotSizeX', mouseDownDnDSnapShotSizeX);
+                    if (!mouseDownDnDSnapShotSizeX) return;
+                    const isItemOver = Math.abs(mouseDownDnDSnapShotSizeX - e.pageX) > 100;
+                    if (isInsideItem && isItemOver) {
+                        currentTargetItem = isInsideArea(item, e);
+                        updateGuideIndex();
+                        const newGuideIndex = updateCurrentGuideIndex(
+                            currentTargetItem,
+                            fromIndex!,
+                        );
+                        if (newGuideIndex !== null && newGuideIndex && currentTargetItem) {
+                            currentGuideIndex = currentTargetItem.index;
+                        }
 
-                    // 마우스 다운되고 무브 된 순간부터, 리퀘스트 에니메이션 돌리는거고,
-                    // 마우스 무브시에 모드 변경,
-                    // 마우스 업에 정지.
-                    if (centerRightCase) {
-                        animateMode = 'centerRight';
-                    }
+                        const centerCase =
+                            e.pageX > ScrollRectInfo.centerStart &&
+                            e.pageX < ScrollRectInfo.centerEnd;
+                        const centerLeftCase =
+                            e.pageX > ScrollRectInfo.centerLeftStart &&
+                            e.pageX < ScrollRectInfo.centerLeftEnd;
+                        const centerRightCase =
+                            e.pageX > ScrollRectInfo.centerRightStart &&
+                            e.pageX < ScrollRectInfo.centerRightEnd;
+                        const leftCase =
+                            e.pageX > ScrollRectInfo.leftStart && e.pageX < ScrollRectInfo.leftEnd;
+                        const rightCase =
+                            e.pageX > ScrollRectInfo.rightStart &&
+                            e.pageX < ScrollRectInfo.rightEnd;
+                        //
+                        if (centerCase) {
+                            animateMode = 'center';
+                        }
 
-                    if (centerLeftCase) {
-                        animateMode = 'conterLeft';
-                    }
+                        // 마우스 다운되고 무브 된 순간부터, 리퀘스트 에니메이션 돌리는거고,
+                        // 마우스 무브시에 모드 변경,
+                        // 마우스 업에 정지.
+                        if (centerRightCase) {
+                            animateMode = 'centerRight';
+                        }
 
-                    if (rightCase) {
-                        animateMode = 'right';
-                    }
+                        if (centerLeftCase) {
+                            animateMode = 'conterLeft';
+                        }
 
-                    if (leftCase) {
-                        animateMode = 'left';
+                        if (rightCase) {
+                            animateMode = 'right';
+                        }
+
+                        if (leftCase) {
+                            animateMode = 'left';
+                        }
                     }
-                }
-            });
+                });
+            }, 100);
+            rectthrottle();
+            if (
+                (draggableElement as unknown as HTMLDivElement) &&
+                dndControl.adjustedDndTargetLeft
+            ) {
+                (draggableElement as HTMLDivElement).style.left =
+                    String(e.pageX + dndControl.adjustedDndTargetLeft) + 'px';
+                (draggableElement as HTMLDivElement).style.top = String(e.pageY) + 'px';
+            }
         },
         mouseUpHandler: (e: MouseEvent) => {
             window.removeEventListener('mousemove', dndControl.mouseMoveHandler);
