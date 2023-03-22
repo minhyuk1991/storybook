@@ -196,4 +196,6 @@ export class GridCore<T extends { [key: string]: any }> {
 
         this.currentColumns = nextColumns;
     }
+
+    rowCheckChange() {}
 }

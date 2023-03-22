@@ -583,8 +583,10 @@
                         justify-content:center;
                         height:60px;
                         
-                        `}">{cell.name}{cell.index}</div
+                        `}"
                         >
+                            <input type="checkbox" name="" id="" checked="{false}" />
+                        </div>
                     </div>
                 {/if}
             {/each}
