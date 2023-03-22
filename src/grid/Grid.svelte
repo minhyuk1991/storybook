@@ -29,6 +29,16 @@
 
     test.addColumn([
         {
+            name: 'check',
+            type: 'check',
+            accessor: 'check1',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: false,
+            isHide: false,
+            size: '100px',
+        },
+        {
             name: 'id',
             type: 'string',
             accessor: 'id',

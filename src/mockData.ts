@@ -12,6 +12,7 @@ export const creatMockData = (index: number): MockData => {
         swap: Math.floor(Math.random() * 100),
         disk: Math.floor(Math.random() * 100),
         diskName: `${hostName}-disk`,
+        check1: false,
     };
 };
 
@@ -30,6 +31,7 @@ function createMockDataCPS(index: number, callback: (data: MockData) => void) {
         swap: Math.floor(Math.random() * 100),
         disk: Math.floor(Math.random() * 100),
         diskName: `${hostName}-disk`,
+        check1: false,
     };
     callback(data);
 }

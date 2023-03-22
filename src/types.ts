@@ -21,6 +21,7 @@ export type MockData = {
     disk: number;
     diskName: string;
     id: string;
+    check1: boolean;
 };
 
 export type MockDataColumn = {

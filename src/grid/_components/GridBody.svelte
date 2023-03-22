@@ -37,6 +37,7 @@
 </style>
 
 <script lang="ts">
+    import {} from 'os';
     import type { MockData } from '../../types';
     import type { DerivedColumnConfigs, GridCore } from '../GridCore';
     import VirtualList from './Vl.svelte';
@@ -65,15 +66,33 @@
         let:item
         scrollHandler="{scrollHandler}"
         scrollX="{scrollX}"
+        let:index="{rowIndex}"
     >
         <div class="row">
-            {#each renderColumnList as cell}
-                {#if isDevMode || cell.onlyDev === false}
+            {#each renderColumnList as cell, index}
+                {#if (isDevMode || cell.onlyDev === false) && cell.type === 'string'}
                     <div
                         style="{`min-width: ${
                             typeof cell.size === 'string' ? cell.size : ''
                         };width:${cell.size}`}">{item[cell.name]}</div
                     >
+                {/if}
+                {#if (isDevMode || cell.onlyDev === false) && cell.type === 'check'}
+                    <div
+                        style="{`min-width: ${
+                            typeof cell.size === 'string' ? cell.size : ''
+                        };width:${cell.size}`}"
+                    >
+                        <input
+                            type="checkbox"
+                            name=""
+                            id=""
+                            checked="{item.isCheck}"
+                            on:change="{(e) => {
+                                console.log(rowIndex);
+                            }}"
+                        />
+                    </div>
                 {/if}
             {/each}
         </div>

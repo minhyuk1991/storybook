@@ -387,8 +387,6 @@
                             console.log(rectInfoList[0].x);
                             setScrollX(0);
                         } else {
-                            // console.log('left', scrollX, scrollElWidth);
-
                             setScrollX(-10);
                             floatingScrolledValue = floatingScrolledValue - 10;
                         }
@@ -396,8 +394,6 @@
                     if (animateMode === 'right') {
                         if (scrollX + 10 <= scrollElWidth) {
                             setScrollX(10);
-                            // console.log('right', scrollX, scrollElWidth);
-
                             floatingScrolledValue = floatingScrolledValue + 10;
                         } else {
                             setScrollX(0);
@@ -529,7 +525,7 @@
     <div class="header">
         <div class="row">
             {#each renderColumnList as cell, index}
-                {#if !cell.onlyDev || isDevMode}
+                {#if (!cell.onlyDev || isDevMode) && cell.type === 'string'}
                     <div>
                         <div
                             class="{`cell cell-${cell.index}`}"
@@ -564,6 +560,31 @@
                                 widthControl.mouseDownHandler(e);
                                 mouseDownLockChange(true);
                             }}"></div>
+                    </div>
+                {/if}
+                {#if (!cell.onlyDev || isDevMode) && cell.type === 'check'}
+                    <div>
+                        <div
+                            class="{`cell cell-${cell.index}`}"
+                            on:mousedown="{(e) => {
+                                console.log('mouseDownSnapShotSizeXmouseDownSnapShotSizeX');
+                                mouseDownDnDSnapShotSizeX = e.pageX;
+                                dndControl.mouseDownHandler(e, cell);
+                            }}"
+                            draggable="{true}"
+                            style="{`
+                        min-width:100px;
+                        width: 100px;
+                        padding: 0 20px;
+                        background: rebeccapurple;
+                        color:white;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        height:60px;
+                        
+                        `}">{cell.name}{cell.index}</div
+                        >
                     </div>
                 {/if}
             {/each}

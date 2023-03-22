@@ -1,28 +1,7 @@
 type Option = { resizable?: boolean; isReorder?: boolean };
 import { v4 as uuidv4 } from 'uuid';
 
-export type ColumnDataType = 'string' | 'int' | 'stringInt' | 'email' | 'url';
-
-export type InputColumnConfig = {
-    name: string;
-    type: ColumnDataType;
-    accessor: string;
-    columnWidth?: string;
-    columnFixed?: boolean;
-    onlyDev?: boolean;
-    isHide?: boolean;
-    size?: string;
-};
-export type InputColumnConfigs = InputColumnConfig[];
-export type DerivedColumnConfig = InputColumnConfig & {
-    columnWidth: string;
-    columnFixed: boolean;
-    onlyDev: boolean;
-    isHide: boolean;
-    index: number;
-    size: string;
-};
-export type DerivedColumnConfigs = DerivedColumnConfig[];
+export type ColumnDataType = 'string' | 'int' | 'stringInt' | 'email' | 'url' | 'double' | 'check';
 
 export type RenderColumnList = {
     name: string;
@@ -75,8 +54,29 @@ const createItem = (
         size,
     };
 };
+export type InputColumnConfig = {
+    name: string;
+    type: ColumnDataType;
+    accessor: string;
+    columnWidth?: string;
+    columnFixed?: boolean;
+    onlyDev?: boolean;
+    isHide?: boolean;
+    size?: string;
+    isCheck?: boolean;
+};
+export type InputColumnConfigs = InputColumnConfig[];
+export type DerivedColumnConfig = InputColumnConfig & {
+    columnWidth: string;
+    columnFixed: boolean;
+    onlyDev: boolean;
+    isHide: boolean;
+    index: number;
+    size: string;
+};
+export type DerivedColumnConfigs = DerivedColumnConfig[];
 
-export class GridCore<T extends { [key: string]: number | string }> {
+export class GridCore<T extends { [key: string]: any }> {
     items: Array<T>;
 
     // columns: DerivedColumnConfigs;
