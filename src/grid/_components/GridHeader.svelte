@@ -365,40 +365,40 @@
                         floatingScrolledValue = floatingScrolledValue + 0;
                     }
                     if (animateMode === 'centerRight') {
-                        if (scrollX + 3 <= scrollElWidth) {
+                        if (scrollX + 10 <= scrollElWidth) {
                             // console.log('centerRight', scrollX, scrollElWidth);
-                            setScrollX(3);
-                            floatingScrolledValue = floatingScrolledValue + 3;
+                            setScrollX(10);
+                            floatingScrolledValue = floatingScrolledValue + 10;
                         } else {
                             setScrollX(0);
                         }
                     }
                     if (animateMode === 'conterLeft') {
-                        if (scrollX - 3 <= rectInfoList[0].x) {
+                        if (scrollX - 10 <= rectInfoList[0].x) {
                             setScrollX(0);
                         } else {
                             // console.log('conterLeft', scrollX, scrollElWidth);
-                            setScrollX(-3);
-                            floatingScrolledValue = floatingScrolledValue - 3;
+                            setScrollX(-10);
+                            floatingScrolledValue = floatingScrolledValue - 10;
                         }
                     }
                     if (animateMode === 'left') {
-                        if (scrollX - 5 <= rectInfoList[0].x) {
+                        if (scrollX - 10 <= rectInfoList[0].x) {
                             console.log(rectInfoList[0].x);
                             setScrollX(0);
                         } else {
                             // console.log('left', scrollX, scrollElWidth);
 
-                            setScrollX(-5);
-                            floatingScrolledValue = floatingScrolledValue - 5;
+                            setScrollX(-10);
+                            floatingScrolledValue = floatingScrolledValue - 10;
                         }
                     }
                     if (animateMode === 'right') {
-                        if (scrollX + 5 <= scrollElWidth) {
-                            setScrollX(5);
+                        if (scrollX + 10 <= scrollElWidth) {
+                            setScrollX(10);
                             // console.log('right', scrollX, scrollElWidth);
 
-                            floatingScrolledValue = floatingScrolledValue + 5;
+                            floatingScrolledValue = floatingScrolledValue + 10;
                         } else {
                             setScrollX(0);
                         }
