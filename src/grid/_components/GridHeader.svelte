@@ -167,13 +167,19 @@
         },
         e: MouseEvent,
     ): { where: 'before' | 'after'; index: number } | undefined => {
+        // 아이템의 시작 x좌표
+        // 마우스 포인터 위치
+        // 스크롤된 값 보정
+        //
         const isInsideX =
-            item.x < e?.pageX + floatingScrolledValue && item.x + item.width > e?.pageX;
+            item.x < e?.pageX + floatingScrolledValue &&
+            item.x + item.width > e?.pageX + floatingScrolledValue;
         const isInsideY = item.y < e?.pageY && item.y + item.height > e?.pageY - window.scrollY;
         const isBefore = isInsideX && item.x + item.width * 0.3 > e.pageX + floatingScrolledValue;
         const isAfter = isInsideX && item.x + item.width * 0.7 < e.pageX + floatingScrolledValue;
         const isInsideXY = isInsideX && isInsideY;
 
+        console.log('isInsideX', item.x < e?.pageX + floatingScrolledValue);
         if (isInsideXY && isBefore) {
             console.log({ where: 'before', index: item.index });
             return { where: 'before', index: item.index };
@@ -189,6 +195,11 @@
         scrollEl.scrollLeft = scrollX;
         scrollEl.scrollTop = scrollY;
     });
+
+    // $: {
+    //     console.log('scrollX', scrollX);
+    //     console.log('floatingScrolledValue', floatingScrolledValue);
+    // }
 
     let animateMode: 'left' | 'conterLeft' | 'center' | 'centerRight' | 'right' | null = null;
     let currentCell: CurrentCell = null;
@@ -224,6 +235,7 @@
                 el: item,
             };
         });
+        console.log(rectInfoList);
     };
 
     const widthControl = {
@@ -354,7 +366,7 @@
                     }
                     if (animateMode === 'centerRight') {
                         if (scrollX + 3 <= scrollElWidth) {
-                            console.log('centerRight', scrollX, scrollElWidth);
+                            // console.log('centerRight', scrollX, scrollElWidth);
                             setScrollX(3);
                             floatingScrolledValue = floatingScrolledValue + 3;
                         } else {
@@ -362,17 +374,21 @@
                         }
                     }
                     if (animateMode === 'conterLeft') {
-                        if (scrollX - 3 <= 0) {
+                        if (scrollX - 3 <= rectInfoList[0].x) {
                             setScrollX(0);
                         } else {
+                            // console.log('conterLeft', scrollX, scrollElWidth);
                             setScrollX(-3);
                             floatingScrolledValue = floatingScrolledValue - 3;
                         }
                     }
                     if (animateMode === 'left') {
-                        if (scrollX - 5 <= 0) {
+                        if (scrollX - 5 <= rectInfoList[0].x) {
+                            console.log(rectInfoList[0].x);
                             setScrollX(0);
                         } else {
+                            // console.log('left', scrollX, scrollElWidth);
+
                             setScrollX(-5);
                             floatingScrolledValue = floatingScrolledValue - 5;
                         }
@@ -380,6 +396,8 @@
                     if (animateMode === 'right') {
                         if (scrollX + 5 <= scrollElWidth) {
                             setScrollX(5);
+                            // console.log('right', scrollX, scrollElWidth);
+
                             floatingScrolledValue = floatingScrolledValue + 5;
                         } else {
                             setScrollX(0);
