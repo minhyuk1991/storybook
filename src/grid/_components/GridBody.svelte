@@ -39,7 +39,7 @@
 <script lang="ts">
     import {} from 'os';
     import type { MockData } from '../../types';
-    import type { DerivedColumnConfigs, GridCore } from '../GridCore';
+    import type { DerivedColumnConfig, DerivedColumnConfigs, GridCore } from '../GridCore';
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
     export let renderColumnList: DerivedColumnConfigs;
@@ -54,6 +54,14 @@
     ) => void;
     let start: number;
     let end: number;
+    type ChangeEvent = Event & {
+        currentTarget: EventTarget & {
+            checked: boolean;
+        };
+    };
+    const onChangeHandler = (e: ChangeEvent, cell: DerivedColumnConfig) => {
+        gridInstance.rowCheckChange(cell.index, e.currentTarget.checked);
+    };
 </script>
 
 <div class="tbody">
@@ -89,7 +97,7 @@
                             id=""
                             checked="{item.isCheck}"
                             on:change="{(e) => {
-                                console.log(rowIndex);
+                                onChangeHandler(e, cell);
                             }}"
                         />
                     </div>

@@ -93,6 +93,7 @@
     export let mouseDownLockChange: (v: boolean) => void;
     export let updateGridColumn: () => void;
     export let mouseDownLock: boolean;
+    export let setRenderList: () => void;
 
     export let scrollX: number;
     export let setScrollX: (value: number) => void;
@@ -585,7 +586,18 @@
                         
                         `}"
                         >
-                            <input type="checkbox" name="" id="" checked="{false}" />
+                            <input
+                                type="checkbox"
+                                name=""
+                                id=""
+                                checked="{cell.isCheck}"
+                                on:change="{(e) => {
+                                    if (e.target) {
+                                        gridInstance.rowAllCheckChange(e.currentTarget.checked);
+                                        setRenderList();
+                                    }
+                                }}"
+                            />
                         </div>
                     </div>
                 {/if}

@@ -17,8 +17,8 @@ export const getOnlyNumber = (pxString: string) => {
     return a;
 };
 
-const getRenderRows = <T>(items: T[]) => {
-    return items;
+const getRenderRows = <T>(currentRows: T[]) => {
+    return currentRows;
 };
 const createItem = (
     {
@@ -77,13 +77,15 @@ export type DerivedColumnConfig = InputColumnConfig & {
 export type DerivedColumnConfigs = DerivedColumnConfig[];
 
 export class GridCore<T extends { [key: string]: any }> {
-    items: Array<T>;
+    currentRows: Array<T>;
 
     // columns: DerivedColumnConfigs;
 
     currentColumns: DerivedColumnConfigs;
 
     originalColumnState: DerivedColumnConfigs;
+
+    originalRowState: T[];
 
     renderRows: T[];
 
@@ -94,15 +96,25 @@ export class GridCore<T extends { [key: string]: any }> {
         callback: (v: boolean) => void;
     }[];
 
-    constructor(items: T[], option?: Option) {
-        this.items = items;
+    isCheck: boolean;
+
+    isAllRowsChecked: boolean;
+
+    isAllRowsUnchecked: boolean;
+
+    constructor(currentRows: T[], option?: Option) {
+        this.currentRows = currentRows;
         this.renderRows = [];
         this.currentColumns = [];
         this.originalColumnState = [];
         //init Rows
-        this.renderRows = getRenderRows<T>(items);
+        this.originalRowState = currentRows;
+        this.renderRows = getRenderRows<T>(currentRows);
         this.isDevMode = false;
         this.isDevModeSubscribeFunctionList = [];
+        this.isCheck = false;
+        this.isAllRowsChecked = false;
+        this.isAllRowsUnchecked = true;
     }
 
     getOnlyDevColumnLength() {
@@ -136,7 +148,7 @@ export class GridCore<T extends { [key: string]: any }> {
     }
 
     getRows() {
-        return this.items;
+        return this.currentRows;
     }
 
     //인자로 함수를 받음
@@ -161,7 +173,6 @@ export class GridCore<T extends { [key: string]: any }> {
         const prevState = this.isDevMode;
         this.isDevMode = v;
         if (prevState !== v) {
-            console.log('동작');
             this.isDevModeSubscribeFunctionList.map((item) => item.callback(v));
         }
     }
@@ -197,5 +208,34 @@ export class GridCore<T extends { [key: string]: any }> {
         this.currentColumns = nextColumns;
     }
 
-    rowCheckChange() {}
+    rowCheckChange(index: number, v: boolean) {
+        if (v) {
+            this.isAllRowsUnchecked = false;
+        }
+        if (!v) {
+            this.isAllRowsChecked = false;
+        }
+
+        if (this.currentColumns[index]) {
+            this.currentColumns[index].isCheck = v;
+        }
+    }
+
+    rowAllCheckChange(v: boolean) {
+        console.log('실행');
+        if (this.isAllRowsUnchecked && v) {
+            console.log('isAllRowsUnchecked');
+            this.currentRows = this.currentRows.map((item) => ({ ...item, isCheck: true }));
+            this.isAllRowsUnchecked = false;
+            this.isAllRowsChecked = true;
+            console.log(this.currentRows);
+        }
+        if (this.isAllRowsChecked && !v) {
+            console.log('isAllRowsChecked');
+            this.currentRows = this.currentRows.map((item) => ({ ...item, isCheck: false }));
+            this.isAllRowsChecked = false;
+            this.isAllRowsUnchecked = true;
+            console.log(this.currentRows);
+        }
+    }
 }

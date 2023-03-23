@@ -31,7 +31,7 @@
         {
             name: 'check',
             type: 'check',
-            accessor: 'check1',
+            accessor: 'isCheck',
             columnWidth: 'string',
             columnFixed: true,
             onlyDev: false,
@@ -108,7 +108,10 @@
         isDevMode = v;
     });
     let renderColumnList = test.getColumns();
-    let renderRowList = test.getRows();
+    let rowsData = test.getRows();
+    const updateGridRows = () => {
+        rowsData = test.getRows();
+    };
     let isSelect = false;
 
     let scrollX: number = 0;
@@ -189,12 +192,13 @@
         mouseDownLockChange="{mouseDownLockChange}"
         mouseDownLock="{mouseDownLock}"
         setScrollX="{setScrollX}"
+        setRenderList="{updateGridRows}"
     />
     <GridBody
         gridInstance="{test}"
         isDevMode="{isDevMode}"
         scrollHandler="{scrollHandler}"
-        rowsData="{renderRowList}"
+        rowsData="{rowsData}"
         scrollY="{scrollY}"
         scrollX="{scrollX}"
         renderColumnList="{renderColumnList}"
