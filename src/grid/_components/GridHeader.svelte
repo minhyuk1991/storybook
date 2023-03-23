@@ -583,7 +583,6 @@
                         align-items:center;
                         justify-content:center;
                         height:60px;
-                        
                         `}"
                         >
                             <input
