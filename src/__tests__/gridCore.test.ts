@@ -2,11 +2,12 @@ import { createMockDataList } from './../mockData';
 
 import '@testing-library/jest-dom';
 import { DerivedColumnConfig, GridCore, InputColumnConfig } from '../grid/GridCore';
+import type { MockData } from '../types';
 
 describe('button ', () => {
     const mockData = createMockDataList(40000);
     const test = new GridCore(mockData, { resizable: true });
-    const list: InputColumnConfig[] = [
+    const list: InputColumnConfig<MockData>[] = [
         {
             name: 'id',
             type: 'string',
@@ -96,7 +97,7 @@ describe('button ', () => {
     });
 
     it('updateColumnWidth', () => {
-        const testCase: DerivedColumnConfig = {
+        const testCase: DerivedColumnConfig<MockData> = {
             name: 'id',
             type: 'string',
             accessor: 'id',

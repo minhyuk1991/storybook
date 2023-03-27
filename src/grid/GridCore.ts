@@ -20,7 +20,7 @@ export const getOnlyNumber = (pxString: string) => {
 const getRenderRows = <T>(currentRows: T[]) => {
     return currentRows;
 };
-const createItem = (
+const createItem = <T>(
     {
         name,
         type,
@@ -30,16 +30,8 @@ const createItem = (
         onlyDev = false,
         isHide = false,
         size = '300px',
-    }: {
-        name: string;
-        type: ColumnDataType;
-        accessor: string;
-        columnWidth?: string | undefined;
-        columnFixed?: boolean | undefined;
-        onlyDev?: boolean | undefined;
-        isHide?: boolean | undefined;
-        size?: string | undefined;
-    },
+        isCheck = false,
+    }: InputColumnConfig<T>,
     index: number,
 ) => {
     return {
@@ -52,10 +44,11 @@ const createItem = (
         isHide,
         index,
         size,
+        isCheck,
     };
 };
-export type InputColumnConfig = {
-    name: string;
+export type InputColumnConfig<T> = {
+    name: keyof T;
     type: ColumnDataType;
     accessor: string;
     columnWidth?: string;
@@ -65,8 +58,8 @@ export type InputColumnConfig = {
     size?: string;
     isCheck?: boolean;
 };
-export type InputColumnConfigs = InputColumnConfig[];
-export type DerivedColumnConfig = InputColumnConfig & {
+export type InputColumnConfigs<T> = InputColumnConfig<T>[];
+export type DerivedColumnConfig<T> = InputColumnConfig<T> & {
     columnWidth: string;
     columnFixed: boolean;
     onlyDev: boolean;
@@ -74,16 +67,16 @@ export type DerivedColumnConfig = InputColumnConfig & {
     index: number;
     size: string;
 };
-export type DerivedColumnConfigs = DerivedColumnConfig[];
+export type DerivedColumnConfigs<T> = DerivedColumnConfig<T>[];
 
 export class GridCore<T extends { [key: string]: any }> {
     currentRows: Array<T>;
 
     // columns: DerivedColumnConfigs;
 
-    currentColumns: DerivedColumnConfigs;
+    currentColumns: DerivedColumnConfigs<T>;
 
-    originalColumnState: DerivedColumnConfigs;
+    originalColumnState: DerivedColumnConfigs<T>;
 
     originalRowState: T[];
 
@@ -96,11 +89,18 @@ export class GridCore<T extends { [key: string]: any }> {
         callback: (v: boolean) => void;
     }[];
 
-    isCheck: boolean;
+    checkTypeInfo: {
+        [K in keyof T]: {
+            currentRows: T[];
+            isAllRowsChecked: boolean;
+            isAllRowsUnchecked: boolean;
+        };
+    };
+    // isCheck: boolean;
 
-    isAllRowsChecked: boolean;
+    // isAllRowsChecked: boolean;
 
-    isAllRowsUnchecked: boolean;
+    // isAllRowsUnchecked: boolean;
 
     constructor(currentRows: T[], option?: Option) {
         this.currentRows = currentRows;
@@ -112,16 +112,30 @@ export class GridCore<T extends { [key: string]: any }> {
         this.renderRows = getRenderRows<T>(currentRows);
         this.isDevMode = false;
         this.isDevModeSubscribeFunctionList = [];
-        this.isCheck = false;
-        this.isAllRowsChecked = false;
-        this.isAllRowsUnchecked = true;
+        this.checkTypeInfo = {} as any;
+        for (const key in currentRows[0]) {
+            if (currentRows[0].hasOwnProperty(key)) {
+                const element = currentRows[0][key];
+                if ((element as any).type === 'check') {
+                    this.checkTypeInfo[key as keyof T] = {
+                        currentRows: currentRows,
+                        isAllRowsChecked: false,
+                        isAllRowsUnchecked: true,
+                    };
+                }
+            }
+        }
+
+        // this.isCheck = false;
+        // this.isAllRowsChecked = false;
+        // this.isAllRowsUnchecked = true;
     }
 
     getOnlyDevColumnLength() {
         return this.currentColumns.filter((item) => item.onlyDev === true).length;
     }
 
-    addColumn(config: InputColumnConfig | InputColumnConfigs) {
+    addColumn(config: InputColumnConfig<T> | InputColumnConfigs<T>) {
         const isArray = Array.isArray(config);
 
         if (isArray) {
@@ -181,7 +195,7 @@ export class GridCore<T extends { [key: string]: any }> {
         return (this.currentColumns = [...this.originalColumnState]);
     }
 
-    updateColumnWidth(width: string, column: DerivedColumnConfig) {
+    updateColumnWidth(width: string, column: DerivedColumnConfig<T>) {
         const target = this.currentColumns.find((item) => item.name === column.name);
         if (target && target.size) {
             target.size = width;
@@ -208,38 +222,68 @@ export class GridCore<T extends { [key: string]: any }> {
         this.currentColumns = nextColumns;
     }
 
-    rowCheckChange(index: number, v: boolean) {
-        if (v) {
-            this.isAllRowsUnchecked = false;
-        }
-        if (!v) {
-            this.isAllRowsChecked = false;
+    rowCheckChange(index: number, v: boolean, name: keyof T) {
+        console.log('rowCheckChange');
+        if (v && this.checkTypeInfo[name]) {
+            this.checkTypeInfo[name]!.isAllRowsUnchecked = false;
+            console.log('name', this.checkTypeInfo[name]!.isAllRowsChecked);
         }
 
-        if (this.currentRows[index]) {
-            // this.currentRows[index].check = v; // 변경된 부분
+        if (!v) {
+            console.log('name', this.checkTypeInfo[name]);
+
+            console.log('        this.checkTypeInfo[name]!.isAllRowsChecked = false;');
+            this.checkTypeInfo[name]!.isAllRowsChecked = false;
+            console.log('name', this.checkTypeInfo[name]!.isAllRowsChecked);
+        }
+
+        if (
+            this.checkTypeInfo[name]?.currentRows[index] &&
+            this.checkTypeInfo[name]?.currentRows[index].type === 'check'
+        ) {
+            (this.checkTypeInfo[name]?.currentRows[index] as any).value = v;
         }
     }
 
-    rowAllCheckChange(v: boolean, fieldName: string, row: T) {
+    rowAllCheckChange(v: boolean, fieldName: keyof T, row: T) {
         console.log('실행');
         console.log('실행', row[fieldName]);
 
-        if (row[fieldName].type === 'check') {
+        if (row[fieldName] && (row[fieldName] as any).type === 'check' && fieldName) {
             console.log('실행 fieldName', fieldName);
-            if (this.isAllRowsUnchecked && v) {
+
+            if (this.checkTypeInfo[fieldName].isAllRowsUnchecked && v) {
                 console.log('isAllRowsUnchecked');
-                this.currentRows = this.currentRows.map((item) => ({ ...item, check: true })); // 변경된 부분
-                this.isAllRowsUnchecked = false;
-                this.isAllRowsChecked = true;
-                console.log(this.currentRows);
+                this.checkTypeInfo[fieldName].currentRows = this.checkTypeInfo[
+                    fieldName
+                ].currentRows.map((item) => ({
+                    ...item,
+                    [fieldName]: {
+                        ...(item[fieldName] as any),
+                        value: true,
+                    },
+                }));
+                console.log(this.checkTypeInfo[fieldName]!.currentRows);
+
+                this.checkTypeInfo[fieldName].isAllRowsUnchecked = false;
+                this.checkTypeInfo[fieldName].isAllRowsChecked = true;
             }
-            if (this.isAllRowsChecked && !v) {
+
+            if (this.checkTypeInfo[fieldName].isAllRowsChecked && v) {
                 console.log('isAllRowsChecked');
-                this.currentRows = this.currentRows.map((item) => ({ ...item, check: false })); // 변경된 부분
-                this.isAllRowsChecked = false;
-                this.isAllRowsUnchecked = true;
-                console.log(this.currentRows);
+                this.checkTypeInfo[fieldName].currentRows = this.checkTypeInfo[
+                    fieldName
+                ].currentRows.map((item) => ({
+                    ...item,
+                    [fieldName]: {
+                        ...(item[fieldName] as any),
+                        value: false,
+                    },
+                }));
+
+                console.log(this.checkTypeInfo[fieldName]!.currentRows);
+                this.checkTypeInfo[fieldName].isAllRowsChecked = false;
+                this.checkTypeInfo[fieldName].isAllRowsUnchecked = true;
             }
         }
     }

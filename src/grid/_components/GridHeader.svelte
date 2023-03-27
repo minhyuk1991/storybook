@@ -88,7 +88,7 @@
     import { throttle } from 'lodash';
 
     export let gridInstance: GridCore<MockData>;
-    export let renderColumnList: DerivedColumnConfig[];
+    export let renderColumnList: DerivedColumnConfig<MockData>[];
     export let isDevMode: boolean;
     export let mouseDownLockChange: (v: boolean) => void;
     export let updateGridColumn: () => void;
@@ -99,7 +99,7 @@
     export let setScrollX: (value: number) => void;
     let floatingScrolledValue = 0;
     let scrollEl: HTMLDivElement;
-    type CurrentCell = DerivedColumnConfig | null;
+    type CurrentCell = DerivedColumnConfig<MockData> | null;
 
     let mouseDownSnapShotSizeX: number | null;
     let mouseDownSnapShotScrollLeft: number | null;
@@ -316,7 +316,7 @@
     let animationFrameId: number | null = null;
     const dndControl = {
         adjustedDndTargetLeft: null,
-        mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => {
+        mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig<MockData>) => {
             elSet();
             e.preventDefault();
             mouseDownSnapShotScrollLeft = scrollEl.scrollLeft;
@@ -515,7 +515,7 @@
         },
     } as {
         adjustedDndTargetLeft: number | null;
-        readonly mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig) => void;
+        readonly mouseDownHandler: (e: MouseEvent, cell: DerivedColumnConfig<MockData>) => void;
         readonly mouseMoveHandler: (e: MouseEvent) => void;
         readonly mouseUpHandler: (e: MouseEvent) => void;
         readonly animate: () => void;
@@ -589,7 +589,7 @@
                                 type="checkbox"
                                 name=""
                                 id=""
-                                checked="{cell.isCheck}"
+                                checked="{gridInstance.checkTypeInfo[cell.name]?.isAllRowsChecked}"
                                 on:change="{(e) => {
                                     if (e.target) {
                                         gridInstance.rowAllCheckChange(

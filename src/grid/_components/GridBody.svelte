@@ -42,7 +42,7 @@
     import type { DerivedColumnConfig, DerivedColumnConfigs, GridCore } from '../GridCore';
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
-    export let renderColumnList: DerivedColumnConfigs;
+    export let renderColumnList: DerivedColumnConfigs<MockData>;
     export let scrollY: number;
     export let scrollX: number;
     export let gridInstance: GridCore<MockData>;
@@ -59,8 +59,18 @@
             checked: boolean;
         };
     };
-    const onChangeHandler = (e: ChangeEvent, cell: DerivedColumnConfig) => {
-        gridInstance.rowCheckChange(cell.index, e.currentTarget.checked);
+    $: {
+        console.log(rowsData);
+    }
+    const onChangeHandler = (e: ChangeEvent, cell: DerivedColumnConfig<MockData>) => {
+        if (gridInstance) {
+            console.log(cell.name);
+            gridInstance.rowCheckChange(cell.index, e.currentTarget.checked, cell.name);
+        }
+    };
+
+    const getA = (cellName: keyof MockData, index: number) => {
+        return gridInstance.checkTypeInfo[cellName].currentRows[index][cellName].value as boolean;
     };
 </script>
 
@@ -85,7 +95,7 @@
                         };width:${cell.size}`}">{item[cell.name].value}</div
                     >
                 {/if}
-                {#if (isDevMode || cell.onlyDev === false) && cell.type === 'check'}
+                {#if (isDevMode || cell.onlyDev === false) && cell.type === 'check' && gridInstance && gridInstance.checkTypeInfo}
                     <div
                         style="{`min-width: ${
                             typeof cell.size === 'string' ? cell.size : ''
@@ -95,7 +105,7 @@
                             type="checkbox"
                             name=""
                             id=""
-                            checked="{item.isCheck}"
+                            checked="{getA(cell.name, index)}"
                             on:change="{(e) => {
                                 onChangeHandler(e, cell);
                             }}"
