@@ -31,7 +31,7 @@
         {
             name: 'check',
             type: 'check',
-            accessor: 'isCheck',
+            accessor: 'check',
             columnWidth: 'string',
             columnFixed: true,
             onlyDev: false,

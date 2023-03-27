@@ -592,7 +592,11 @@
                                 checked="{cell.isCheck}"
                                 on:change="{(e) => {
                                     if (e.target) {
-                                        gridInstance.rowAllCheckChange(e.currentTarget.checked);
+                                        gridInstance.rowAllCheckChange(
+                                            e.currentTarget.checked,
+                                            cell.name,
+                                            gridInstance.currentRows[index],
+                                        );
                                         setRenderList();
                                     }
                                 }}"

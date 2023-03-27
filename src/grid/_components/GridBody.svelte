@@ -82,7 +82,7 @@
                     <div
                         style="{`min-width: ${
                             typeof cell.size === 'string' ? cell.size : ''
-                        };width:${cell.size}`}">{item[cell.name]}</div
+                        };width:${cell.size}`}">{item[cell.name].value}</div
                     >
                 {/if}
                 {#if (isDevMode || cell.onlyDev === false) && cell.type === 'check'}

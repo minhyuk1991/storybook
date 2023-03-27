@@ -13,15 +13,42 @@ export type Folder = {
 export type RootFolder = Folder[];
 
 export type MockData = {
-    hostName: string;
-    top: number;
-    cpu: number;
-    mem: number;
-    swap: number;
-    disk: number;
-    diskName: string;
-    id: string;
-    check1: boolean;
+    hostName: {
+        value: string;
+        type: 'string';
+    };
+    top: {
+        value: number;
+        type: 'string';
+    };
+    cpu: {
+        value: number;
+        type: 'string';
+    };
+    mem: {
+        value: number;
+        type: 'string';
+    };
+    swap: {
+        value: number;
+        type: 'string';
+    };
+    disk: {
+        value: number;
+        type: 'string';
+    };
+    diskName: {
+        value: string;
+        type: 'string';
+    };
+    id: {
+        value: string;
+        type: 'string';
+    };
+    check: {
+        value: boolean;
+        type: 'check';
+    };
 };
 
 export type MockDataColumn = {

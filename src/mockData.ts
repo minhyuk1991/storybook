@@ -4,15 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 export const creatMockData = (index: number): MockData => {
     const hostName = `host-${index}`;
     return {
-        id: uuidv4(),
-        hostName,
-        top: Math.floor(Math.random() * 100),
-        cpu: Math.floor(Math.random() * 100),
-        mem: Math.floor(Math.random() * 100),
-        swap: Math.floor(Math.random() * 100),
-        disk: Math.floor(Math.random() * 100),
-        diskName: `${hostName}-disk`,
-        check1: false,
+        id: { value: uuidv4(), type: 'string' },
+        hostName: { value: hostName, type: 'string' },
+        top: { value: Math.floor(Math.random() * 100), type: 'string' },
+        cpu: { value: Math.floor(Math.random() * 100), type: 'string' },
+        mem: { value: Math.floor(Math.random() * 100), type: 'string' },
+        swap: { value: Math.floor(Math.random() * 100), type: 'string' },
+        disk: { value: Math.floor(Math.random() * 100), type: 'string' },
+        diskName: { value: `${hostName}-disk`, type: 'string' },
+        check: { value: false, type: 'check' },
     };
 };
 
@@ -23,17 +23,17 @@ export const createMockDataList = (length: number) => {
 function createMockDataCPS(index: number, callback: (data: MockData) => void) {
     const hostName = `host-${index}`;
     const data = {
-        id: uuidv4(),
-        hostName,
-        top: Math.floor(Math.random() * 100),
-        cpu: Math.floor(Math.random() * 100),
-        mem: Math.floor(Math.random() * 100),
-        swap: Math.floor(Math.random() * 100),
-        disk: Math.floor(Math.random() * 100),
-        diskName: `${hostName}-disk`,
-        check1: false,
+        id: { value: uuidv4(), type: 'string' },
+        hostName: { value: hostName, type: 'string' },
+        top: { value: Math.floor(Math.random() * 100), type: 'string' },
+        cpu: { value: Math.floor(Math.random() * 100), type: 'string' },
+        mem: { value: Math.floor(Math.random() * 100), type: 'string' },
+        swap: { value: Math.floor(Math.random() * 100), type: 'string' },
+        disk: { value: Math.floor(Math.random() * 100), type: 'string' },
+        diskName: { value: `${hostName}-disk`, type: 'string' },
+        check: { value: false, type: 'check' },
     };
-    callback(data);
+    callback(data as MockData);
 }
 
 export function createMockDataListPromise(length: number) {

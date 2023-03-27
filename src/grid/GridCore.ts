@@ -216,26 +216,31 @@ export class GridCore<T extends { [key: string]: any }> {
             this.isAllRowsChecked = false;
         }
 
-        if (this.currentColumns[index]) {
-            this.currentColumns[index].isCheck = v;
+        if (this.currentRows[index]) {
+            // this.currentRows[index].check = v; // 변경된 부분
         }
     }
 
-    rowAllCheckChange(v: boolean) {
+    rowAllCheckChange(v: boolean, fieldName: string, row: T) {
         console.log('실행');
-        if (this.isAllRowsUnchecked && v) {
-            console.log('isAllRowsUnchecked');
-            this.currentRows = this.currentRows.map((item) => ({ ...item, isCheck: true }));
-            this.isAllRowsUnchecked = false;
-            this.isAllRowsChecked = true;
-            console.log(this.currentRows);
-        }
-        if (this.isAllRowsChecked && !v) {
-            console.log('isAllRowsChecked');
-            this.currentRows = this.currentRows.map((item) => ({ ...item, isCheck: false }));
-            this.isAllRowsChecked = false;
-            this.isAllRowsUnchecked = true;
-            console.log(this.currentRows);
+        console.log('실행', row[fieldName]);
+
+        if (row[fieldName].type === 'check') {
+            console.log('실행 fieldName', fieldName);
+            if (this.isAllRowsUnchecked && v) {
+                console.log('isAllRowsUnchecked');
+                this.currentRows = this.currentRows.map((item) => ({ ...item, check: true })); // 변경된 부분
+                this.isAllRowsUnchecked = false;
+                this.isAllRowsChecked = true;
+                console.log(this.currentRows);
+            }
+            if (this.isAllRowsChecked && !v) {
+                console.log('isAllRowsChecked');
+                this.currentRows = this.currentRows.map((item) => ({ ...item, check: false })); // 변경된 부분
+                this.isAllRowsChecked = false;
+                this.isAllRowsUnchecked = true;
+                console.log(this.currentRows);
+            }
         }
     }
 }
