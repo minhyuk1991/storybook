@@ -22,8 +22,8 @@ export const getOnlyNumber = (pxString: string) => {
     if (!hasPXstring) {
         throw new Error("Unable to find string 'px'.");
     }
-    const a = pxString.slice(0, pxString.length - 2);
-    return a;
+    const numberValue = pxString.slice(0, pxString.length - 2);
+    return numberValue;
 };
 
 const createItem = <T>(
