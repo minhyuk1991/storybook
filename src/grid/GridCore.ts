@@ -278,28 +278,40 @@ export class GridCore<T extends { [key: string]: any }> {
     }
 
     rowCheckChange(index: number, v: boolean, name: keyof T) {
-        console.log('index', index, name);
         if (this.currentRows[index][name].type === 'check') {
             console.log('index', index);
             this.currentRows[index][name].value = v;
         }
+        let hasFalseValue = false;
+        let hasTrueValue = false;
+
+        for (const item of this.currentRows) {
+            if (item[name].type === 'check') {
+                if (item[name].value === false) {
+                    hasFalseValue = true;
+                } else if (item[name].value === true) {
+                    hasTrueValue = true;
+                }
+            }
+
+            // 둘 다 찾았다면 더 이상 반복할 필요가 없으므로 루프를 종료합니다.
+            if (hasFalseValue && hasTrueValue) {
+                break;
+            }
+        }
+
         if (v && this.checkTypeInfo[name]) {
             this.checkTypeInfo[name]!.isAllRowsUnchecked = false;
             console.log('체크 햇', this.currentRows);
 
-            const isAllFalse = this.currentRows.find(
-                (item) => item[name].type === 'check' && item[name].value === false,
-            );
-            console.log(this.checkTypeInfo[name]);
-
             //체크를 했으니, 체크가 안된게 없다면
-            if (isAllFalse) {
+            if (hasFalseValue) {
                 console.log('체크 했으나, 펄스인게 있음');
                 this.checkTypeInfo[name].isAllRowsChecked = false;
                 this.checkTypeInfo[name].isDisabled = true;
             }
 
-            if (!isAllFalse) {
+            if (!hasFalseValue) {
                 console.log('체크 했으나, 펄스인게 없음');
                 this.checkTypeInfo[name].currentAllIsRowsChecked = true;
                 console.log(this.checkTypeInfo[name]);
@@ -308,21 +320,18 @@ export class GridCore<T extends { [key: string]: any }> {
         }
 
         if (!v) {
-            const isAllTrue = this.currentRows.find(
-                (item) => item[name].type === 'check' && item[name].value === true,
-            );
-
             this.checkTypeInfo[name]!.isAllRowsChecked = false;
             console.log('체크 풀었', this.currentRows);
 
-            if (isAllTrue) {
+            if (hasTrueValue) {
                 console.log('체크 풀었으나, 트루인게 있음');
 
-                this.checkTypeInfo[name]!.isAllRowsUnchecked = true;
-                this.checkTypeInfo[name].isDisabled = false;
+                // this.checkTypeInfo[name]!.isAllRowsUnchecked = true;
             }
-            if (!isAllTrue) {
+            if (!hasTrueValue) {
                 console.log('체크 풀었으나, 트루인게 없음');
+                this.checkTypeInfo[name].isDisabled = false;
+                this.checkTypeInfo[name].isAllRowsUnchecked = true;
             }
             return;
         }
