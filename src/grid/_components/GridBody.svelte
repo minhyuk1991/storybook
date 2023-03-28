@@ -61,10 +61,14 @@
         };
     };
 
-    const onChangeHandler = (e: ChangeEvent, cell: DerivedColumnConfig<MockData>) => {
+    const onChangeHandler = (
+        e: ChangeEvent,
+        item: DerivedColumnConfig<MockData>,
+        name: keyof MockData,
+    ) => {
         if (gridInstance) {
-            console.log(cell.name);
-            gridInstance.rowCheckChange(cell.index, e.currentTarget.checked, cell.name);
+            console.log(item.name);
+            gridInstance.rowCheckChange(item.index, e.currentTarget.checked, name);
             updateGridRows();
         }
     };
@@ -103,8 +107,8 @@
                             id=""
                             checked="{item[cell.name].value}"
                             on:change="{(e) => {
-                                console.log('item', item);
-                                onChangeHandler(e, item);
+                                console.log('item', item.index);
+                                onChangeHandler(e, item, cell.name);
                             }}"
                         />
                         <!-- {console.log(rowsData[index][cell.name])} -->

@@ -183,7 +183,6 @@
     bind:offsetHeight="{viewportHeight}"
     on:scroll="{handleScroll}"
     on:scroll="{scrollHandler}"
-    ssss
     style="height: {height};"
     class="{`class-${elementId}`}"
 >

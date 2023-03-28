@@ -26,9 +26,6 @@ export const getOnlyNumber = (pxString: string) => {
     return a;
 };
 
-const getRenderRows = <T>(currentRows: T[]) => {
-    return currentRows;
-};
 const createItem = <T>(
     {
         name,
@@ -78,8 +75,10 @@ export type DerivedColumnConfig<T> = InputColumnConfig<T> & {
 };
 export type DerivedColumnConfigs<T> = DerivedColumnConfig<T>[];
 
+// export type IndexArray<T> = T & { index: number }[];
+
 export class GridCore<T extends { [key: string]: any }> {
-    currentRows: Array<T>;
+    currentRows: Array<T & { index: number }>;
 
     // columns: DerivedColumnConfigs;
 
@@ -89,7 +88,7 @@ export class GridCore<T extends { [key: string]: any }> {
 
     originalRowState: T[];
 
-    renderRows: T[];
+    renderRows: Array<T & { index: number }>;
 
     isDevMode: boolean;
 
@@ -113,13 +112,13 @@ export class GridCore<T extends { [key: string]: any }> {
     // isAllRowsUnchecked: boolean;
 
     constructor(currentRows: T[], option?: Option) {
-        this.currentRows = currentRows;
+        this.currentRows = currentRows.map((item, index) => ({ ...item, index }));
         this.renderRows = [];
         this.currentColumns = [];
         this.originalColumnState = [];
         //init Rows
         this.originalRowState = currentRows;
-        this.renderRows = getRenderRows<T>(currentRows);
+        this.renderRows = this.currentRows;
         this.isDevMode = false;
         this.isDevModeSubscribeFunctionList = [];
         this.checkTypeInfo = {} as any;
@@ -279,6 +278,7 @@ export class GridCore<T extends { [key: string]: any }> {
     }
 
     rowCheckChange(index: number, v: boolean, name: keyof T) {
+        console.log('index', index, name);
         if (this.currentRows[index][name].type === 'check') {
             console.log('index', index);
             this.currentRows[index][name].value = v;
