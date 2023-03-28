@@ -313,7 +313,9 @@ export class GridCore<T extends { [key: string]: any }> {
 
             if (!hasFalseValue) {
                 console.log('체크 했으나, 펄스인게 없음');
+                this.checkTypeInfo[name].isDisabled = false;
                 this.checkTypeInfo[name].currentAllIsRowsChecked = true;
+                this.checkTypeInfo[name]!.isAllRowsChecked = true;
                 console.log(this.checkTypeInfo[name]);
             }
             return;
@@ -325,8 +327,9 @@ export class GridCore<T extends { [key: string]: any }> {
 
             if (hasTrueValue) {
                 console.log('체크 풀었으나, 트루인게 있음');
-
-                // this.checkTypeInfo[name]!.isAllRowsUnchecked = true;
+                this.checkTypeInfo[name].currentAllIsRowsChecked = false;
+                this.checkTypeInfo[name].isDisabled = true;
+                this.checkTypeInfo[name]!.isAllRowsUnchecked = false;
             }
             if (!hasTrueValue) {
                 console.log('체크 풀었으나, 트루인게 없음');

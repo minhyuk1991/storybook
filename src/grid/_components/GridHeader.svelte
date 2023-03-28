@@ -598,6 +598,7 @@
                                 name=""
                                 id=""
                                 disabled="{checkInfo[cell.name].isDisabled}"
+                                value="{checkInfo[cell.name].currentAllIsRowsChecked}"
                                 checked="{checkInfo[cell.name].currentAllIsRowsChecked}"
                                 on:change="{(e) => {
                                     if (e.target) {
@@ -607,14 +608,7 @@
                                             gridInstance.currentRows[index],
                                         );
                                         console.log(gridInstance.checkTypeInfo[cell.name]);
-                                        const aa =
-                                            gridInstance.checkTypeInfo[cell.name]
-                                                .isAllRowsChecked &&
-                                            gridInstance.checkTypeInfo[cell.name]
-                                                .isAllRowsUnchecked === false;
-                                        if (aa) {
-                                            e.currentTarget.checked = true;
-                                        }
+
                                         updateGridRows();
                                     }
                                 }}"

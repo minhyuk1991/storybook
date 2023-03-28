@@ -109,6 +109,12 @@
                             on:change="{(e) => {
                                 console.log('item', item.index);
                                 onChangeHandler(e, item, cell.name);
+                                if (e.currentTarget && e.currentTarget.checked === false) {
+                                    console.log('실행!!');
+                                    gridInstance.checkTypeInfo[
+                                        cell.name
+                                    ].currentAllIsRowsChecked = false;
+                                }
                                 updateGridRows();
                             }}"
                         />
