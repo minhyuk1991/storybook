@@ -101,9 +101,10 @@
                             type="checkbox"
                             name=""
                             id=""
-                            checked="{rowsData[index][cell.name].value}"
+                            checked="{item[cell.name].value}"
                             on:change="{(e) => {
-                                onChangeHandler(e, cell);
+                                console.log('item', item);
+                                onChangeHandler(e, item);
                             }}"
                         />
                         <!-- {console.log(rowsData[index][cell.name])} -->

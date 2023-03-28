@@ -29,6 +29,16 @@
 
     test.addColumn([
         {
+            name: 'check1',
+            type: 'check',
+            accessor: 'check1',
+            columnWidth: 'string',
+            columnFixed: true,
+            onlyDev: false,
+            isHide: false,
+            size: '100px',
+        },
+        {
             name: 'check',
             type: 'check',
             accessor: 'check',
@@ -109,8 +119,11 @@
     });
     let renderColumnList = test.getColumns();
     let rowsData = test.getRows();
+    let checkInfo = test.checkTypeInfo;
+
     const updateGridRows = () => {
         rowsData = test.getRows();
+        checkInfo = test.checkTypeInfo;
     };
     let isSelect = false;
 
@@ -193,6 +206,7 @@
         mouseDownLock="{mouseDownLock}"
         setScrollX="{setScrollX}"
         updateGridRows="{updateGridRows}"
+        checkInfo="{checkInfo}"
     />
     <GridBody
         updateGridRows="{updateGridRows}"

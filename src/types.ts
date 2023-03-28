@@ -49,6 +49,10 @@ export type MockData = {
         value: boolean;
         type: 'check';
     };
+    check1: {
+        value: boolean;
+        type: 'check';
+    };
 };
 
 export type MockDataColumn = {

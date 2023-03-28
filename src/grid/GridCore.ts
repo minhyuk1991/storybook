@@ -8,6 +8,15 @@ export type RenderColumnList = {
     isHidden: boolean;
 }[];
 
+export type CheckTypeInfo<T> = {
+    [K in keyof T]: {
+        currentAllIsRowsChecked: boolean;
+        isAllRowsChecked: boolean;
+        isAllRowsUnchecked: boolean;
+        isDisabled: boolean;
+    };
+};
+
 export const getOnlyNumber = (pxString: string) => {
     const hasPXstring = pxString.slice(pxString.length - 2, pxString.length);
     if (!hasPXstring) {
@@ -91,8 +100,10 @@ export class GridCore<T extends { [key: string]: any }> {
 
     checkTypeInfo: {
         [K in keyof T]: {
+            currentAllIsRowsChecked: boolean;
             isAllRowsChecked: boolean;
             isAllRowsUnchecked: boolean;
+            isDisabled: boolean;
         };
     };
     // isCheck: boolean;
@@ -117,9 +128,56 @@ export class GridCore<T extends { [key: string]: any }> {
                 const element = currentRows[0][key];
                 if ((element as any).type === 'check') {
                     this.checkTypeInfo[key as keyof T] = {
+                        currentAllIsRowsChecked: false,
                         isAllRowsChecked: false,
                         isAllRowsUnchecked: true,
+                        isDisabled: false,
                     };
+                    const checkItems = currentRows.reduce(
+                        (acc, c) => {
+                            if (c[key].value === true) {
+                                acc.checkedCount++;
+                                acc.isAllRowsUnchecked = false;
+                            }
+
+                            if (c[key].value === false) {
+                                acc.isAllRowsChecked = false;
+                            }
+
+                            return acc;
+                        },
+                        {
+                            checkedCount: 0,
+                            isAllRowsChecked: false,
+                            isAllRowsUnchecked: false,
+                        },
+                    );
+                    console.log('checkItems', checkItems);
+                    if (checkItems.checkedCount === 0) {
+                        this.checkTypeInfo[key].currentAllIsRowsChecked = false;
+                        this.checkTypeInfo[key].isDisabled = false;
+                        this.checkTypeInfo[key].isAllRowsUnchecked = true;
+                        this.checkTypeInfo[key].isAllRowsChecked = false;
+                        console.log(this.checkTypeInfo);
+                    }
+                    if (checkItems.checkedCount === currentRows.length) {
+                        this.checkTypeInfo[key].currentAllIsRowsChecked = true;
+                        this.checkTypeInfo[key].isDisabled = false;
+                        this.checkTypeInfo[key].isAllRowsUnchecked = false;
+                        this.checkTypeInfo[key].isAllRowsChecked = true;
+                        console.log(this.checkTypeInfo);
+                    }
+                    if (
+                        checkItems.checkedCount > 0 &&
+                        checkItems.checkedCount < currentRows.length
+                    ) {
+                        console.log('0초과');
+                        this.checkTypeInfo[key].currentAllIsRowsChecked = false;
+                        this.checkTypeInfo[key].isDisabled = true;
+                        this.checkTypeInfo[key].isAllRowsUnchecked = false;
+                        this.checkTypeInfo[key].isAllRowsChecked = false;
+                        console.log(this.checkTypeInfo);
+                    }
                 }
             }
         }
@@ -221,22 +279,50 @@ export class GridCore<T extends { [key: string]: any }> {
     }
 
     rowCheckChange(index: number, v: boolean, name: keyof T) {
-        console.log('rowCheckChange');
+        if (this.currentRows[index][name].type === 'check') {
+            console.log('index', index);
+            this.currentRows[index][name].value = v;
+        }
         if (v && this.checkTypeInfo[name]) {
             this.checkTypeInfo[name]!.isAllRowsUnchecked = false;
+            console.log('체크 햇', this.currentRows);
+
+            const falseCaseX = this.currentRows.find(
+                (item) => item[name].type === 'check' && item[name].value === false,
+            );
+            console.log(this.checkTypeInfo[name]);
+
+            //체크를 했으니, 체크가 안된게 없다면
+            if (falseCaseX) {
+                console.log('체크 했으나, 펄스인게 있음');
+                this.checkTypeInfo[name].isAllRowsChecked = false;
+                this.checkTypeInfo[name].isDisabled = true;
+            }
             console.log('name', this.checkTypeInfo[name]!.isAllRowsChecked);
+            return;
         }
 
         if (!v) {
-            console.log('name', this.checkTypeInfo[name]);
+            console.log('!v', v);
 
-            console.log('        this.checkTypeInfo[name]!.isAllRowsChecked = false;');
             this.checkTypeInfo[name]!.isAllRowsChecked = false;
-            console.log('name', this.checkTypeInfo[name]!.isAllRowsChecked);
-        }
+            console.log('체크 풀었', this.currentRows);
+            console.log(
+                this.currentRows.find(
+                    (item) => item[name].type === 'check' && item[name].value === true,
+                ),
+            );
+            if (
+                this.currentRows.find(
+                    (item) => item[name].type === 'check' && item[name].value === true,
+                )
+            ) {
+                console.log('체크 풀었으나, 트루인게 있음');
 
-        if (this.currentRows[index] && this.currentRows[index].type === 'check') {
-            (this.currentRows[index] as any).value = v;
+                this.checkTypeInfo[name]!.isAllRowsUnchecked = true;
+                this.checkTypeInfo[name].isDisabled = false;
+            }
+            return;
         }
     }
 
@@ -271,9 +357,7 @@ export class GridCore<T extends { [key: string]: any }> {
                         value: false,
                     },
                 }));
-
                 console.log(this.currentRows);
-
                 this.checkTypeInfo[fieldName].isAllRowsChecked = false;
                 this.checkTypeInfo[fieldName].isAllRowsUnchecked = true;
             }

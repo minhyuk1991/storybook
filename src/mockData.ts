@@ -13,6 +13,7 @@ export const creatMockData = (index: number): MockData => {
         disk: { value: Math.floor(Math.random() * 100), type: 'string' },
         diskName: { value: `${hostName}-disk`, type: 'string' },
         check: { value: false, type: 'check' },
+        check1: { value: false, type: 'check' },
     };
 };
 
@@ -32,6 +33,7 @@ function createMockDataCPS(index: number, callback: (data: MockData) => void) {
         disk: { value: Math.floor(Math.random() * 100), type: 'string' },
         diskName: { value: `${hostName}-disk`, type: 'string' },
         check: { value: false, type: 'check' },
+        check1: { value: false, type: 'check' },
     };
     callback(data as MockData);
 }

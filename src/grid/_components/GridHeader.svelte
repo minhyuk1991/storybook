@@ -83,7 +83,7 @@
     import { onMount } from 'svelte';
     import { v4 as uuidv4 } from 'uuid';
     import type { MockData } from '../../types';
-    import { DerivedColumnConfig, getOnlyNumber, GridCore } from '../GridCore';
+    import { CheckTypeInfo, DerivedColumnConfig, getOnlyNumber, GridCore } from '../GridCore';
     import { updateCurrentGuideIndex } from './utils';
     import { throttle } from 'lodash';
 
@@ -94,6 +94,7 @@
     export let updateGridColumn: () => void;
     export let mouseDownLock: boolean;
     export let updateGridRows: () => void;
+    export let checkInfo: CheckTypeInfo<MockData>;
 
     export let scrollX: number;
     export let setScrollX: (value: number) => void;
@@ -312,6 +313,9 @@
         console.log(ScrollRectInfo);
     });
 
+    $: {
+        console.log('header rowsData');
+    }
     // let isClickedItemOver: boolean = false;
     let animationFrameId: number | null = null;
     const dndControl = {
@@ -589,7 +593,8 @@
                                 type="checkbox"
                                 name=""
                                 id=""
-                                checked="{gridInstance.checkTypeInfo[cell.name]?.isAllRowsChecked}"
+                                disabled="{checkInfo[cell.name].isDisabled}"
+                                checked="{checkInfo[cell.name].currentAllIsRowsChecked}"
                                 on:change="{(e) => {
                                     if (e.target) {
                                         gridInstance.rowAllCheckChange(
@@ -597,6 +602,15 @@
                                             cell.name,
                                             gridInstance.currentRows[index],
                                         );
+                                        console.log(gridInstance.checkTypeInfo[cell.name]);
+                                        const aa =
+                                            gridInstance.checkTypeInfo[cell.name]
+                                                .isAllRowsChecked &&
+                                            gridInstance.checkTypeInfo[cell.name]
+                                                .isAllRowsUnchecked === false;
+                                        if (aa) {
+                                            e.currentTarget.checked = true;
+                                        }
                                         updateGridRows();
                                     }
                                 }}"
