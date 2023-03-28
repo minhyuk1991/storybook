@@ -97,7 +97,7 @@
                 {/if}
                 {#if (isDevMode || cell.onlyDev === false) && cell.type === 'check' && gridInstance && gridInstance.checkTypeInfo}
                     <div
-                        style="{`min-width: ${
+                        style="{`display:flex; justify-content:center; min-width: ${
                             typeof cell.size === 'string' ? cell.size : ''
                         };width:${cell.size}`}"
                     >

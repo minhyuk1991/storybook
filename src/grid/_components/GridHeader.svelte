@@ -18,6 +18,10 @@
         cursor: move;
     }
 
+    .row > div > .cell.check {
+        display: flex;
+        justify-content: center;
+    }
     .row > div > .cell:active {
         cursor: grabbing;
         cursor: -moz-grabbing;
