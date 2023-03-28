@@ -287,40 +287,42 @@ export class GridCore<T extends { [key: string]: any }> {
             this.checkTypeInfo[name]!.isAllRowsUnchecked = false;
             console.log('체크 햇', this.currentRows);
 
-            const falseCaseX = this.currentRows.find(
+            const isAllFalse = this.currentRows.find(
                 (item) => item[name].type === 'check' && item[name].value === false,
             );
             console.log(this.checkTypeInfo[name]);
 
             //체크를 했으니, 체크가 안된게 없다면
-            if (falseCaseX) {
+            if (isAllFalse) {
                 console.log('체크 했으나, 펄스인게 있음');
                 this.checkTypeInfo[name].isAllRowsChecked = false;
                 this.checkTypeInfo[name].isDisabled = true;
             }
-            console.log('name', this.checkTypeInfo[name]!.isAllRowsChecked);
+
+            if (!isAllFalse) {
+                console.log('체크 했으나, 펄스인게 없음');
+                this.checkTypeInfo[name].currentAllIsRowsChecked = true;
+                console.log(this.checkTypeInfo[name]);
+            }
             return;
         }
 
         if (!v) {
-            console.log('!v', v);
+            const isAllTrue = this.currentRows.find(
+                (item) => item[name].type === 'check' && item[name].value === true,
+            );
 
             this.checkTypeInfo[name]!.isAllRowsChecked = false;
             console.log('체크 풀었', this.currentRows);
-            console.log(
-                this.currentRows.find(
-                    (item) => item[name].type === 'check' && item[name].value === true,
-                ),
-            );
-            if (
-                this.currentRows.find(
-                    (item) => item[name].type === 'check' && item[name].value === true,
-                )
-            ) {
+
+            if (isAllTrue) {
                 console.log('체크 풀었으나, 트루인게 있음');
 
                 this.checkTypeInfo[name]!.isAllRowsUnchecked = true;
                 this.checkTypeInfo[name].isDisabled = false;
+            }
+            if (!isAllTrue) {
+                console.log('체크 풀었으나, 트루인게 없음');
             }
             return;
         }

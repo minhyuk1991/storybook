@@ -109,6 +109,7 @@
                             on:change="{(e) => {
                                 console.log('item', item.index);
                                 onChangeHandler(e, item, cell.name);
+                                updateGridRows();
                             }}"
                         />
                         <!-- {console.log(rowsData[index][cell.name])} -->
