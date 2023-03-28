@@ -192,9 +192,10 @@
         mouseDownLockChange="{mouseDownLockChange}"
         mouseDownLock="{mouseDownLock}"
         setScrollX="{setScrollX}"
-        setRenderList="{updateGridRows}"
+        updateGridRows="{updateGridRows}"
     />
     <GridBody
+        updateGridRows="{updateGridRows}"
         gridInstance="{test}"
         isDevMode="{isDevMode}"
         scrollHandler="{scrollHandler}"

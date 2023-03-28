@@ -93,7 +93,7 @@
     export let mouseDownLockChange: (v: boolean) => void;
     export let updateGridColumn: () => void;
     export let mouseDownLock: boolean;
-    export let setRenderList: () => void;
+    export let updateGridRows: () => void;
 
     export let scrollX: number;
     export let setScrollX: (value: number) => void;
@@ -597,7 +597,7 @@
                                             cell.name,
                                             gridInstance.currentRows[index],
                                         );
-                                        setRenderList();
+                                        updateGridRows();
                                     }
                                 }}"
                             />

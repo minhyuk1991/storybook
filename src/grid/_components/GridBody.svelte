@@ -47,6 +47,7 @@
     export let scrollX: number;
     export let gridInstance: GridCore<MockData>;
     export let isDevMode: boolean;
+    export let updateGridRows: () => void;
     export let scrollHandler: (
         e: UIEvent & {
             currentTarget: EventTarget & HTMLDivElement;
@@ -59,18 +60,13 @@
             checked: boolean;
         };
     };
-    $: {
-        console.log(rowsData);
-    }
+
     const onChangeHandler = (e: ChangeEvent, cell: DerivedColumnConfig<MockData>) => {
         if (gridInstance) {
             console.log(cell.name);
             gridInstance.rowCheckChange(cell.index, e.currentTarget.checked, cell.name);
+            updateGridRows();
         }
-    };
-
-    const getA = (cellName: keyof MockData, index: number) => {
-        return gridInstance.checkTypeInfo[cellName].currentRows[index][cellName].value as boolean;
     };
 </script>
 
@@ -105,11 +101,12 @@
                             type="checkbox"
                             name=""
                             id=""
-                            checked="{getA(cell.name, index)}"
+                            checked="{rowsData[index][cell.name].value}"
                             on:change="{(e) => {
                                 onChangeHandler(e, cell);
                             }}"
                         />
+                        <!-- {console.log(rowsData[index][cell.name])} -->
                     </div>
                 {/if}
             {/each}

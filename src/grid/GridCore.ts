@@ -91,7 +91,6 @@ export class GridCore<T extends { [key: string]: any }> {
 
     checkTypeInfo: {
         [K in keyof T]: {
-            currentRows: T[];
             isAllRowsChecked: boolean;
             isAllRowsUnchecked: boolean;
         };
@@ -118,7 +117,6 @@ export class GridCore<T extends { [key: string]: any }> {
                 const element = currentRows[0][key];
                 if ((element as any).type === 'check') {
                     this.checkTypeInfo[key as keyof T] = {
-                        currentRows: currentRows,
                         isAllRowsChecked: false,
                         isAllRowsUnchecked: true,
                     };
@@ -237,11 +235,8 @@ export class GridCore<T extends { [key: string]: any }> {
             console.log('name', this.checkTypeInfo[name]!.isAllRowsChecked);
         }
 
-        if (
-            this.checkTypeInfo[name]?.currentRows[index] &&
-            this.checkTypeInfo[name]?.currentRows[index].type === 'check'
-        ) {
-            (this.checkTypeInfo[name]?.currentRows[index] as any).value = v;
+        if (this.currentRows[index] && this.currentRows[index].type === 'check') {
+            (this.currentRows[index] as any).value = v;
         }
     }
 
@@ -249,39 +244,36 @@ export class GridCore<T extends { [key: string]: any }> {
         console.log('실행');
         console.log('실행', row[fieldName]);
 
-        if (row[fieldName] && (row[fieldName] as any).type === 'check' && fieldName) {
+        if (row[fieldName] && row[fieldName].type === 'check' && fieldName) {
             console.log('실행 fieldName', fieldName);
 
             if (this.checkTypeInfo[fieldName].isAllRowsUnchecked && v) {
                 console.log('isAllRowsUnchecked');
-                this.checkTypeInfo[fieldName].currentRows = this.checkTypeInfo[
-                    fieldName
-                ].currentRows.map((item) => ({
+                this.currentRows = this.currentRows.map((item) => ({
                     ...item,
                     [fieldName]: {
-                        ...(item[fieldName] as any),
+                        ...item[fieldName],
                         value: true,
                     },
                 }));
-                console.log(this.checkTypeInfo[fieldName]!.currentRows);
+                console.log(this.currentRows);
 
                 this.checkTypeInfo[fieldName].isAllRowsUnchecked = false;
                 this.checkTypeInfo[fieldName].isAllRowsChecked = true;
             }
 
-            if (this.checkTypeInfo[fieldName].isAllRowsChecked && v) {
+            if (this.checkTypeInfo[fieldName].isAllRowsChecked && !v) {
                 console.log('isAllRowsChecked');
-                this.checkTypeInfo[fieldName].currentRows = this.checkTypeInfo[
-                    fieldName
-                ].currentRows.map((item) => ({
+                this.currentRows = this.currentRows.map((item) => ({
                     ...item,
                     [fieldName]: {
-                        ...(item[fieldName] as any),
+                        ...item[fieldName],
                         value: false,
                     },
                 }));
 
-                console.log(this.checkTypeInfo[fieldName]!.currentRows);
+                console.log(this.currentRows);
+
                 this.checkTypeInfo[fieldName].isAllRowsChecked = false;
                 this.checkTypeInfo[fieldName].isAllRowsUnchecked = true;
             }
