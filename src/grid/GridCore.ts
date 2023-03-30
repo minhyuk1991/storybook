@@ -1,7 +1,15 @@
 type Option = { resizable?: boolean; isReorder?: boolean };
 import { v4 as uuidv4 } from 'uuid';
 
-export type ColumnDataType = 'string' | 'int' | 'stringInt' | 'email' | 'url' | 'double' | 'check';
+export type ColumnDataType =
+    | 'string'
+    | 'int'
+    | 'stringInt'
+    | 'email'
+    | 'url'
+    | 'double'
+    | 'check'
+    | 'date';
 
 export type RenderColumnList = {
     name: string;

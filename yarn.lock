@@ -6561,6 +6561,35 @@
   "resolved" "https://registry.npmjs.org/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz"
   "version" "1.0.4"
 
+"gridjs-selection@^4.0.0":
+  "integrity" "sha512-cG0Zbpq+MP1PaECmHcFENFWUfJUKbwE+0qj8kbPfxoFhHF638GQzn/dijdhLMLK8mNTy33zwA8qlSq53LcfRMg=="
+  "resolved" "https://registry.npmjs.org/gridjs-selection/-/gridjs-selection-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "gridjs" "^4.0.0"
+    "preact" "^10.4.8"
+    "tslib" "^2.0.1"
+
+"gridjs-svelte@^2.1.1":
+  "integrity" "sha512-tYkgdqNKSnfmAYYc8EP4axn/Xlugp7VLwAlpNkP4SBLHHYD/ejD2DJ+FMatDNqcJ1Z1kuMnJWO+VBcAOirEByw=="
+  "resolved" "https://registry.npmjs.org/gridjs-svelte/-/gridjs-svelte-2.1.1.tgz"
+  "version" "2.1.1"
+
+"gridjs@^4.0.0":
+  "integrity" "sha512-HSs5/DYcy+TF96TiYejqDQ5q4sZBTwVFfY3wKhz8oDD/kdeL5T03kWo2pih2906JVBlx/Qk9bAFzlGnnvsW7Gg=="
+  "resolved" "https://registry.npmjs.org/gridjs/-/gridjs-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "preact" "^10.5.12"
+    "tslib" "^2.0.1"
+
+"gridjs@^6.0.6", "gridjs@>=5.0.0":
+  "integrity" "sha512-TZ20nY+weE/wlyXOd3A9FJyJlsJ/MrHr6frMgUHFN29RmWZCYtnyfF0zuspXC81oePwSJeSZ8HY651aeyX8+rQ=="
+  "resolved" "https://registry.npmjs.org/gridjs/-/gridjs-6.0.6.tgz"
+  "version" "6.0.6"
+  dependencies:
+    "preact" "^10.11.3"
+
 "handlebars@^4.7.7":
   "integrity" "sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA=="
   "resolved" "https://registry.npmjs.org/handlebars/-/handlebars-4.7.7.tgz"
@@ -9580,6 +9609,11 @@
     "picocolors" "^0.2.1"
     "source-map" "^0.6.1"
 
+"preact@^10.11.3", "preact@^10.4.8", "preact@^10.5.12":
+  "integrity" "sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw=="
+  "resolved" "https://registry.npmjs.org/preact/-/preact-10.13.2.tgz"
+  "version" "10.13.2"
+
 "prelude-ls@^1.2.1":
   "integrity" "sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g=="
   "resolved" "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz"
@@ -11024,7 +11058,7 @@
   "resolved" "https://registry.npmjs.org/svelte-tiny-virtual-list/-/svelte-tiny-virtual-list-2.0.5.tgz"
   "version" "2.0.5"
 
-"svelte@^3.0.0", "svelte@^3.1.0", "svelte@^3.2.0", "svelte@^3.23.0", "svelte@^3.24.0", "svelte@^3.37.0", "svelte@^3.49.0", "svelte@^3.50.0", "svelte@^3.54.0", "svelte@^3.55.0", "svelte@>= 3", "svelte@>=3.19.0", "svelte@>3.0.0", "svelte@3.x":
+"svelte@^3.0.0", "svelte@^3.1.0", "svelte@^3.2.0", "svelte@^3.23.0", "svelte@^3.24.0", "svelte@^3.37.0", "svelte@^3.49.0", "svelte@^3.50.0", "svelte@^3.54.0", "svelte@^3.55.0", "svelte@>= 3", "svelte@>=3.19.0", "svelte@>=3.30.0", "svelte@>3.0.0", "svelte@3.x":
   "integrity" "sha512-uGu2FVMlOuey4JoKHKrpZFkoYyj0VLjJdz47zX5+gVK5odxHM40RVhar9/iK2YFRVxvfg9FkhfVlR0sjeIrOiA=="
   "resolved" "https://registry.npmjs.org/svelte/-/svelte-3.55.0.tgz"
   "version" "3.55.0"

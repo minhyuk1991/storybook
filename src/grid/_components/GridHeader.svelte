@@ -571,6 +571,7 @@
                             }}"></div>
                     </div>
                 {/if}
+
                 {#if (!cell.onlyDev || isDevMode) && cell.type === 'check'}
                     <div>
                         <div

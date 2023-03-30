@@ -27,11 +27,11 @@ html.dark body {
     transition: 0.5s;
 }
 
-.cell {
+/* .cell {
     padding: 0 20px;
     background: rebeccapurple;
     color: white;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
+} */

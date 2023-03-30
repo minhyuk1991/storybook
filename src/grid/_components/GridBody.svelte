@@ -40,6 +40,7 @@
     import {} from 'os';
     import type { MockData } from '../../types';
     import type { DerivedColumnConfig, DerivedColumnConfigs, GridCore } from '../GridCore';
+    import { numberWithCommas } from './utils';
     import VirtualList from './Vl.svelte';
     export let rowsData: { [type: string]: any }[] = [];
     export let renderColumnList: DerivedColumnConfigs<MockData>;
@@ -95,6 +96,14 @@
                         };width:${cell.size}`}">{item[cell.name].value}</div
                     >
                 {/if}
+                {#if (isDevMode || cell.onlyDev === false) && cell.type === 'int'}
+                    <div
+                        style="{`min-width: ${
+                            typeof cell.size === 'string' ? cell.size : ''
+                        };width:${cell.size}`}">{numberWithCommas(item[cell.name].value)}</div
+                    >
+                {/if}
+
                 {#if (isDevMode || cell.onlyDev === false) && cell.type === 'check' && gridInstance && gridInstance.checkTypeInfo}
                     <div
                         style="{`display:flex; justify-content:center; min-width: ${

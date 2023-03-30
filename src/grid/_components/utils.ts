@@ -72,7 +72,7 @@ export const isInsideArea = (
 export type DndControl = {
     mouseDownHandler: (
         e: MouseEvent,
-        cell: DerivedColumnConfig,
+        cell: DerivedColumnConfig<MockData>,
         coulmnElList: Element[],
         mouseDownLockChange: (v: boolean) => void,
         gridInstance: GridCore<MockData>,
@@ -89,7 +89,7 @@ export type WidthControl = {
         e: MouseEvent & {
             currentTarget: EventTarget & HTMLDivElement;
         },
-        currentCell: DerivedColumnConfig,
+        currentCell: DerivedColumnConfig<MockData>,
         currentCellSize: number,
         gridInstance: GridCore<MockData>,
         updateGridColumn: () => void,
@@ -114,4 +114,8 @@ export function scrollRight(element: HTMLDivElement) {
         }
     }
     requestAnimationFrame(animateScroll);
+}
+
+export function numberWithCommas(number: number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
